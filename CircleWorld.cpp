@@ -101,13 +101,9 @@ void CircleObject::ResolveContact(CircleObject* a_OtherObject)
 	a_OtherObject->Velocity = velOtherPerp + velParalell;
 	
 	// Îòäàëåíèå îêðóæíîñòåé äðóã îò äðóãà
-	CoordinateType distanceDivRadius = 1.01 * dist / (Radius + a_OtherObject->Radius);
-
-	CoordinateType oneDivDistCentr = onedivdist * 2.0; //Center.Distance(centrWeight);
-	Center = (Center - centrWeight) * oneDivDistCentr * distanceDivRadius + centrWeight;
-
-	CoordinateType oneDivDistOtherCentr = oneDivDistCentr; // otherCentr.Distance(centrWeight);
-	otherCentr = (otherCentr - centrWeight) * oneDivDistCentr * distanceDivRadius + centrWeight;
+	//CoordinateType oneDivRadius = 1.01 / (Radius + a_OtherObject->Radius);
+	Center = normVector * (-Radius * 1.05) + centrWeight;
+	otherCentr = normVector * a_OtherObject->Radius * 1.05 + centrWeight;
 }
 
 

@@ -5,6 +5,8 @@
 #include "CircleWorld.h"
 #include <vector>
 
+const CoordinateType accuraty = 0.001;
+
 void Gravity(CircleObject* a_CircleObject)
 {
 	Point centrGravity(0.0, 0.0, 0.0);
@@ -19,7 +21,7 @@ void Gravity(CircleObject* a_CircleObject)
 	if (dist > 1.0)
 	{
 		accelerationVector = (centrGravity - circleCentr) * onedivdist;
-		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * 1.5;
+		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * 100.5 * accuraty;
 	}
 }
 
@@ -29,7 +31,7 @@ void resize(int width,int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-5,5, -5,5, 2,12);   
-	gluLookAt(0,0,10, 0,0,0, 0,1,0);
+	gluLookAt(0,0,5, 0,0,0, 0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 }    
 
@@ -37,8 +39,6 @@ std::vector<CircleObject> objects;
 
 void display(void)
 {
-	const CoordinateType accuraty = 0.001;
-	
 	for (size_t i1 = 0; i1 < objects.size(); i1++)
 	{
 		CircleObject& obj1 = objects[i1];
@@ -75,7 +75,7 @@ void display(void)
 		
 		glPopMatrix();
 	}
-	glRotated(0.01, 0, 0, 1); 
+	glRotated(0.1, 0, 0, 1); 
 	
 	glutSwapBuffers();
 }
@@ -111,9 +111,9 @@ int main(int argc, char** argv)
 	{
 		CircleObject obj;
 		const CoordinateType maxValue = 1.0;
-		const CoordinateType maxVelValue = 0.0;
-		obj.Center = Point(maxValue * rand() / (RAND_MAX * 1.0), maxValue * rand() / (RAND_MAX * 1.0), maxValue * rand() / (RAND_MAX * 1.0));
-		obj.Velocity = Point(maxVelValue * rand() / (RAND_MAX * 1.0), maxVelValue * rand() / (RAND_MAX * 1.0), maxVelValue * rand() / (RAND_MAX * 1.0));
+		const CoordinateType maxVelValue = 200.0;
+		obj.Center = Point(maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2, maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2, maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2);
+		obj.Velocity = Point(maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2, maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2, maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2);
 		obj.Radius = 0.15;
 
 		objects.push_back(obj);

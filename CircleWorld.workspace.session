@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Session Name="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace">
-  <int Value="0" Name="m_selectedTab"/>
+  <int Value="2" Name="m_selectedTab"/>
   <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="23" Name="FirstVisibleLine"/>
-      <int Value="65" Name="CurrentLine"/>
+      <int Value="96" Name="FirstVisibleLine"/>
+      <int Value="109" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="9" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.cpp" Name="FileName"/>
+      <int Value="66" Name="FirstVisibleLine"/>
+      <int Value="100" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
   </TabInfoArray>
