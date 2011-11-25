@@ -5,23 +5,25 @@
 #include "CircleWorld.h"
 #include <vector>
 
-const CoordinateType accuraty = 0.001;
+const CoordinateType accuraty = 0.01;
 
 void Gravity(CircleObject* a_CircleObject)
 {
+	if (a_CircleObject->IsFixed)
+		return;
+		
 	Point centrGravity(0.0, 0.0, 0.0);
 	Point& circleCentr = a_CircleObject->Center;
 
 	CoordinateType dist = centrGravity.Distance(circleCentr);
 	CoordinateType onedivdist = 0.0;
-	Point accelerationVector;
 	if (dist > 0.0)
 		onedivdist = 1.0 / dist;
 
-	if (dist > 1.0)
+	if (dist > 0.1)
 	{
-		accelerationVector = (centrGravity - circleCentr) * onedivdist;
-		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * 100.5 * accuraty;
+		Point accelerationVector = (centrGravity - circleCentr) * onedivdist;
+		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 25.0 * accuraty;
 	}
 }
 
@@ -30,12 +32,31 @@ void resize(int width,int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-5,5, -5,5, 2,12);   
+	glOrtho(-10,10, -10,10, -5.02,120);   
 	gluLookAt(0,0,5, 0,0,0, 0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 }    
 
 std::vector<CircleObject> objects;
+
+void keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+		case 97: // 'a'
+			glRotated(-1, 0, 0, 1); 			
+			break;
+		case 100: // 'd'
+			glRotated(1, 0, 0, 1); 			
+			break;
+		case 119: // 'w'
+			glRotated(-1, 1, 0, 0); 			
+			break;
+		case 115: // 's'
+			glRotated(1, 1, 0, 0); 			
+			break;
+	}
+}
 
 void display(void)
 {
@@ -44,7 +65,7 @@ void display(void)
 		CircleObject& obj1 = objects[i1];
 		
 		Gravity(&obj1);
-
+		
 		obj1.Center.x += obj1.Velocity.x * accuraty;
 		obj1.Center.y += obj1.Velocity.y * accuraty;
 		obj1.Center.z += obj1.Velocity.z * accuraty;
@@ -70,19 +91,25 @@ void display(void)
 		
 		CircleObject& obj = objects[i];
 		glTranslated(obj.Center.x, obj.Center.y, obj.Center.z);
-		glColor3d(1, 0, 0);
-		glutSolidSphere(obj.Radius, 10, 10);
+		if (i == 0)
+		{
+			glColor3d(1, 1, 0);
+			glutSolidSphere(obj.Radius, 20, 20);
+		}	
+		else
+		{
+			glColor3d(0.6, 0.0, 0.1);
+			glutSolidSphere(obj.Radius, 10, 10);
+		}
 		
 		glPopMatrix();
 	}
-	glRotated(0.1, 0, 0, 1); 
-	
 	glutSwapBuffers();
 }
 
 int main(int argc, char** argv)
 {
-	float pos[4] = {3,3,3,1};
+	float pos[4] = {5,5,5,1};
 	float dir[3] = {-1,-1,-1};
 	GLfloat mat_specular[] = {1,1,1,1};
 
@@ -90,12 +117,15 @@ int main(int argc, char** argv)
 
 	glutInitWindowPosition(50, 10);
 	glutInitWindowSize(800, 600);
-	glutInitDisplayMode( GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE );
-	glutCreateWindow("GLUT Template");
+	glutInitDisplayMode( GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE | GLUT_ACCUM );
+	glutCreateWindow("Circle World");
 	glutIdleFunc(display);
 	glutDisplayFunc(display);
 	glutReshapeFunc(resize);
+	glutKeyboardFunc(keyboard);
   
+	glShadeModel(GL_SMOOTH);
+	
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);
@@ -107,14 +137,22 @@ int main(int argc, char** argv)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
 
-	for (size_t i = 0; i < 200; i++)
+	CircleObject obj;
+	obj.Center = Point(0 , 0 , 0);
+	obj.Velocity = Point(0, 0, 0);
+	obj.Radius = 2.0;
+	obj.IsFixed = true;
+	objects.push_back(obj);
+
+	for (size_t i = 0; i < 500; i++)
 	{
+		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleObject obj;
-		const CoordinateType maxValue = 1.0;
-		const CoordinateType maxVelValue = 200.0;
-		obj.Center = Point(maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2, maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2, maxValue * rand() / (RAND_MAX * 1.0) - maxValue/2);
-		obj.Velocity = Point(maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2, maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2, maxVelValue * rand() / (RAND_MAX * 1.0) - maxVelValue/2);
-		obj.Radius = 0.15;
+		const CoordinateType maxValue = 20.0;
+		const CoordinateType maxVelValue = 4.0;
+		obj.Center = Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue * 1.0e-93));
+		obj.Velocity = Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
+		obj.Radius = 0.2 + rand_pmmax(.18);
 
 		objects.push_back(obj);
 	}

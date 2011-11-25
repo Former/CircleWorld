@@ -41,18 +41,18 @@ CoordinateType Point::Distance(const Point& a_OtherPoint) const
 	return sqrt(Distance2(a_OtherPoint)); 
 }
 
-Point Point::operator * (const Point& a_Value) const // Ñêàëÿðíîå ïðîèçâåäåíèå
+CoordinateType Point::operator * (const Point& a_Value) const // Ñêàëÿðíîå ïðîèçâåäåíèå
 {
-	return Point(x * a_Value.x, y * a_Value.y, z * a_Value.z); 
+	return (x * a_Value.x + y * a_Value.y + z * a_Value.z); 
 }
 
 
-Point Point::operator * (const double& a_Value) const
+Point Point::operator * (const CoordinateType& a_Value) const
 {
 	return Point(x * a_Value, y * a_Value, z * a_Value); 
 }
 
-Point Point::operator / (const double& a_Value) const
+Point Point::operator / (const CoordinateType& a_Value) const
 {
 	return Point(x / a_Value, y / a_Value, z / a_Value); 
 }
@@ -69,8 +69,9 @@ Point Point::operator - (const Point& a_Value) const
 
 CircleObject::CircleObject()
 {
-	Radius = 0.0;
-	Weight = 0.0;
+	Radius 	= 0.0;
+	Weight 	= 0.0;
+	IsFixed = false;
 }
 
 bool CircleObject::IsIntersection(const CircleObject& a_OtherObject) const // Ïåðåñåêàþòñÿ ëè ýòè îáåêòû
@@ -80,30 +81,64 @@ bool CircleObject::IsIntersection(const CircleObject& a_OtherObject) const // Ï
 
 void CircleObject::ResolveContact(CircleObject* a_OtherObject) 
 {
-	Point& otherCentr = a_OtherObject->Center;
-	Point centrWeight = (Center + otherCentr) * 0.5;
+	ResolveContact(this, a_OtherObject);
+}
+
+void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2) 
+{
+	const CoordinateType zapas = 0.01;
 	
-	CoordinateType dist = otherCentr.Distance(Center);
+	if (a_Object1->IsFixed && a_Object2->IsFixed)
+		return;
+		
+	if (a_Object1->IsFixed)
+	{
+		ResolveContact(a_Object2, a_Object1);
+		return;
+	}
+	
+	Point& centr1 = a_Object1->Center;
+	Point& centr2 = a_Object2->Center;
+	Point centrWeight = (centr1 + centr2) * 0.5;
+	
+	CoordinateType dist = centr1.Distance(centr2);
 	CoordinateType onedivdist = 0.0;
 	if (dist > 0.0)
 		onedivdist = 1.0 / dist;
 
 	// Ñòàëêèâàíèå (çàêîí ñîõðàíåíèÿ èìïóëüñà)
-	Point normVector = (otherCentr - Center) * onedivdist;
+	Point normVector = (centr2 - centr1) * onedivdist;
 	
-	Point velParalell	= normVector * (normVector * Velocity);
-	Point velPerp		= Velocity - velParalell;
+	Point& vel1 = a_Object1->Velocity;
+	Point& vel2 = a_Object2->Velocity;
+	
+	CoordinateType cosa1 = (normVector * vel1);
+	Point vel1Paralell	= normVector * (normVector * vel1);
+	Point vel1Perp		= vel1 - vel1Paralell;
 
-	Point velOtherParalell	= normVector * (normVector * a_OtherObject->Velocity);
-	Point velOtherPerp		= a_OtherObject->Velocity - velOtherParalell;
+	if (a_Object2->IsFixed)
+	{
+		if ((vel1Paralell * normVector) > 0)
+			vel1 = vel1Perp - vel1Paralell;
+		else
+			vel1 = vel1Perp + vel1Paralell;
+		centr1 = normVector * (-(a_Object1->Radius + a_Object2->Radius) * (1.0 + zapas)) + centr2;		
+		return;
+	}
 
-	Velocity = velPerp + velOtherParalell;
-	a_OtherObject->Velocity = velOtherPerp + velParalell;
+	CoordinateType cosa2 = (normVector * vel2);
+	Point vel2Paralell	= normVector * (normVector * vel2);
+	Point vel2Perp		= vel2 - vel2Paralell;
+
+	if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
+	{
+		vel1 = vel1Perp + vel2Paralell;
+		vel2 = vel2Perp + vel1Paralell;
+	}
 	
 	// Îòäàëåíèå îêðóæíîñòåé äðóã îò äðóãà
-	//CoordinateType oneDivRadius = 1.01 / (Radius + a_OtherObject->Radius);
-	Center = normVector * (-Radius * 1.05) + centrWeight;
-	otherCentr = normVector * a_OtherObject->Radius * 1.05 + centrWeight;
+	centr1 = normVector * (-a_Object1->Radius * (1.0 + zapas)) + centrWeight;
+	centr2 = normVector * (+a_Object2->Radius * (1.0 + zapas)) + centrWeight;
 }
 
 
