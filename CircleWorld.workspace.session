@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Session Name="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace">
-  <int Value="2" Name="m_selectedTab"/>
+  <int Value="1" Name="m_selectedTab"/>
   <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="2" Name="CurrentLine"/>
+      <int Value="5" Name="FirstVisibleLine"/>
+      <int Value="41" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.cpp" Name="FileName"/>
-      <int Value="98" Name="FirstVisibleLine"/>
-      <int Value="135" Name="CurrentLine"/>
+      <int Value="132" Name="FirstVisibleLine"/>
+      <int Value="166" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="134" Name="FirstVisibleLine"/>
-      <int Value="152" Name="CurrentLine"/>
+      <int Value="28" Name="FirstVisibleLine"/>
+      <int Value="64" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
   </TabInfoArray>

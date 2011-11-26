@@ -23,7 +23,7 @@ void Gravity(CircleObject* a_CircleObject)
 	if (dist > 0.1)
 	{
 		Point accelerationVector = (centrGravity - circleCentr) * onedivdist;
-		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 25.0 * accuraty;
+		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 250.0 * accuraty;
 	}
 }
 
@@ -32,8 +32,10 @@ void resize(int width,int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-10,10, -10,10, -5.02,120);   
-	gluLookAt(0,0,5, 0,0,0, 0,1,0);
+	if (height)
+		gluPerspective(30.0f, width / height, 0.1f, 1500.0f);
+	//glOrtho(-10,10, -10,10, -5.02,120);   
+	gluLookAt(0,0,50, 0,0,0, 0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 }    
 
@@ -60,29 +62,7 @@ void keyboard(unsigned char key, int x, int y)
 
 void display(void)
 {
-	for (size_t i1 = 0; i1 < objects.size(); i1++)
-	{
-		CircleObject& obj1 = objects[i1];
-		
-		Gravity(&obj1);
-		
-		obj1.Center.x += obj1.Velocity.x * accuraty;
-		obj1.Center.y += obj1.Velocity.y * accuraty;
-		obj1.Center.z += obj1.Velocity.z * accuraty;
-		
-		for (size_t i2 = i1; i2 < objects.size(); i2++)
-		{
-			if (i1 == i2)
-				continue;
-
-			CircleObject& obj2 = objects[i2];
-
-			if (obj1.IsIntersection(obj2))
-			{
-				obj1.ResolveContact(&obj2);
-			}
-		}
-	}
+	CalculateNextPosition(&objects);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (size_t i = 0; i < objects.size(); i++)
@@ -144,15 +124,15 @@ int main(int argc, char** argv)
 	obj.IsFixed = true;
 	objects.push_back(obj);
 
-	for (size_t i = 0; i < 500; i++)
+	for (size_t i = 0; i < 5000; i++)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleObject obj;
-		const CoordinateType maxValue = 20.0;
-		const CoordinateType maxVelValue = 4.0;
-		obj.Center = Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue * 1.0e-93));
+		const CoordinateType maxValue = 80.0;
+		const CoordinateType maxVelValue = 20.0;
+		obj.Center = Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0.0);
 		obj.Velocity = Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
-		obj.Radius = 0.2 + rand_pmmax(.18);
+		obj.Radius = 0.2;// + rand_pmmax(.18);
 
 		objects.push_back(obj);
 	}

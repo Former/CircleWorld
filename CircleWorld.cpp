@@ -141,4 +141,29 @@ void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Objec
 	centr2 = normVector * (+a_Object2->Radius * (1.0 + zapas)) + centrWeight;
 }
 
+void CalculateNextPosition(std::vector<CircleObject>* a_Objects)
+{
+	for (size_t i1 = 0; i1 < a_Objects->size(); i1++)
+	{
+		CircleObject& obj1 = (*a_Objects)[i1];
+		
+		Gravity(&obj1);
+		
+		obj1.Center.x += obj1.Velocity.x * accuraty;
+		obj1.Center.y += obj1.Velocity.y * accuraty;
+		obj1.Center.z += obj1.Velocity.z * accuraty;
+		
+		for (size_t i2 = i1; i2 < a_Objects->size(); i2++)
+		{
+			if (i1 == i2)
+				continue;
 
+			CircleObject& obj2 = (*a_Objects)[i2];
+
+			if (obj1.IsIntersection(obj2))
+			{
+				obj1.ResolveContact(&obj2);
+			}
+		}
+	}
+}

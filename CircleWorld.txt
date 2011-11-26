@@ -1,1 +1,1 @@
-Bin/Debug/main.o Bin/Debug/CircleWorld.o
+Bin/Release/main.o Bin/Release/CircleWorld.o

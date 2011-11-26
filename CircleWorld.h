@@ -39,4 +39,4 @@ public:
 	bool 			IsFixed;
 };
 
-
+void CalculateNextPosition(std::vector<CircleObject>* a_Objects);
