@@ -1,7 +1,11 @@
 #pragma once 
 
+#include <vector>
+#include <string>
+
 typedef double CoordinateType;
 typedef float WeightType;
+typedef size_t COIndex;
 
 class Point
 {
@@ -28,15 +32,34 @@ class CircleObject
 {
 public:
 	CircleObject();
-	bool 			IsIntersection(const CircleObject& a_OtherObject) const; // Ïåðåñåêàþòñÿ ëè ýòè îáåêòû
-	void 			ResolveContact(CircleObject* a_OtherObject);
-	static void 	ResolveContact(CircleObject* a_OtherObject1, CircleObject* a_OtherObject2);
 
 	Point			Velocity;
 	Point			Center;
 	CoordinateType	Radius;
-	WeightType		Weight;
-	bool 			IsFixed;
+	
+private:
+	Point 			m_LastCenter;
+	CoordinateType	m_RadiusNearArea;
+	std::vector<COIndex> m_NearObjects;
 };
 
-void CalculateNextPosition(std::vector<CircleObject>* a_Objects);
+class CircleObjectMover
+{
+public:
+	CircleObjectMover();	
+	
+	COIndex 		AddObject(CircleObject a_Object);
+	CircleObject& 	GetObject(COIndex a_Index);
+	std::vector<CircleObject>& GetObjects();
+	
+	void Move(std::vector<COIndex> a_Indexes, CoordinateType a_Accuracy);
+	void Contact(std::vector<COIndex> a_Indexes, bool a_UseInernal);
+	void ContactWithFirstFixed(std::vector<COIndex> a_FirstIndexes, std::vector<COIndex> a_Indexes, bool a_UseNear);
+	void Gravity(std::vector<COIndex> a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy);
+
+private:
+	static bool		IsIntersection(CircleObject* a_Object1, CircleObject* a_Object2);
+	static void 	ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2);
+
+	std::vector<CircleObject> m_Objects;
+}

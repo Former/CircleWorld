@@ -3,29 +3,6 @@
 #include <GL/glut.h>
 
 #include "CircleWorld.h"
-#include <vector>
-
-const CoordinateType accuraty = 0.01;
-
-void Gravity(CircleObject* a_CircleObject)
-{
-	if (a_CircleObject->IsFixed)
-		return;
-		
-	Point centrGravity(0.0, 0.0, 0.0);
-	Point& circleCentr = a_CircleObject->Center;
-
-	CoordinateType dist = centrGravity.Distance(circleCentr);
-	CoordinateType onedivdist = 0.0;
-	if (dist > 0.0)
-		onedivdist = 1.0 / dist;
-
-	if (dist > 0.1)
-	{
-		Point accelerationVector = (centrGravity - circleCentr) * onedivdist;
-		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 250.0 * accuraty;
-	}
-}
 
 void resize(int width,int height)
 {

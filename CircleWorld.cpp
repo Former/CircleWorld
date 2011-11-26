@@ -41,7 +41,7 @@ CoordinateType Point::Distance(const Point& a_OtherPoint) const
 	return sqrt(Distance2(a_OtherPoint)); 
 }
 
-CoordinateType Point::operator * (const Point& a_Value) const // Ñêàëÿðíîå ïðîèçâåäåíèå
+CoordinateType Point::operator * (const Point& a_Value) const // Скаляное произведение
 {
 	return (x * a_Value.x + y * a_Value.y + z * a_Value.z); 
 }
@@ -74,7 +74,7 @@ CircleObject::CircleObject()
 	IsFixed = false;
 }
 
-bool CircleObject::IsIntersection(const CircleObject& a_OtherObject) const // Ïåðåñåêàþòñÿ ëè ýòè îáåêòû
+bool CircleObject::IsIntersection(const CircleObject& a_OtherObject) const // Пересекаются ли эти обекты
 {
 	return a_OtherObject.Center.CheckConnect(Center, Radius + a_OtherObject.Radius);
 }
@@ -139,6 +139,33 @@ void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Objec
 	// Îòäàëåíèå îêðóæíîñòåé äðóã îò äðóãà
 	centr1 = normVector * (-a_Object1->Radius * (1.0 + zapas)) + centrWeight;
 	centr2 = normVector * (+a_Object2->Radius * (1.0 + zapas)) + centrWeight;
+}
+
+const CoordinateType accuraty = 0.01;
+
+void Gravity(CircleObject* a_CircleObject)
+{
+	if (a_CircleObject->IsFixed)
+		return;
+		
+	Point centrGravity(0.0, 0.0, 0.0);
+	Point& circleCentr = a_CircleObject->Center;
+
+	CoordinateType dist = centrGravity.Distance(circleCentr);
+	CoordinateType onedivdist = 0.0;
+	if (dist > 0.0)
+		onedivdist = 1.0 / dist;
+
+	if (dist > 0.1)
+	{
+		Point accelerationVector = (centrGravity - circleCentr) * onedivdist;
+		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 250.0 * accuraty;
+	}
+}
+
+void CalculateNewPosition(std::vector<CircleObject>* a_Objects)
+{
+	
 }
 
 void CalculateNextPosition(std::vector<CircleObject>* a_Objects)
