@@ -67,35 +67,106 @@ Point Point::operator - (const Point& a_Value) const
 	return Point(x - a_Value.x, y - a_Value.y, z - a_Value.z); 
 }
 
+
 CircleObject::CircleObject()
 {
-	Radius 	= 0.0;
-	Weight 	= 0.0;
-	IsFixed = false;
+	Radius = 1.0;
 }
 
-bool CircleObject::IsIntersection(const CircleObject& a_OtherObject) const // Пересекаются ли эти обекты
+CONear::CONear()
 {
-	return a_OtherObject.Center.CheckConnect(Center, Radius + a_OtherObject.Radius);
+	RadiusNearArea 	= 0.0;
+	Objects			= 0;
 }
 
-void CircleObject::ResolveContact(CircleObject* a_OtherObject) 
+CircleObjectMover::CircleObjectMover()
+{	
+}	
+
+COIndex CircleObjectMover::AddObject(CircleObject a_Object)
 {
-	ResolveContact(this, a_OtherObject);
+	m_Objects.push_back(a_Object);
 }
 
-void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2) 
+CircleObject& CircleObjectMover::GetObject(COIndex a_Index)
+{
+	return m_Objects[a_Index];
+}
+
+std::vector<CircleObject>& CircleObjectMover::GetObjects()
+{
+	return m_Objects;
+}
+
+void CircleObjectMover::Move(const std::vector<COIndex>& a_Indexes, CoordinateType a_Accuracy)
+{
+	for (size_t i = 0; i < a_Indexes.size(); i++)
+	{
+		COIndex objIndex = a_Indexes[i];
+		CircleObject& obj = m_Objects[objIndex];
+		
+		obj.Center = obj.Center + obj.Velocity * a_Accuracy;
+	}
+}
+
+void CircleObjectMover::Contact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed)
+{	
+	bool isIndsEqual = (&a_FirstIndexes == &a_SecondIndexes);
+	for (size_t i = 0; i < a_FirstIndexes.size(); i++)
+	{
+		COIndex obj1Index = a_FirstIndexes[i];		
+		CircleObject& obj1 = m_Objects[obj1Index];
+		
+		for (size_t j = (isIndsEqual ? i : 0); j < a_SecondIndexes.size(); j++)
+		{
+			COIndex obj2Index = a_SecondIndexes[j];		
+			if (obj1Index == obj2Index)
+				continue;
+
+			CircleObject& obj2 = m_Objects[obj2Index];
+
+			if (IsIntersection(&obj1, &obj2))
+				ResolveContact(&obj1, &obj2, a_IsFirstFixed);
+		}
+	}
+}
+
+void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed)
+{
+	
+}
+
+void CircleObjectMover::Gravity(const std::vector<COIndex>& a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy)
+{
+	for (size_t i = 0; i < a_Indexes.size(); i++)
+	{
+		COIndex objIndex = a_Indexes[i];
+		CircleObject& obj = m_Objects[objIndex];
+		
+		Point& circleCentr = obj.Center;
+
+		CoordinateType dist = a_CenterGravity.Distance(circleCentr);
+		CoordinateType onedivdist = 0.0;
+		if (dist > 0.0)
+			onedivdist = 1.0 / dist;
+
+		if (dist > 0.1)
+		{
+			Point accelerationVector = (a_CenterGravity - circleCentr) * onedivdist;
+			obj.Velocity = obj.Velocity + accelerationVector * onedivdist * onedivdist * a_Force * a_Accuracy; // 250;
+		}
+
+	}
+}
+
+bool	CircleObjectMover::IsIntersection(CircleObject* a_Object1, CircleObject* a_Object2)
+{
+	return a_Object1->Center.CheckConnect(a_Object2->Center, a_Object2->Radius + a_Object1->Radius);	
+}
+
+void CircleObjectMover::ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2, bool a_IsObject1Fixed)
 {
 	const CoordinateType zapas = 0.01;
-	
-	if (a_Object1->IsFixed && a_Object2->IsFixed)
-		return;
-		
-	if (a_Object1->IsFixed)
-	{
-		ResolveContact(a_Object2, a_Object1);
-		return;
-	}
 	
 	Point& centr1 = a_Object1->Center;
 	Point& centr2 = a_Object2->Center;
@@ -112,23 +183,21 @@ void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Objec
 	Point& vel1 = a_Object1->Velocity;
 	Point& vel2 = a_Object2->Velocity;
 	
-	CoordinateType cosa1 = (normVector * vel1);
-	Point vel1Paralell	= normVector * (normVector * vel1);
-	Point vel1Perp		= vel1 - vel1Paralell;
+	Point vel2Paralell	= normVector * (normVector * vel2);
+	Point vel2Perp		= vel2 - vel2Paralell;
 
-	if (a_Object2->IsFixed)
+	if (a_IsObject1Fixed)
 	{
-		if ((vel1Paralell * normVector) > 0)
-			vel1 = vel1Perp - vel1Paralell;
+		if ((vel2Paralell * normVector) < 0)
+			vel2 = vel2Perp - vel2Paralell;
 		else
-			vel1 = vel1Perp + vel1Paralell;
-		centr1 = normVector * (-(a_Object1->Radius + a_Object2->Radius) * (1.0 + zapas)) + centr2;		
+			vel2 = vel2Perp + vel2Paralell;
+		centr2 = normVector * ((a_Object2->Radius + a_Object1->Radius) * (1.0 + zapas)) + centr1;		
 		return;
 	}
 
-	CoordinateType cosa2 = (normVector * vel2);
-	Point vel2Paralell	= normVector * (normVector * vel2);
-	Point vel2Perp		= vel2 - vel2Paralell;
+	Point vel1Paralell	= normVector * (normVector * vel1);
+	Point vel1Perp		= vel1 - vel1Paralell;
 
 	if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
 	{
@@ -141,56 +210,5 @@ void CircleObject::ResolveContact(CircleObject* a_Object1, CircleObject* a_Objec
 	centr2 = normVector * (+a_Object2->Radius * (1.0 + zapas)) + centrWeight;
 }
 
-const CoordinateType accuraty = 0.01;
+//const CoordinateType accuraty = 0.01;
 
-void Gravity(CircleObject* a_CircleObject)
-{
-	if (a_CircleObject->IsFixed)
-		return;
-		
-	Point centrGravity(0.0, 0.0, 0.0);
-	Point& circleCentr = a_CircleObject->Center;
-
-	CoordinateType dist = centrGravity.Distance(circleCentr);
-	CoordinateType onedivdist = 0.0;
-	if (dist > 0.0)
-		onedivdist = 1.0 / dist;
-
-	if (dist > 0.1)
-	{
-		Point accelerationVector = (centrGravity - circleCentr) * onedivdist;
-		a_CircleObject->Velocity = a_CircleObject->Velocity + accelerationVector * onedivdist * onedivdist * 250.0 * accuraty;
-	}
-}
-
-void CalculateNewPosition(std::vector<CircleObject>* a_Objects)
-{
-	
-}
-
-void CalculateNextPosition(std::vector<CircleObject>* a_Objects)
-{
-	for (size_t i1 = 0; i1 < a_Objects->size(); i1++)
-	{
-		CircleObject& obj1 = (*a_Objects)[i1];
-		
-		Gravity(&obj1);
-		
-		obj1.Center.x += obj1.Velocity.x * accuraty;
-		obj1.Center.y += obj1.Velocity.y * accuraty;
-		obj1.Center.z += obj1.Velocity.z * accuraty;
-		
-		for (size_t i2 = i1; i2 < a_Objects->size(); i2++)
-		{
-			if (i1 == i2)
-				continue;
-
-			CircleObject& obj2 = (*a_Objects)[i2];
-
-			if (obj1.IsIntersection(obj2))
-			{
-				obj1.ResolveContact(&obj2);
-			}
-		}
-	}
-}

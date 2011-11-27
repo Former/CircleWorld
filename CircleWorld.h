@@ -36,11 +36,17 @@ public:
 	Point			Velocity;
 	Point			Center;
 	CoordinateType	Radius;
+};
+
+class CONear
+{
+public:
+	CONear();
 	
-private:
-	Point 			m_LastCenter;
-	CoordinateType	m_RadiusNearArea;
-	std::vector<COIndex> m_NearObjects;
+	Point 						LastCenter;
+	CoordinateType				RadiusNearArea;
+	std::vector<COIndex> 		NearObjects;
+	std::vector<CircleObject>* 	Objects;
 };
 
 class CircleObjectMover
@@ -52,14 +58,15 @@ public:
 	CircleObject& 	GetObject(COIndex a_Index);
 	std::vector<CircleObject>& GetObjects();
 	
-	void Move(std::vector<COIndex> a_Indexes, CoordinateType a_Accuracy);
-	void Contact(std::vector<COIndex> a_Indexes, bool a_UseInernal);
-	void ContactWithFirstFixed(std::vector<COIndex> a_FirstIndexes, std::vector<COIndex> a_Indexes, bool a_UseNear);
-	void Gravity(std::vector<COIndex> a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy);
+	void Move(const std::vector<COIndex>& a_Indexes, CoordinateType a_Accuracy);
+	void Contact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed);
+	void NearContact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed);
+	void Gravity(const std::vector<COIndex>& a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy);
 
 private:
 	static bool		IsIntersection(CircleObject* a_Object1, CircleObject* a_Object2);
-	static void 	ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2);
+	static void 	ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2, bool a_IsObject1Fixed);
 
 	std::vector<CircleObject> m_Objects;
-}
+	std::vector<CONear> m_NearObjects;
+};
