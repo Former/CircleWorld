@@ -46,7 +46,6 @@ public:
 	Point 						LastCenter;
 	CoordinateType				RadiusNearArea;
 	std::vector<COIndex> 		NearObjects;
-	std::vector<CircleObject>* 	Objects;
 };
 
 class CircleObjectMover
@@ -64,6 +63,9 @@ public:
 	void Gravity(const std::vector<COIndex>& a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy);
 
 private:
+	bool IsNear(Point a_Center, CoordinateType a_Radius, Point a_Point);
+	void CalculateNear(CONear* a_NearData, const std::vector<COIndex>& a_Indexes, COIndex a_CurIndex);
+
 	static bool		IsIntersection(CircleObject* a_Object1, CircleObject* a_Object2);
 	static void 	ResolveContact(CircleObject* a_Object1, CircleObject* a_Object2, bool a_IsObject1Fixed);
 

@@ -57,7 +57,7 @@ void display(void)
 	
 	g_ObjectsMover.Move(allObj, accuracy);
 	g_ObjectsMover.Gravity(allObj, Point(0, 0, 0), 250,  accuracy);
-	g_ObjectsMover.Contact(allFithOut0, allFithOut0, false);
+	g_ObjectsMover.NearContact(allFithOut0, allFithOut0, false);
 	g_ObjectsMover.Contact(only0, allFithOut0, true);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -121,7 +121,7 @@ int main(int argc, char** argv)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleObject obj;
-		const CoordinateType maxValue = 80.0;
+		const CoordinateType maxValue = 40.0;
 		const CoordinateType maxVelValue = 20.0;
 		obj.Center = Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
 		obj.Velocity = Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);

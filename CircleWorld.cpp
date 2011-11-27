@@ -76,7 +76,6 @@ CircleObject::CircleObject()
 CONear::CONear()
 {
 	RadiusNearArea 	= 0.0;
-	Objects			= 0;
 }
 
 CircleObjectMover::CircleObjectMover()
@@ -131,9 +130,63 @@ void CircleObjectMover::Contact(const std::vector<COIndex>& a_FirstIndexes, cons
 	}
 }
 
+bool CircleObjectMover::IsNear(Point a_Center, CoordinateType a_Radius, Point a_Point)
+{
+	if ((a_Point.x < a_Center.x - a_Radius) || (a_Point.x > a_Center.x + a_Radius))
+		return false;
+	if ((a_Point.y < a_Center.y - a_Radius) || (a_Point.y > a_Center.y + a_Radius))
+		return false;
+	if ((a_Point.z < a_Center.z - a_Radius) || (a_Point.z > a_Center.z + a_Radius))
+		return false;
+	return true;
+}
+
+void CircleObjectMover::CalculateNear(CONear* a_NearData, const std::vector<COIndex>& a_Indexes, COIndex a_CurIndex)
+{
+	a_NearData->NearObjects.clear();
+	for (size_t j = 0; j < a_Indexes.size(); j++)
+	{
+		COIndex objIndex = a_Indexes[j];
+		if (objIndex == a_CurIndex)
+			continue;
+
+		CircleObject& obj = m_Objects[objIndex];
+
+		if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea, obj.Center))
+			a_NearData->NearObjects.push_back(objIndex);
+	}
+}
+
 void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed)
 {
-	
+	if (m_NearObjects.size() != m_Objects.size())
+		m_NearObjects.resize(m_Objects.size());
+
+	for (size_t i = 0; i < a_FirstIndexes.size(); i++)
+	{
+		COIndex obj1Index = a_FirstIndexes[i];		
+		CircleObject& obj1 = m_Objects[obj1Index];
+		CONear& near = m_NearObjects[obj1Index];
+		
+		if (near.RadiusNearArea == 0.0 || !IsNear(obj1.Center, near.RadiusNearArea / 2, near.LastCenter))
+		{
+			near.LastCenter = obj1.Center;
+			near.RadiusNearArea = obj1.Radius * 10.0;
+			CalculateNear(&near, a_SecondIndexes, obj1Index);	
+		}
+		
+		for (size_t j = 0; j < near.NearObjects.size(); j++)
+		{
+			COIndex obj2Index = near.NearObjects[j];
+			if (obj1Index == obj2Index)
+				continue;
+
+			CircleObject& obj2 = m_Objects[obj2Index];
+
+			if (IsIntersection(&obj1, &obj2))
+				ResolveContact(&obj1, &obj2, a_IsFirstFixed);
+		}
+	}
 }
 
 void CircleObjectMover::Gravity(const std::vector<COIndex>& a_Indexes, Point a_CenterGravity, CoordinateType a_Force, CoordinateType a_Accuracy)

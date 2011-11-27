@@ -5,19 +5,19 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.h" Name="FileName"/>
-      <int Value="41" Name="FirstVisibleLine"/>
-      <int Value="62" Name="CurrentLine"/>
+      <int Value="40" Name="FirstVisibleLine"/>
+      <int Value="66" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.cpp" Name="FileName"/>
-      <int Value="104" Name="FirstVisibleLine"/>
-      <int Value="119" Name="CurrentLine"/>
+      <int Value="152" Name="FirstVisibleLine"/>
+      <int Value="173" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="106" Name="FirstVisibleLine"/>
+      <int Value="109" Name="FirstVisibleLine"/>
       <int Value="125" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
