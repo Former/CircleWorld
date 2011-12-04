@@ -10,16 +10,19 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="CircleWorld.cpp"/>
+    <File Name="GetWorkTime.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="CircleWorld.h"/>
+    <File Name="GetWorkTime.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
-      <Compiler Options="" C_Options="">
+      <Compiler Options="-lrt" C_Options="-lrt">
         <IncludePath Value="."/>
+        <Preprocessor Value="__WX__"/>
       </Compiler>
-      <Linker Options="">
+      <Linker Options="-lrt">
         <LibraryPath Value="."/>
         <Library Value="GLU"/>
         <Library Value="GL"/>
@@ -28,15 +31,12 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <Preprocessor Value="__WX__"/>
-      </Compiler>
+      <Compiler Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="-mwindows;$(shell wx-config --libs --cxxflags --gl-libs --debug=yes --libs --unicode=yes)" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -65,9 +65,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
-        <Preprocessor Value="__WX__"/>
-      </Compiler>
+      <Compiler Options="-g;-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-g;-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
       <Linker Options="-mwindows;-s;$(shell wx-config --debug=no --libs --unicode=yes)" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Release" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>

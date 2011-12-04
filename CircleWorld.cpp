@@ -71,6 +71,8 @@ Point Point::operator - (const Point& a_Value) const
 CircleObject::CircleObject()
 {
 	Radius = 1.0;
+	Weight = 1.0;
+	IsFixed = false;
 }
 
 CONear::CONear()
@@ -108,7 +110,7 @@ void CircleObjectMover::Move(const std::vector<COIndex>& a_Indexes, CoordinateTy
 	}
 }
 
-void CircleObjectMover::Contact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed)
+void CircleObjectMover::Contact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IgnoreFixed)
 {	
 	bool isIndsEqual = (&a_FirstIndexes == &a_SecondIndexes);
 	for (size_t i = 0; i < a_FirstIndexes.size(); i++)
@@ -124,19 +126,36 @@ void CircleObjectMover::Contact(const std::vector<COIndex>& a_FirstIndexes, cons
 
 			CircleObject& obj2 = m_Objects[obj2Index];
 
-			if (IsIntersection(&obj1, &obj2))
-				ResolveContact(&obj1, &obj2, a_IsFirstFixed);
+			if (!IsIntersection(&obj1, &obj2))
+				continue;
+			
+			// @@@ ToDo Fix copy paste
+			if (a_IgnoreFixed || (!obj1.IsFixed && !obj2.IsFixed))
+			{
+				ResolveContact(&obj1, &obj2, false);
+				continue;
+			}	
+			
+			if (obj2.IsFixed && obj1.IsFixed)
+				continue;
+			
+			if (obj2.IsFixed)
+				ResolveContact(&obj2, &obj1, true);
+			else
+				ResolveContact(&obj1, &obj2, true);
 		}
 	}
 }
 
-bool CircleObjectMover::IsNear(Point a_Center, CoordinateType a_Radius, Point a_Point)
+bool CircleObjectMover::IsNear(Point a_Center, CoordinateType a_Radius, CircleObject& a_Object)
 {
-	if ((a_Point.x < a_Center.x - a_Radius) || (a_Point.x > a_Center.x + a_Radius))
+	const Point centerMinusObjCenter = a_Center - a_Object.Center;
+	const CoordinateType radiusPlusObjRadius = a_Object.Radius + a_Radius;
+	if (centerMinusObjCenter.x > radiusPlusObjRadius || centerMinusObjCenter.x < -radiusPlusObjRadius )
 		return false;
-	if ((a_Point.y < a_Center.y - a_Radius) || (a_Point.y > a_Center.y + a_Radius))
+	if (centerMinusObjCenter.y > radiusPlusObjRadius || centerMinusObjCenter.y < -radiusPlusObjRadius )
 		return false;
-	if ((a_Point.z < a_Center.z - a_Radius) || (a_Point.z > a_Center.z + a_Radius))
+	if (centerMinusObjCenter.z > radiusPlusObjRadius || centerMinusObjCenter.z < -radiusPlusObjRadius )
 		return false;
 	return true;
 }
@@ -152,12 +171,12 @@ void CircleObjectMover::CalculateNear(CONear* a_NearData, const std::vector<COIn
 
 		CircleObject& obj = m_Objects[objIndex];
 
-		if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea, obj.Center))
+		if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea, obj))
 			a_NearData->NearObjects.push_back(objIndex);
 	}
 }
 
-void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IsFirstFixed)
+void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, const std::vector<COIndex>& a_SecondIndexes, bool a_IgnoreFixed)
 {
 	if (m_NearObjects.size() != m_Objects.size())
 		m_NearObjects.resize(m_Objects.size());
@@ -168,7 +187,7 @@ void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, 
 		CircleObject& obj1 = m_Objects[obj1Index];
 		CONear& near = m_NearObjects[obj1Index];
 		
-		if (near.RadiusNearArea == 0.0 || !IsNear(obj1.Center, near.RadiusNearArea / 2, near.LastCenter))
+		if (near.RadiusNearArea == 0.0 || !IsNear(near.LastCenter, near.RadiusNearArea / 2, obj1))
 		{
 			near.LastCenter = obj1.Center;
 			near.RadiusNearArea = obj1.Radius * 10.0;
@@ -183,8 +202,22 @@ void CircleObjectMover::NearContact(const std::vector<COIndex>& a_FirstIndexes, 
 
 			CircleObject& obj2 = m_Objects[obj2Index];
 
-			if (IsIntersection(&obj1, &obj2))
-				ResolveContact(&obj1, &obj2, a_IsFirstFixed);
+			if (!IsIntersection(&obj1, &obj2))
+				continue;
+			
+			if (a_IgnoreFixed || (!obj1.IsFixed && !obj2.IsFixed))
+			{
+				ResolveContact(&obj1, &obj2, false);
+				continue;
+			}	
+			
+			if (obj1.IsFixed && obj2.IsFixed)
+				continue;
+			
+			if (obj2.IsFixed)
+				ResolveContact(&obj2, &obj1, true);
+			else
+				ResolveContact(&obj1, &obj2, true);
 		}
 	}
 }
@@ -223,7 +256,10 @@ void CircleObjectMover::ResolveContact(CircleObject* a_Object1, CircleObject* a_
 	
 	Point& centr1 = a_Object1->Center;
 	Point& centr2 = a_Object2->Center;
-	Point centrWeight = (centr1 + centr2) * 0.5;
+	const CoordinateType weight1 = a_Object1->Weight;
+	const CoordinateType weight2 = a_Object1->Weight;
+	
+	Point centrWeight = (centr1 * weight1 + centr2 * weight2) / (weight1 + weight2);
 	
 	CoordinateType dist = centr1.Distance(centr2);
 	CoordinateType onedivdist = 0.0;
