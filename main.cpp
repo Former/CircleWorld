@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 	obj.IsFixed = true;
 	g_ObjectsMover.AddObject(obj);
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleObject obj;
