@@ -9,11 +9,9 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
-    <File Name="CircleWorld.cpp"/>
     <File Name="GetWorkTime.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="CircleWorld.h"/>
     <File Name="GetWorkTime.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
@@ -36,7 +34,8 @@
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -70,7 +69,8 @@
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Release" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -99,4 +99,15 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="Engine">
+    <File Name="Engine/CircleWorld.cpp"/>
+    <File Name="Engine/CircleWorld.h"/>
+    <File Name="Engine/Point.h"/>
+    <File Name="Engine/Point.cpp"/>
+    <File Name="Engine/CommonTypes.h"/>
+    <File Name="Engine/CircleObject.h"/>
+    <File Name="Engine/CircleObject.cpp"/>
+    <File Name="Engine/CircleSelector.h"/>
+    <File Name="Engine/CircleSelector.cpp"/>
+  </VirtualDirectory>
 </CodeLite_Project>
