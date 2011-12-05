@@ -4,6 +4,8 @@
 
 namespace CircleEngine
 {
+	typedef std::pair<CircleObjectPtr, CircleObjectPtr> CircleObjectPair;
+	
 	class Selector
 	{
 	public:
@@ -43,7 +45,7 @@ namespace CircleEngine
 	protected:		
 		std::vector<CircleObjectPtr> m_Objects;
 	};
-		
+	
 	// Выбирает все пары объектов
 	class CrossSelector : public Selector 
 	{
@@ -55,7 +57,7 @@ namespace CircleEngine
 		public:
 			Iterator(CrossSelector* a_Parent);
 
-			CircleObjectPtr Get() const;
+			CircleObjectPair Get() const;
 			bool IsEnd() const;
 			void Next();
 		
@@ -77,7 +79,7 @@ namespace CircleEngine
 		std::vector<CircleObjectPtr> m_Objects;
 	};
 
-	// Выбирает все пары объектов расположенных близко друг другу
+	// Выбирает все пары объектов, расположенных близко друг другу
 	class CrossNearSelector : public Selector 
 	{
 		friend class Iterator;		
@@ -88,7 +90,7 @@ namespace CircleEngine
 		public:
 			Iterator(CrossNearSelector* a_Parent);
 
-			CircleObjectPtr Get() const;
+			CircleObjectPair Get() const;
 			bool IsEnd() const;
 			void Next();
 		

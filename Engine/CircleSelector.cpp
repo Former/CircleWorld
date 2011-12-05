@@ -74,10 +74,9 @@ namespace CircleEngine
 		m_Parent = a_Parent;
 	}
 
-	CircleObjectPtr CrossSelector::Iterator::Get() const
+	CircleObjectPair CrossSelector::Iterator::Get() const
 	{
-		const size_t size = m_Parent->m_Objects.size();
-		return m_Parent->m_Objects[m_Index1 * size + m_Index2];
+		return CircleObjectPair(m_Parent->m_Objects[m_Index1], m_Parent->m_Objects[m_Index2]);
 	}
 	
 	bool CrossSelector::Iterator::IsEnd() const
@@ -142,9 +141,10 @@ namespace CircleEngine
 			FindNextFullNear();
 	}
 
-	CircleObjectPtr CrossNearSelector::Iterator::Get() const
+	CircleObjectPair CrossNearSelector::Iterator::Get() const
 	{
-		
+		const CONear& near = m_Parent->m_NearObjects[m_Index];
+		return CircleObjectPair(m_Parent->m_Objects[m_Index], near.NearObjects[m_NearIndex]);
 	}
 	
 	bool CrossNearSelector::Iterator::IsEnd() const
@@ -248,10 +248,10 @@ namespace CircleEngine
 		{
 			if (i == a_CurIndex)
 				continue;
-			CircleObject& obj = m_Objects[i];
+			const CircleObjectPtr& obj = m_Objects[i];
 
 			if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea, obj))
-				a_NearData->NearObjects.push_back(objIndex);
+				a_NearData->NearObjects.push_back(obj);
 		}
 	}
 }
