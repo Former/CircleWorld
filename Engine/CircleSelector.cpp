@@ -139,7 +139,7 @@ namespace CircleEngine
 		m_NearIndex	= 0;
 		m_Parent 	= 0;
 		if (!IsEnd())
-			CheckNear();
+			FindNextFullNear();
 	}
 
 	CircleObjectPtr CrossNearSelector::Iterator::Get() const
@@ -167,11 +167,11 @@ namespace CircleEngine
 		{
 			m_Index++;
 			m_NearIndex = 0;
-			CheckNear();			
+			FindNextFullNear();			
 		}				
 	}
 	
-	void CrossNearSelector::Iterator::CheckNear()
+	void CrossNearSelector::Iterator::FindNextFullNear()
 	{
 		size_t nearSize = 0;
 		while(!IsEnd() && (nearSize == 0))
@@ -195,11 +195,13 @@ namespace CircleEngine
 	void CrossNearSelector::Add(const CircleObjectPtr& a_Object)
 	{
 		m_Objects.push_back(a_Object);
+		m_NearObjects.resize(m_Objects.size());
 	}
 	
 	void CrossNearSelector::Delete(const Iterator& a_Iterator)
 	{
 		m_Objects.erase(m_Objects.begin() + a_Iterator.m_Index);
+		m_NearObjects.resize(m_Objects.size());
 	}
 	
 	void CrossNearSelector::Delete(const CircleObjectPtr& a_Object)
@@ -212,6 +214,7 @@ namespace CircleEngine
 				break;
 			}
 		}
+		m_NearObjects.resize(m_Objects.size());
 	}
 
 	Iterator CrossNearSelector::Begin()

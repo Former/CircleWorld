@@ -93,7 +93,7 @@ namespace CircleEngine
 			void Next();
 		
 		private:
-			void CheckNear();
+			void FindNextFullNear();
 		
 			size_t 	m_Index;
 			size_t 	m_NearIndex;
