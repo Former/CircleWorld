@@ -5,13 +5,13 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="121" Name="FirstVisibleLine"/>
+      <int Value="135" Name="FirstVisibleLine"/>
       <int Value="136" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/EngineRules.cpp" Name="FileName"/>
-      <int Value="64" Name="FirstVisibleLine"/>
+      <int Value="61" Name="FirstVisibleLine"/>
       <int Value="59" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
