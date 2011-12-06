@@ -163,19 +163,6 @@ int main(int argc, char** argv)
 	g_CircleCoordinator.AddRule(moveRule);
 	g_CircleCoordinator.AddRule(gravityRule);
 	g_CircleCoordinator.AddRule(contactRule);
-	/*
-	std::vector<CircleObject>& objects = g_ObjectsMover.GetObjects();
-	static std::vector<COIndex> allObj;
-	if (!allObj.size())
-	{
-		for (COIndex i = 0; i < objects.size(); i++)
-			allObj.push_back(i);
-	}
-	
-	g_ObjectsMover.Move(allObj, accuracy);
-	g_ObjectsMover.Gravity(allObj, objects[0].Center, 5000,  accuracy);
-	g_ObjectsMover.NearContact(allObj, allObj, false);*/
-//	g_ObjectsMover.Contact(allObj, allObj, false);
 		
 	g_WorkTime.Start();
 	

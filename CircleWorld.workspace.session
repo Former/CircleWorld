@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Session Name="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace">
-  <int Value="0" Name="m_selectedTab"/>
+  <int Value="1" Name="m_selectedTab"/>
   <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="117" Name="FirstVisibleLine"/>
-      <int Value="137" Name="CurrentLine"/>
+      <int Value="121" Name="FirstVisibleLine"/>
+      <int Value="136" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/EngineRules.cpp" Name="FileName"/>
-      <int Value="51" Name="FirstVisibleLine"/>
+      <int Value="64" Name="FirstVisibleLine"/>
       <int Value="59" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/usr/include/c++/4.4/tr1/shared_ptr.h" Name="FileName"/>
-      <int Value="523" Name="FirstVisibleLine"/>
+      <int Value="524" Name="FirstVisibleLine"/>
       <int Value="525" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleCoordinator.cpp" Name="FileName"/>
-      <int Value="4" Name="FirstVisibleLine"/>
+      <int Value="0" Name="FirstVisibleLine"/>
       <int Value="25" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/usr/include/c++/4.4/bits/stl_vector.h" Name="FileName"/>
-      <int Value="586" Name="FirstVisibleLine"/>
+      <int Value="609" Name="FirstVisibleLine"/>
       <int Value="610" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/EngineRules.h" Name="FileName"/>
-      <int Value="16" Name="FirstVisibleLine"/>
+      <int Value="28" Name="FirstVisibleLine"/>
       <int Value="61" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
