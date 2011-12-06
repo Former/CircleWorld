@@ -75,7 +75,7 @@ void display(void)
 		else
 		{
 			glColor3d(0.6, 0.0, 0.1);
-			glutSolidSphere(obj->Radius, 5, 5);
+			glutSolidSphere(obj->Radius, 7, 7);
 		}
 		
 		glPopMatrix();
@@ -86,6 +86,12 @@ void display(void)
 	std::stringstream sstr;
 	sstr << "fps " << s_executecount / g_WorkTime.GetCurrentTime();
 	DebugOtput(sstr.str());
+	
+	if (s_executecount > 100)
+	{
+		g_WorkTime.Start();
+		s_executecount = 0;
+	}	
 
 	glutSwapBuffers();
 }
@@ -122,8 +128,8 @@ int main(int argc, char** argv)
 	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
 
 	CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
-	obj->Radius = 1.0;
-	obj->IsFixed = true;
+	obj->Radius = 2.0;
+	obj->Weight = 1.0;
 	g_CircleCoordinator.AddObject(obj);
 
 	for (size_t i = 0; i < 5000; i++)
@@ -134,8 +140,8 @@ int main(int argc, char** argv)
 		const CircleEngine::CoordinateType maxVelValue = 20.0;
 		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
 		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
-		obj->Radius = 0.2; // + rand_pmmax(.18);
-		obj->Weight = 0.001;
+		obj->Radius = 0.2 + rand_pmmax(.18);
+		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;
 		
 		g_CircleCoordinator.AddObject(obj);
 	}

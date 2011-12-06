@@ -57,7 +57,7 @@ namespace CircleEngine
 		
 	protected:
 		static bool	IsIntersection(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2);
-		static void ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, bool a_IsObject1Fixed);
+		static void ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2);
 		
 		PairSelectorPtr m_Selector;
 	};

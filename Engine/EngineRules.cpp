@@ -85,19 +85,7 @@ namespace CircleEngine
 			if (!IsIntersection(obj1, obj2))
 				continue;
 			
-			if (!obj1->IsFixed && !obj2->IsFixed)
-			{
-				ResolveContact(obj1, obj2, false);
-				continue;
-			}	
-			
-			if (obj2->IsFixed && obj1->IsFixed)
-				continue;
-			
-			if (obj2->IsFixed)
-				ResolveContact(obj2, obj1, true);
-			else
-				ResolveContact(obj1, obj2, true);
+			ResolveContact(obj1, obj2);
 		}
 	}
 
@@ -106,16 +94,17 @@ namespace CircleEngine
 		return a_Object1->Center.CheckConnect(a_Object2->Center, a_Object2->Radius + a_Object1->Radius);	
 	}
 		
-	void RuleContact::ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, bool a_IsObject1Fixed)
+	void RuleContact::ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2)
 	{
 		const CoordinateType zapas = 0.01;
 		
 		Point& centr1 = a_Object1->Center;
 		Point& centr2 = a_Object2->Center;
 		const CoordinateType weight1 = a_Object1->Weight;
-		const CoordinateType weight2 = a_Object1->Weight;
+		const CoordinateType weight2 = a_Object2->Weight;
 		
-		Point centrWeight = (centr1 * weight1 + centr2 * weight2) / (weight1 + weight2);
+		const CoordinateType one_div_summ_weight = 1.0 / (weight1 + weight2);
+		Point centrWeight = (centr1 * weight1 + centr2 * weight2) * one_div_summ_weight;
 		
 		CoordinateType dist = centr1.Distance(centr2);
 		CoordinateType onedivdist = 0.0;
@@ -131,27 +120,17 @@ namespace CircleEngine
 		Point vel2Paralell	= normVector * (normVector * vel2);
 		Point vel2Perp		= vel2 - vel2Paralell;
 
-		if (a_IsObject1Fixed)
-		{
-			if ((vel2Paralell * normVector) < 0)
-				vel2 = vel2Perp - vel2Paralell;
-			else
-				vel2 = vel2Perp + vel2Paralell;
-			centr2 = normVector * ((a_Object2->Radius + a_Object1->Radius) * (1.0 + zapas)) + centr1;		
-			return;
-		}
-
 		Point vel1Paralell	= normVector * (normVector * vel1);
 		Point vel1Perp		= vel1 - vel1Paralell;
 
 		if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
 		{
-			vel1 = vel1Perp + vel2Paralell;
-			vel2 = vel2Perp + vel1Paralell;
+			vel1 = vel1Perp + (vel2Paralell * 2.0 * weight2  + vel1Paralell * (weight1 - weight2)) * one_div_summ_weight;
+			vel2 = vel2Perp + (vel1Paralell * 2.0 * weight1 + vel2Paralell * (weight2 - weight1)) * one_div_summ_weight;
 		}
 		
 		// Îòäàëåíèå îêðóæíîñòåé äðóã îò äðóãà
-		centr1 = normVector * (-a_Object1->Radius * (1.0 + zapas)) + centrWeight;
-		centr2 = normVector * (+a_Object2->Radius * (1.0 + zapas)) + centrWeight;
+		centr1 = normVector * (-(a_Object1->Radius + a_Object2->Radius) * weight2 * one_div_summ_weight * (1.0 + zapas)) + centrWeight;
+		centr2 = normVector * (+(a_Object1->Radius + a_Object2->Radius) * weight1 * one_div_summ_weight * (1.0 + zapas)) + centrWeight;
 	}
 }

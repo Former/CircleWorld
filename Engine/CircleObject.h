@@ -13,7 +13,6 @@ namespace CircleEngine
 		Point			Velocity;
 		CoordinateType	Radius;
 		WeightType		Weight;
-		bool 			IsFixed;
 	};
 	
 	typedef engine_shared_ptr<CircleObject> CircleObjectPtr;

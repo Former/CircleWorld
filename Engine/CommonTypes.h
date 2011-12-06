@@ -13,6 +13,6 @@
 namespace CircleEngine
 {
 	typedef double CoordinateType;
-	typedef float WeightType;
+	typedef double WeightType;
 	typedef size_t COIndex;
 }
