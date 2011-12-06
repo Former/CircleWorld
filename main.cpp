@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include "CircleWorld.h"
+#include "CircleCoordinator.h"
 #include "GetWorkTime.h"
 
 void resize(int width,int height)
@@ -19,7 +19,7 @@ void resize(int width,int height)
 	glMatrixMode(GL_MODELVIEW);
 }    
 
-CircleObjectMover g_ObjectsMover;
+CircleEngine::CircleCoordinator g_CircleCoordinator;
 GetWorkTime		g_WorkTime;
 
 void keyboard(unsigned char key, int x, int y)
@@ -57,44 +57,32 @@ void DebugOtput(const std::string& string)
 
 void display(void)
 {
-	static size_t s_executecount = 0;
-	CoordinateType accuracy = 0.005;
-	std::vector<CircleObject>& objects = g_ObjectsMover.GetObjects();
-	static std::vector<COIndex> allObj;
-	if (!allObj.size())
-	{
-		for (COIndex i = 0; i < objects.size(); i++)
-			allObj.push_back(i);
-	}
-	
-	g_ObjectsMover.Move(allObj, accuracy);
-	g_ObjectsMover.Gravity(allObj, objects[0].Center, 5000,  accuracy);
-	g_ObjectsMover.NearContact(allObj, allObj, false);
-//	g_ObjectsMover.Contact(allObj, allObj, false);
-	
+	g_CircleCoordinator.DoStep();
+
+	std::vector<CircleEngine::CircleObjectPtr> objects = g_CircleCoordinator.GetObjects();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		glPushMatrix();
 		
-		CircleObject& obj = objects[i];
-		glTranslated(obj.Center.x, obj.Center.y, obj.Center.z);
+		CircleEngine::CircleObjectPtr obj = objects[i];
+		glTranslated(obj->Center.x, obj->Center.y, obj->Center.z);
 		if (i == 0)
 		{
 			glColor3d(1, 1, 0);
-			glutSolidSphere(obj.Radius, 20, 20);
+			glutSolidSphere(obj->Radius, 20, 20);
 		}	
 		else
 		{
 			glColor3d(0.6, 0.0, 0.1);
-			glutSolidSphere(obj.Radius, 5, 5);
+			glutSolidSphere(obj->Radius, 5, 5);
 		}
 		
 		glPopMatrix();
 	}
 	
+	static size_t s_executecount = 0;
 	s_executecount++;
-
 	std::stringstream sstr;
 	sstr << "fps " << s_executecount / g_WorkTime.GetCurrentTime();
 	DebugOtput(sstr.str());
@@ -133,24 +121,62 @@ int main(int argc, char** argv)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
 
-	CircleObject obj;
-	obj.Radius = 1.0;
-	obj.IsFixed = true;
-	g_ObjectsMover.AddObject(obj);
+	CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
+	obj->Radius = 1.0;
+	obj->IsFixed = true;
+	g_CircleCoordinator.AddObject(obj);
 
-	for (size_t i = 0; i < 10000; i++)
+	for (size_t i = 0; i < 5000; i++)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
-		CircleObject obj;
-		const CoordinateType maxValue = 80.0;
-		const CoordinateType maxVelValue = 20.0;
-		obj.Center = Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
-		obj.Velocity = Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
-		obj.Radius = 0.2; // + rand_pmmax(.18);
-
-		g_ObjectsMover.AddObject(obj);
+		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
+		const CircleEngine::CoordinateType maxValue = 80.0;
+		const CircleEngine::CoordinateType maxVelValue = 20.0;
+		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
+		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
+		obj->Radius = 0.2; // + rand_pmmax(.18);
+		obj->Weight = 0.0001;
+		
+		g_CircleCoordinator.AddObject(obj);
 	}
 	
+	std::vector<CircleEngine::CircleObjectPtr> objects = g_CircleCoordinator.GetObjects();
+	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
+	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector); 
+	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		allSeqSelector->Add(objects[i]);
+		allCrossNearSelector->Add(objects[i]);
+		if (i == 0)
+			oneToOtherSelector->AddSome(objects[i]);
+		else
+			oneToOtherSelector->AddOther(objects[i]);
+	}
+
+	CircleEngine::CoordinateType accuracy = 0.005;
+	
+	CircleEngine::RulePtr moveRule(new CircleEngine::RuleMove(allSeqSelector, accuracy));
+	CircleEngine::RulePtr contactRule(new CircleEngine::RuleContact(allCrossNearSelector));
+	CircleEngine::RulePtr gravityRule(new CircleEngine::RuleGravity(oneToOtherSelector, 5000, accuracy));
+	
+	g_CircleCoordinator.AddRule(moveRule);
+	g_CircleCoordinator.AddRule(gravityRule);
+	g_CircleCoordinator.AddRule(contactRule);
+	/*
+	std::vector<CircleObject>& objects = g_ObjectsMover.GetObjects();
+	static std::vector<COIndex> allObj;
+	if (!allObj.size())
+	{
+		for (COIndex i = 0; i < objects.size(); i++)
+			allObj.push_back(i);
+	}
+	
+	g_ObjectsMover.Move(allObj, accuracy);
+	g_ObjectsMover.Gravity(allObj, objects[0].Center, 5000,  accuracy);
+	g_ObjectsMover.NearContact(allObj, allObj, false);*/
+//	g_ObjectsMover.Contact(allObj, allObj, false);
+		
 	g_WorkTime.Start();
 	
     glutMainLoop();

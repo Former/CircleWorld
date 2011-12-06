@@ -1,1 +1,1 @@
-Bin/Release/main.o Bin/Release/CircleWorld.o Bin/Release/GetWorkTime.o
+Bin/Release/main.o Bin/Release/GetWorkTime.o Bin/Release/Engine_Point.o Bin/Release/Engine_CircleObject.o Bin/Release/Engine_CircleSelector.o Bin/Release/Engine_EngineRules.o Bin/Release/Engine_CircleCoordinator.o

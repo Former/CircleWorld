@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Point.h"
+
 namespace CircleEngine
 {
 	class CircleObject

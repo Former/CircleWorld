@@ -2,7 +2,7 @@
 
 namespace CircleEngine
 {
-	virtual Selector::~Selector()
+	Selector::~Selector()
 	{			
 	}
 	
@@ -37,15 +37,14 @@ namespace CircleEngine
 	SequenceSelector::SequenceSelector()
 	{		
 	}
+
+	SequenceSelector::~SequenceSelector()
+	{		
+	}
 	
 	void SequenceSelector::Add(const CircleObjectPtr& a_Object)
 	{
 		m_Objects.push_back(a_Object);
-	}
-	
-	void SequenceSelector::Delete(const Iterator& a_Iterator)
-	{
-		m_Objects.erase(m_Objects.begin() + a_Iterator.m_Index);
 	}
 	
 	void SequenceSelector::Delete(const CircleObjectPtr& a_Object)
@@ -60,18 +59,113 @@ namespace CircleEngine
 		}
 	}
 
-	Iterator SequenceSelector::Begin()
+	SequenceSelector::Iterator SequenceSelector::Begin()
 	{
 		return Iterator(this);
 	}		
 		
 	////////////////////////////////////////////////////////////
+
+	PairSelector::Iterator::~Iterator()
+	{		
+	}
+	
+	PairSelector::~PairSelector()
+	{		
+	}
+	
+	//////////////////////////////////////////////////////////////
+	
+	SomeToOtherSelector::Iterator::Iterator(SomeToOtherSelector* a_Parent)
+	{
+		m_SomeIndex = 0;
+		m_OtherIndex = 0;
+		m_Parent = a_Parent;
+	}
+	
+	SomeToOtherSelector::Iterator::~Iterator()
+	{		
+	}
+
+	CircleObjectPair SomeToOtherSelector::Iterator::Get() const
+	{
+		return CircleObjectPair(m_Parent->m_SomeObjects[m_SomeIndex], m_Parent->m_OtherObjects[m_OtherIndex]);
+	}
+	
+	bool SomeToOtherSelector::Iterator::IsEnd() const
+	{
+		const size_t size = m_Parent->m_SomeObjects.size();
+		return ((m_SomeIndex + 1) > size); 
+	}
+	
+	void SomeToOtherSelector::Iterator::Next()
+	{
+		if (IsEnd())
+			return;
+
+		const size_t size = m_Parent->m_OtherObjects.size();
+		m_OtherIndex++;
+		if (m_OtherIndex >= size)
+		{
+			m_SomeIndex++;
+			m_OtherIndex = 0;
+		}
+	}
+
+	SomeToOtherSelector::SomeToOtherSelector()
+	{		
+	}
+	
+	SomeToOtherSelector::~SomeToOtherSelector()
+	{		
+	}
+	
+	void SomeToOtherSelector::AddSome(const CircleObjectPtr& a_Object)
+	{
+		m_SomeObjects.push_back(a_Object);
+	}
+	
+	void SomeToOtherSelector::AddOther(const CircleObjectPtr& a_Object)
+	{
+		m_OtherObjects.push_back(a_Object);
+	}
+	
+	void SomeToOtherSelector::Delete(const CircleObjectPtr& a_Object)
+	{
+		for (size_t i = 0; i < m_SomeObjects.size(); i++)
+		{
+			if (m_SomeObjects[i].get() == a_Object.get())
+			{
+				m_SomeObjects.erase(m_SomeObjects.begin() + i);
+				break;
+			}
+		}
+		for (size_t i = 0; i < m_OtherObjects.size(); i++)
+		{
+			if (m_OtherObjects[i].get() == a_Object.get())
+			{
+				m_OtherObjects.erase(m_OtherObjects.begin() + i);
+				break;
+			}
+		}
+	}
+
+	PairSelector::IteratorPtr SomeToOtherSelector::Begin()
+	{
+		return IteratorPtr(new Iterator(this));
+	}
 		
+	//////////////////////////////////////////////////////////////
+	
 	CrossSelector::Iterator::Iterator(CrossSelector* a_Parent)
 	{
 		m_Index1 = 0;
 		m_Index2 = 1;
 		m_Parent = a_Parent;
+	}
+
+	CrossSelector::Iterator::~Iterator()
+	{		
 	}
 
 	CircleObjectPair CrossSelector::Iterator::Get() const
@@ -103,14 +197,13 @@ namespace CircleEngine
 	{		
 	}
 
+	CrossSelector::~CrossSelector()
+	{		
+	}
+
 	void CrossSelector::Add(const CircleObjectPtr& a_Object)
 	{
 		m_Objects.push_back(a_Object);
-	}
-	
-	void CrossSelector::Delete(const Iterator& a_Iterator)
-	{
-		m_Objects.erase(m_Objects.begin() + a_Iterator.m_Index1 * size + a_Iterator.m_Index2);
 	}
 	
 	void CrossSelector::Delete(const CircleObjectPtr& a_Object)
@@ -125,9 +218,9 @@ namespace CircleEngine
 		}
 	}
 
-	Iterator CrossSelector::Begin()
+	PairSelector::IteratorPtr CrossSelector::Begin()
 	{
-		return Iterator(this);
+		return IteratorPtr(new Iterator(this));
 	}
 	
 	////////////////////////////////////////////////////////////
@@ -136,9 +229,13 @@ namespace CircleEngine
 	{
 		m_Index 	= 0;
 		m_NearIndex	= 0;
-		m_Parent 	= 0;
+		m_Parent 	= a_Parent;
 		if (!IsEnd())
 			FindNextFullNear();
+	}
+	
+	CrossNearSelector::Iterator::~Iterator()
+	{		
 	}
 
 	CircleObjectPair CrossNearSelector::Iterator::Get() const
@@ -160,7 +257,7 @@ namespace CircleEngine
 	{
 		if (IsEnd())
 			return;
-		const size_t nearSize = m_Parent->m_NearObjects.NearObjects.size();
+		const size_t nearSize = m_Parent->m_NearObjects[m_Index].NearObjects.size();
 		
 		m_NearIndex++;
 		if (m_NearIndex >= nearSize)
@@ -176,31 +273,31 @@ namespace CircleEngine
 		size_t nearSize = 0;
 		while(!IsEnd() && (nearSize == 0))
 		{
-			const CONear& near = m_Parent->m_NearObjects[m_Index];
-			CircleObject& obj = m_Parent->m_Objects[m_Index];
-			if (near.RadiusNearArea == 0.0 || !IsNear(near.LastCenter, near.RadiusNearArea / 2, obj))
+			CONear& near = m_Parent->m_NearObjects[m_Index];
+			CircleObjectPtr& obj = m_Parent->m_Objects[m_Index];
+			if (near.RadiusNearArea == 0.0 || !m_Parent->IsNear(near.LastCenter, near.RadiusNearArea / 2, obj))
 			{
-				near.LastCenter 	= obj.Center;
-				near.RadiusNearArea	= obj.Radius * 10.0;
+				near.LastCenter 	= obj->Center;
+				near.RadiusNearArea	= obj->Radius * 10.0;
 				m_Parent->CalculateNear(&near, m_Index);	
 			}
 			nearSize = near.NearObjects.size();
+			if (nearSize == 0)
+				m_Index++;
 		}
 	}
 		
 	CrossNearSelector::CrossNearSelector()
 	{		
 	}
+
+	CrossNearSelector::~CrossNearSelector()
+	{		
+	}
 	
 	void CrossNearSelector::Add(const CircleObjectPtr& a_Object)
 	{
 		m_Objects.push_back(a_Object);
-		m_NearObjects.resize(m_Objects.size());
-	}
-	
-	void CrossNearSelector::Delete(const Iterator& a_Iterator)
-	{
-		m_Objects.erase(m_Objects.begin() + a_Iterator.m_Index);
 		m_NearObjects.resize(m_Objects.size());
 	}
 	
@@ -217,9 +314,9 @@ namespace CircleEngine
 		m_NearObjects.resize(m_Objects.size());
 	}
 
-	Iterator CrossNearSelector::Begin()
+	PairSelector::IteratorPtr CrossNearSelector::Begin()
 	{
-		return Iterator(this);
+		return IteratorPtr(new Iterator(this));
 	}
 	
 		
@@ -230,8 +327,8 @@ namespace CircleEngine
 	
 	bool CrossNearSelector::IsNear(Point a_Center, CoordinateType a_Radius, const CircleObjectPtr& a_Object)
 	{
-		const Point centerMinusObjCenter = a_Center - a_Object.Center;
-		const CoordinateType radiusPlusObjRadius = a_Object.Radius + a_Radius;
+		const Point centerMinusObjCenter = a_Center - a_Object->Center;
+		const CoordinateType radiusPlusObjRadius = a_Object->Radius + a_Radius;
 		if (centerMinusObjCenter.x > radiusPlusObjRadius || centerMinusObjCenter.x < -radiusPlusObjRadius )
 			return false;
 		if (centerMinusObjCenter.y > radiusPlusObjRadius || centerMinusObjCenter.y < -radiusPlusObjRadius )
