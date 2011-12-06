@@ -135,7 +135,7 @@ int main(int argc, char** argv)
 		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
 		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
 		obj->Radius = 0.2; // + rand_pmmax(.18);
-		obj->Weight = 0.0001;
+		obj->Weight = 0.001;
 		
 		g_CircleCoordinator.AddObject(obj);
 	}

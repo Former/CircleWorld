@@ -57,7 +57,7 @@ namespace CircleEngine
 			if (dist > 0.1)
 			{
 				Point accelerationVector = (obj2->Center - obj1->Center) * onedivdist;
-				//obj1->Velocity = obj1->Velocity + accelerationVector * onedivdist * onedivdist * m_Force * m_Accuracy * obj2->Weight;
+				obj1->Velocity = obj1->Velocity + accelerationVector * onedivdist * onedivdist * m_Force * m_Accuracy * obj2->Weight;
 				obj2->Velocity = obj2->Velocity - accelerationVector * onedivdist * onedivdist * m_Force * m_Accuracy * obj1->Weight;
 			}
 		}
