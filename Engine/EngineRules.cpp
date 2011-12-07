@@ -45,9 +45,8 @@ namespace CircleEngine
 	{
 		for (PairSelector::IteratorPtr it = m_Selector->Begin(); !it->IsEnd(); it->Next())
 		{			
-			CircleObjectPair pair = it->Get();
-			CircleObjectPtr& obj1 = pair.first;
-			CircleObjectPtr& obj2 = pair.second;
+			const CircleObjectPtr& obj1 = it->GetFirst();
+			const CircleObjectPtr& obj2 = it->GetSecond();
 			
 			CoordinateType dist = obj1->Center.Distance(obj2->Center);
 			CoordinateType onedivdist = 0.0;
@@ -78,9 +77,8 @@ namespace CircleEngine
 	{
 		for (PairSelector::IteratorPtr it = m_Selector->Begin(); !it->IsEnd(); it->Next())
 		{			
-			CircleObjectPair pair = it->Get();
-			CircleObjectPtr& obj1 = pair.first;
-			CircleObjectPtr& obj2 = pair.second;
+			const CircleObjectPtr& obj1 = it->GetFirst();
+			const CircleObjectPtr& obj2 = it->GetSecond();
 			
 			if (!IsIntersection(obj1, obj2))
 				continue;

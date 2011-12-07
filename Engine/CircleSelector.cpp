@@ -87,10 +87,15 @@ namespace CircleEngine
 	{		
 	}
 
-	CircleObjectPair SomeToOtherSelector::Iterator::Get() const
+	CircleObjectPtr SomeToOtherSelector::Iterator::GetFirst() const
 	{
-		return CircleObjectPair(m_Parent->m_SomeObjects[m_SomeIndex], m_Parent->m_OtherObjects[m_OtherIndex]);
+		return m_Parent->m_SomeObjects[m_SomeIndex];
 	}
+	
+	CircleObjectPtr SomeToOtherSelector::Iterator::GetSecond() const
+	{
+		return m_Parent->m_OtherObjects[m_OtherIndex];
+	}	
 	
 	bool SomeToOtherSelector::Iterator::IsEnd() const
 	{
@@ -168,10 +173,15 @@ namespace CircleEngine
 	{		
 	}
 
-	CircleObjectPair CrossSelector::Iterator::Get() const
+	CircleObjectPtr CrossSelector::Iterator::GetFirst() const
 	{
-		return CircleObjectPair(m_Parent->m_Objects[m_Index1], m_Parent->m_Objects[m_Index2]);
+		return m_Parent->m_Objects[m_Index1];
 	}
+	
+	CircleObjectPtr CrossSelector::Iterator::GetSecond() const
+	{
+		return m_Parent->m_Objects[m_Index2];
+	}	
 	
 	bool CrossSelector::Iterator::IsEnd() const
 	{
@@ -238,11 +248,16 @@ namespace CircleEngine
 	{		
 	}
 
-	CircleObjectPair CrossNearSelector::Iterator::Get() const
+	CircleObjectPtr CrossNearSelector::Iterator::GetFirst() const
+	{
+		return m_Parent->m_Objects[m_Index];
+	}
+	
+	CircleObjectPtr CrossNearSelector::Iterator::GetSecond() const
 	{
 		const CONear& near = m_Parent->m_NearObjects[m_Index];
-		return CircleObjectPair(m_Parent->m_Objects[m_Index], near.NearObjects[m_NearIndex]);
-	}
+		return near.NearObjects[m_NearIndex];
+	}	
 	
 	bool CrossNearSelector::Iterator::IsEnd() const
 	{
@@ -275,10 +290,18 @@ namespace CircleEngine
 		{
 			CONear& near = m_Parent->m_NearObjects[m_Index];
 			CircleObjectPtr& obj = m_Parent->m_Objects[m_Index];
-			if (near.RadiusNearArea == 0.0 || !m_Parent->IsNear(near.LastCenter, near.RadiusNearArea / 2, obj))
+			if (near.RadiusNearArea < obj->Radius || !m_Parent->IsNear(near.LastCenter, near.RadiusNearArea / 2, obj))
 			{
 				near.LastCenter 	= obj->Center;
-				near.RadiusNearArea	= obj->Radius * 10.0;
+				if (near.RadiusNearArea < obj->Radius)
+					near.RadiusNearArea	= obj->Radius * 10.0;
+				else
+				{
+					if (near.NearObjects.size() > m_Parent->m_BestNeighborsCount)
+						near.RadiusNearArea = near.RadiusNearArea * 0.8;
+					else
+						near.RadiusNearArea = near.RadiusNearArea * 1.2;
+				}		
 				m_Parent->CalculateNear(&near, m_Index);	
 			}
 			nearSize = near.NearObjects.size();
@@ -287,8 +310,9 @@ namespace CircleEngine
 		}
 	}
 		
-	CrossNearSelector::CrossNearSelector()
-	{		
+	CrossNearSelector::CrossNearSelector(size_t a_BestNeighborsCount)
+	{
+		m_BestNeighborsCount = a_BestNeighborsCount;
 	}
 
 	CrossNearSelector::~CrossNearSelector()
@@ -340,7 +364,7 @@ namespace CircleEngine
 	
 	void CrossNearSelector::CalculateNear(CONear* a_NearData, size_t a_CurIndex)
 	{
-		a_NearData->NearObjects.clear();
+		a_NearData->NearObjects.resize(0);
 		for (size_t i = 0; i < m_Objects.size(); i++)
 		{
 			if (i == a_CurIndex)

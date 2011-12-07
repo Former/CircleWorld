@@ -4,8 +4,6 @@
 
 namespace CircleEngine
 {
-	typedef std::pair<CircleObjectPtr, CircleObjectPtr> CircleObjectPair;
-	
 	class Selector
 	{
 	public:
@@ -58,7 +56,8 @@ namespace CircleEngine
 		public:
 			virtual ~Iterator();
 
-			virtual CircleObjectPair Get() const = 0;
+			virtual CircleObjectPtr GetFirst() const = 0;
+			virtual CircleObjectPtr GetSecond() const = 0;
 			virtual bool IsEnd() const = 0;
 			virtual void Next() = 0;
 		};
@@ -85,7 +84,8 @@ namespace CircleEngine
 			Iterator(SomeToOtherSelector* a_Parent);
 			virtual ~Iterator();
 
-			virtual CircleObjectPair Get() const;
+			virtual CircleObjectPtr GetFirst() const;
+			virtual CircleObjectPtr GetSecond() const;
 			virtual bool IsEnd() const;
 			virtual void Next();
 		
@@ -123,7 +123,8 @@ namespace CircleEngine
 			Iterator(CrossSelector* a_Parent);
 			virtual ~Iterator();
 
-			virtual CircleObjectPair Get() const;
+			virtual CircleObjectPtr GetFirst() const;
+			virtual CircleObjectPtr GetSecond() const;
 			virtual bool IsEnd() const;
 			virtual void Next();
 		
@@ -158,7 +159,8 @@ namespace CircleEngine
 			Iterator(CrossNearSelector* a_Parent);
 			virtual ~Iterator();
 
-			virtual CircleObjectPair Get() const;
+			virtual CircleObjectPtr GetFirst() const;
+			virtual CircleObjectPtr GetSecond() const;
 			virtual bool IsEnd() const;
 			virtual void Next();
 		
@@ -170,7 +172,7 @@ namespace CircleEngine
 			CrossNearSelector* m_Parent;
 		};
 		
-		CrossNearSelector();
+		CrossNearSelector(size_t a_BestNeighborsCount);
 		virtual ~CrossNearSelector();
 		
 		void 	Add(const CircleObjectPtr& a_Object);
@@ -192,6 +194,7 @@ namespace CircleEngine
 		bool IsNear(Point a_Center, CoordinateType a_Radius, const CircleObjectPtr& a_Obj);
 		void CalculateNear(CONear* a_NearData, size_t a_CurIndex);
 
+		size_t m_BestNeighborsCount;
 		std::vector<CircleObjectPtr> 	m_Objects;
 		std::vector<CONear> 			m_NearObjects;
 	};

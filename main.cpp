@@ -15,7 +15,7 @@ void resize(int width,int height)
 	glLoadIdentity();
 	if (height)
 		gluPerspective(30.0f, width / height, 0.1f, 1500.0f);
-	gluLookAt(0,-50,20, 0,0,0, 0,1,0);
+	gluLookAt(0,-150,20, 0,0,0, 0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 }    
 
@@ -139,8 +139,8 @@ int main(int argc, char** argv)
 		const CircleEngine::CoordinateType maxValue = 80.0;
 		const CircleEngine::CoordinateType maxVelValue = 20.0;
 		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
-		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0);
-		obj->Radius = 0.2 + rand_pmmax(.18);
+		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
+		obj->Radius = 0.2 + rand_pmmax(.1);
 		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;
 		
 		g_CircleCoordinator.AddObject(obj);
@@ -148,7 +148,7 @@ int main(int argc, char** argv)
 	
 	std::vector<CircleEngine::CircleObjectPtr> objects = g_CircleCoordinator.GetObjects();
 	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
-	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector); 
+	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector(10)); 
 	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
