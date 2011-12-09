@@ -188,10 +188,11 @@ namespace CircleEngine
 
 			Point 							LastCenter;
 			CoordinateType					RadiusNearArea;
+			CoordinateType					RadiusMoveArea;
 			std::vector<CircleObjectPtr> 	NearObjects;
 		};
 	
-		bool IsNear(Point a_Center, CoordinateType a_Radius, const CircleObjectPtr& a_Obj);
+		bool IsNear(const Point& a_Center, CoordinateType a_Radius, const Point& a_OtherCenter);
 		void CalculateNear(CONear* a_NearData, size_t a_CurIndex);
 
 		size_t m_BestNeighborsCount;

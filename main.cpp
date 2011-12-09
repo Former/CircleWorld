@@ -132,15 +132,15 @@ int main(int argc, char** argv)
 	obj->Weight = 1.0;
 	g_CircleCoordinator.AddObject(obj);
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
 		const CircleEngine::CoordinateType maxValue = 80.0;
 		const CircleEngine::CoordinateType maxVelValue = 20.0;
-		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0);
+		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));
 		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
-		obj->Radius = 0.2 + rand_pmmax(.1);
+		obj->Radius = 0.3 + rand_pmmax(.2);
 		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;
 		
 		g_CircleCoordinator.AddObject(obj);

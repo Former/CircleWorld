@@ -290,7 +290,7 @@ namespace CircleEngine
 		{
 			CONear& near = m_Parent->m_NearObjects[m_Index];
 			CircleObjectPtr& obj = m_Parent->m_Objects[m_Index];
-			if (near.RadiusNearArea < obj->Radius || !m_Parent->IsNear(near.LastCenter, near.RadiusNearArea / 2, obj))
+			if (near.RadiusMoveArea < obj->Radius || !m_Parent->IsNear(near.LastCenter, near.RadiusMoveArea, obj->Center))
 			{
 				near.LastCenter 	= obj->Center;
 				if (near.RadiusNearArea < obj->Radius)
@@ -298,9 +298,14 @@ namespace CircleEngine
 				else
 				{
 					if (near.NearObjects.size() > m_Parent->m_BestNeighborsCount)
-						near.RadiusNearArea = near.RadiusNearArea * 0.8;
+						near.RadiusNearArea = near.RadiusNearArea * 0.70;
 					else
-						near.RadiusNearArea = near.RadiusNearArea * 1.2;
+						near.RadiusNearArea = near.RadiusNearArea * 1.3;
+					
+					if (near.RadiusNearArea < obj->Radius * 3.0)
+						near.RadiusNearArea = obj->Radius * 3.0;						
+					
+					near.RadiusMoveArea = near.RadiusNearArea * 0.5;
 				}		
 				m_Parent->CalculateNear(&near, m_Index);	
 			}
@@ -347,17 +352,17 @@ namespace CircleEngine
 	CrossNearSelector::CONear::CONear()
 	{
 		RadiusNearArea 	= 0.0;
+		RadiusMoveArea	= 0.0;
 	}
 	
-	bool CrossNearSelector::IsNear(Point a_Center, CoordinateType a_Radius, const CircleObjectPtr& a_Object)
+	bool CrossNearSelector::IsNear(const Point& a_Center, CoordinateType a_Radius, const Point& a_OtherCenter)
 	{
-		const Point centerMinusObjCenter = a_Center - a_Object->Center;
-		const CoordinateType radiusPlusObjRadius = a_Object->Radius + a_Radius;
-		if (centerMinusObjCenter.x > radiusPlusObjRadius || centerMinusObjCenter.x < -radiusPlusObjRadius )
+		const Point centerMinusObjCenter = a_Center - a_OtherCenter;
+		if (centerMinusObjCenter.x > a_Radius || centerMinusObjCenter.x < -a_Radius )
 			return false;
-		if (centerMinusObjCenter.y > radiusPlusObjRadius || centerMinusObjCenter.y < -radiusPlusObjRadius )
+		if (centerMinusObjCenter.y > a_Radius || centerMinusObjCenter.y < -a_Radius )
 			return false;
-		if (centerMinusObjCenter.z > radiusPlusObjRadius || centerMinusObjCenter.z < -radiusPlusObjRadius )
+		if (centerMinusObjCenter.z > a_Radius || centerMinusObjCenter.z < -a_Radius )
 			return false;
 		return true;
 	}
@@ -365,13 +370,17 @@ namespace CircleEngine
 	void CrossNearSelector::CalculateNear(CONear* a_NearData, size_t a_CurIndex)
 	{
 		a_NearData->NearObjects.resize(0);
+		a_NearData->NearObjects.reserve(2 * m_BestNeighborsCount);
+		const CircleObjectPtr& curObj 	= m_Objects[a_CurIndex];
 		for (size_t i = 0; i < m_Objects.size(); i++)
 		{
 			if (i == a_CurIndex)
 				continue;
-			const CircleObjectPtr& obj = m_Objects[i];
+			
+			const CircleObjectPtr& obj 	= m_Objects[i];
+			CONear& near 				= m_NearObjects[i];
 
-			if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea, obj))
+			if (IsNear(a_NearData->LastCenter, a_NearData->RadiusNearArea + near.RadiusMoveArea, obj->Center))
 				a_NearData->NearObjects.push_back(obj);
 		}
 	}
