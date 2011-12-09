@@ -309,9 +309,8 @@ namespace CircleEngine
 					
 					if (near->RadiusNearArea < obj->Radius * 3.0)
 						near->RadiusNearArea = obj->Radius * 3.0;						
-					
-					near->RadiusMoveArea = near->RadiusNearArea * 0.5;
 				}		
+				near->RadiusMoveArea = near->RadiusNearArea * 0.5;
 				m_Parent->CalculateNear(near, m_Index);	
 			}
 			nearSize = near->NearObjects.size();
