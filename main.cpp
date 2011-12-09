@@ -132,7 +132,7 @@ int main(int argc, char** argv)
 	obj->Weight = 1.0;
 	g_CircleCoordinator.AddObject(obj);
 
-	for (size_t i = 0; i < 10000; i++)
+	for (size_t i = 0; i < 5000; i++)
 	{
 		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
@@ -148,12 +148,14 @@ int main(int argc, char** argv)
 	
 	std::vector<CircleEngine::CircleObjectPtr> objects = g_CircleCoordinator.GetObjects();
 	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
-	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector(10)); 
+	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector(20)); 
+	CircleEngine::CrossSelectorPtr allCrossSelector(new CircleEngine::CrossSelector()); 
 	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		allSeqSelector->Add(objects[i]);
 		allCrossNearSelector->Add(objects[i]);
+		allCrossSelector->Add(objects[i]);
 		if (i == 0)
 			oneToOtherSelector->AddSome(objects[i]);
 		else

@@ -5,20 +5,44 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="124" Name="FirstVisibleLine"/>
-      <int Value="130" Name="CurrentLine"/>
+      <int Value="147" Name="FirstVisibleLine"/>
+      <int Value="166" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.h" Name="FileName"/>
-      <int Value="165" Name="FirstVisibleLine"/>
-      <int Value="189" Name="CurrentLine"/>
+      <int Value="182" Name="FirstVisibleLine"/>
+      <int Value="196" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.cpp" Name="FileName"/>
-      <int Value="334" Name="FirstVisibleLine"/>
-      <int Value="357" Name="CurrentLine"/>
+      <int Value="432" Name="FirstVisibleLine"/>
+      <int Value="440" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleObject.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="9" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleObject.cpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="15" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/usr/include/c++/4.4/tr1/shared_ptr.h" Name="FileName"/>
+      <int Value="375" Name="FirstVisibleLine"/>
+      <int Value="376" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/GetWorkTime.cpp" Name="FileName"/>
+      <int Value="4" Name="FirstVisibleLine"/>
+      <int Value="5" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
   </TabInfoArray>

@@ -181,6 +181,9 @@ namespace CircleEngine
 		virtual PairSelector::IteratorPtr Begin();
 		
 	protected:
+		class CONear;
+		typedef engine_shared_ptr<CONear> CONearPtr;
+
 		class CONear
 		{
 		public:
@@ -190,14 +193,17 @@ namespace CircleEngine
 			CoordinateType					RadiusNearArea;
 			CoordinateType					RadiusMoveArea;
 			std::vector<CircleObjectPtr> 	NearObjects;
+			std::vector<CONearPtr> 			NearArray;
 		};
 	
 		bool IsNear(const Point& a_Center, CoordinateType a_Radius, const Point& a_OtherCenter);
-		void CalculateNear(CONear* a_NearData, size_t a_CurIndex);
+		void CalculateNear(const CONearPtr& a_NearData, size_t a_CurIndex);
+		void CalculateNearFromAllObject(const CONearPtr& a_NearData, size_t a_CurIndex);
+		void FillNearData(const CONearPtr& a_NearData, const CircleObjectPtr& a_Obj, const CONearPtr& a_ObjNear);
 
 		size_t m_BestNeighborsCount;
 		std::vector<CircleObjectPtr> 	m_Objects;
-		std::vector<CONear> 			m_NearObjects;
+		std::vector<CONearPtr> 			m_NearObjects;
 	};
 	typedef engine_shared_ptr<CrossNearSelector> CrossNearSelectorPtr;
 }
