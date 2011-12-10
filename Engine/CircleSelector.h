@@ -206,4 +206,100 @@ namespace CircleEngine
 		std::vector<CONearPtr> 			m_NearObjects;
 	};
 	typedef engine_shared_ptr<CrossNearSelector> CrossNearSelectorPtr;
+	
+	///////////////////////////////////////////////////////////////////////
+	
+	// Выбирает все пары объектов, расположенных близко друг другу
+	template <typename UserData>
+	class PairUserSelector : public Selector 
+	{
+		friend class Iterator;		
+	public:
+		class Iterator
+		{
+			friend class PairUserSelector;
+		public:
+			Iterator(PairUserSelector* a_Parent)
+			{
+				m_Parent = a_Parent;
+				m_Index = 0;
+			}
+
+			CircleObjectPtr GetFirst() const
+			{
+				return m_Parent->m_Objects[m_Index].first;
+			}
+			
+			CircleObjectPtr GetSecond() const
+			{
+				return m_Parent->m_Objects[m_Index].second;
+			}
+			
+			UserData 		GetUserData() const
+			{
+				return m_Parent->m_Objects[m_Index].data;
+			}
+			
+			bool IsEnd() const
+			{
+				if (m_Index >= m_Parent->m_Objects.size())
+					return true;
+				return false;
+			}
+			
+			void Next()
+			{
+				if (IsEnd())
+					return;
+				m_Index++;
+			}
+		
+		private:
+			size_t 	m_Index;
+			PairUserSelector* m_Parent;
+		};
+		typedef engine_shared_ptr<Iterator> IteratorPtr;
+		
+		PairUserSelector()
+		{			
+		}
+		
+		virtual ~PairUserSelector()
+		{			
+		}
+		
+		void 	Add(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, UserData& a_UserData)
+		{
+			Item item;
+			item.first = a_Object1;
+			item.second = a_Object2;
+			item.data = a_UserData;
+			m_Objects.push_back(item);
+		}
+		
+		virtual void 	Delete(const CircleObjectPtr& a_Object)
+		{
+			for(size_t i = 0; i < m_Objects.size(); ++i)
+			{
+				Item it = m_Objects[i];
+				if ((it.first.get() == a_Object.get()) || (it.second.get() == a_Object.get()))
+					m_Objects.erase(m_Objects.begin() + i);
+			}
+		}
+
+		virtual IteratorPtr Begin()
+		{
+			return IteratorPtr(new Iterator(this));
+		}
+		
+	protected:
+		struct Item
+		{
+			CircleObjectPtr first;
+			CircleObjectPtr second;
+			UserData		data;
+		};
+	
+		std::vector<Item> 	m_Objects;
+	};
 }

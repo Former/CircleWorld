@@ -292,7 +292,7 @@ namespace CircleEngine
 		{
 			CONearPtr& near = m_Parent->m_NearObjects[m_Index];
 			if (!near)
-				near= CONearPtr(new CONear);
+				near = CONearPtr(new CONear);
 				
 			CircleObjectPtr& obj = m_Parent->m_Objects[m_Index];
 			if (near->RadiusMoveArea < obj->Radius || !m_Parent->IsNear(near->LastCenter, near->RadiusMoveArea, obj->Center))
@@ -401,6 +401,9 @@ namespace CircleEngine
 		
 		for (size_t i = 0; i < curNear->NearObjects.size(); i++)
 		{
+			CalculateNearFromAllObject(a_NearData, a_CurIndex);
+			return;
+			
 			const CircleObjectPtr& obj 	= curNear->NearObjects[i];
 			// должен обязательно перекрывать центр
 			if (!IsNear(curObj->Center, curNear->RadiusNearArea, obj->Center))

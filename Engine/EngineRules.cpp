@@ -91,11 +91,9 @@ namespace CircleEngine
 	{
 		return a_Object1->Center.CheckConnect(a_Object2->Center, a_Object2->Radius + a_Object1->Radius);	
 	}
-		
-	void RuleContact::ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2)
+	
+	static void ResolveCollision(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const CoordinateType a_NewDistance, const CoordinateType a_Zapas, const bool a_EqualVelocytyAfterCollision)
 	{
-		const CoordinateType zapas = 0.01;
-		
 		Point& centr1 = a_Object1->Center;
 		Point& centr2 = a_Object2->Center;
 		const CoordinateType weight1 = a_Object1->Weight;
@@ -121,14 +119,58 @@ namespace CircleEngine
 		Point vel1Paralell	= normVector * (normVector * vel1);
 		Point vel1Perp		= vel1 - vel1Paralell;
 
-		if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
+		if (a_EqualVelocytyAfterCollision)
 		{
-			vel1 = vel1Perp + (vel2Paralell * 2.0 * weight2  + vel1Paralell * (weight1 - weight2)) * one_div_summ_weight;
-			vel2 = vel2Perp + (vel1Paralell * 2.0 * weight1 + vel2Paralell * (weight2 - weight1)) * one_div_summ_weight;
+			// Объекты после соударения остаються с одинаковой скоростью (они соединены "стержнем")
+			Point newVelParalell = (vel1Paralell * weight1 + vel2Paralell * weight2) * one_div_summ_weight;
+			vel1 = vel1Perp + newVelParalell;
+			vel2 = vel2Perp + newVelParalell;
+		}
+		else
+		{
+			// Простое соударение 
+			if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
+			{
+				vel1 = vel1Perp + (vel2Paralell * 2.0 * weight2  + vel1Paralell * (weight1 - weight2)) * one_div_summ_weight;
+				vel2 = vel2Perp + (vel1Paralell * 2.0 * weight1 + vel2Paralell * (weight2 - weight1)) * one_div_summ_weight;
+			}
 		}
 		
 		// Îòäàëåíèå îêðóæíîñòåé äðóã îò äðóãà
-		centr1 = normVector * (-(a_Object1->Radius + a_Object2->Radius) * weight2 * one_div_summ_weight * (1.0 + zapas)) + centrWeight;
-		centr2 = normVector * (+(a_Object1->Radius + a_Object2->Radius) * weight1 * one_div_summ_weight * (1.0 + zapas)) + centrWeight;
+		centr1 = normVector * (-(a_NewDistance) * weight2 * one_div_summ_weight * (1.0 + a_Zapas)) + centrWeight;
+		centr2 = normVector * (+(a_NewDistance) * weight1 * one_div_summ_weight * (1.0 + a_Zapas)) + centrWeight;
+	}
+	
+	void RuleContact::ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2)
+	{
+		ResolveCollision(a_Object1, a_Object2, a_Object1->Radius + a_Object2->Radius, 0.01, false);
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	RuleStrongBar::RuleStrongBar(PairBarSelectorPtr a_Selector)
+	{
+		m_Selector = a_Selector;
+	}
+	
+	RuleStrongBar::~RuleStrongBar()
+	{		
+	}
+	
+	void RuleStrongBar::DoStep()
+	{
+		for (PairBarSelector::IteratorPtr it = m_Selector->Begin(); !it->IsEnd(); it->Next())
+		{			
+			const CircleObjectPtr& obj1 = it->GetFirst();
+			const CircleObjectPtr& obj2 = it->GetSecond();
+			const BarProperties& data = it->GetUserData();
+			
+			ResolveStrongBar(obj1, obj2, data);
+		}
+	}
+	
+	void RuleStrongBar::ResolveStrongBar(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const BarProperties& a_Properties)
+	{
+		ResolveCollision(a_Object1, a_Object2, a_Properties.Distance, 0.00, true);
 	}
 }

@@ -20,6 +20,7 @@ void resize(int width,int height)
 }    
 
 CircleEngine::CircleCoordinator g_CircleCoordinator;
+CircleEngine::PairBarSelectorPtr g_LinesSelector;
 GetWorkTime		g_WorkTime;
 
 void keyboard(unsigned char key, int x, int y)
@@ -81,6 +82,21 @@ void display(void)
 		glPopMatrix();
 	}
 	
+	// Draw lines	
+	glLineWidth(1); // ширина линии 
+	glBegin(GL_LINES);
+	for (CircleEngine::PairBarSelector::IteratorPtr it = g_LinesSelector->Begin(); !it->IsEnd(); it->Next())
+	{			
+		const CircleEngine::CircleObjectPtr& obj1 = it->GetFirst();
+		const CircleEngine::CircleObjectPtr& obj2 = it->GetSecond();
+		
+		glColor3d(1, 1, 1);
+		glVertex3d(obj1->Center.x, obj1->Center.y, obj1->Center.z);
+		glVertex3d(obj2->Center.x, obj2->Center.y, obj2->Center.z);
+	}
+	glEnd();
+	
+	// Draw FPS
 	static size_t s_executecount = 0;
 	s_executecount++;
 	std::stringstream sstr;
@@ -132,9 +148,11 @@ int main(int argc, char** argv)
 	obj->Weight = 1.0;
 	g_CircleCoordinator.AddObject(obj);
 
+	#define rand_pmmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
+	#define rand_pmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0))
+
 	for (size_t i = 0; i < 5000; i++)
 	{
-		#define rand_pmmax(maxValue) (maxValue * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
 		const CircleEngine::CoordinateType maxValue = 80.0;
 		const CircleEngine::CoordinateType maxVelValue = 20.0;
@@ -162,15 +180,40 @@ int main(int argc, char** argv)
 			oneToOtherSelector->AddOther(objects[i]);
 	}
 
+	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
+	g_LinesSelector = pairBarSelector;
+
+	for (size_t i = 1; i < 100; i++)
+	{
+		CircleEngine::BarProperties prop;
+		const CircleEngine::CoordinateType maxDistance = 10.0;		
+		prop.Distance = rand_pmax(maxDistance);
+		
+		const CircleEngine::CoordinateType maxSize = objects.size() - 1;
+		size_t index1 = (size_t)rand_pmax(maxSize);
+		size_t index2 = (size_t)rand_pmax(maxSize);
+		
+		//size_t index1 = i;
+		//size_t index2 = i + 1;
+
+		if (index1 == index2)
+			continue;
+		
+		pairBarSelector->Add(objects[index1], objects[index2], prop);
+	}
+
 	CircleEngine::CoordinateType accuracy = 0.005;
-	
 	CircleEngine::RulePtr moveRule(new CircleEngine::RuleMove(allSeqSelector, accuracy));
 	CircleEngine::RulePtr contactRule(new CircleEngine::RuleContact(allCrossNearSelector));
 	CircleEngine::RulePtr gravityRule(new CircleEngine::RuleGravity(oneToOtherSelector, 5000, accuracy));
+	CircleEngine::RulePtr strongBarRule(new CircleEngine::RuleStrongBar(pairBarSelector));
 	
 	g_CircleCoordinator.AddRule(moveRule);
+	g_CircleCoordinator.AddRule(strongBarRule);
 	g_CircleCoordinator.AddRule(gravityRule);
+	g_CircleCoordinator.AddRule(strongBarRule);
 	g_CircleCoordinator.AddRule(contactRule);
+	g_CircleCoordinator.AddRule(strongBarRule);
 		
 	g_WorkTime.Start();
 	

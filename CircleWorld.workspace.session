@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Session Name="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace">
-  <int Value="2" Name="m_selectedTab"/>
+  <int Value="0" Name="m_selectedTab"/>
   <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/main.cpp" Name="FileName"/>
-      <int Value="150" Name="FirstVisibleLine"/>
-      <int Value="163" Name="CurrentLine"/>
+      <int Value="181" Name="FirstVisibleLine"/>
+      <int Value="185" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.h" Name="FileName"/>
-      <int Value="174" Name="FirstVisibleLine"/>
-      <int Value="196" Name="CurrentLine"/>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/EngineRules.h" Name="FileName"/>
+      <int Value="48" Name="FirstVisibleLine"/>
+      <int Value="76" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.cpp" Name="FileName"/>
-      <int Value="292" Name="FirstVisibleLine"/>
-      <int Value="312" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleObject.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="9" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleObject.cpp" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="15" Name="CurrentLine"/>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/EngineRules.cpp" Name="FileName"/>
+      <int Value="137" Name="FirstVisibleLine"/>
+      <int Value="121" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/usr/include/c++/4.4/tr1/shared_ptr.h" Name="FileName"/>
-      <int Value="375" Name="FirstVisibleLine"/>
-      <int Value="376" Name="CurrentLine"/>
+      <int Value="523" Name="FirstVisibleLine"/>
+      <int Value="525" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/GetWorkTime.cpp" Name="FileName"/>
-      <int Value="3" Name="FirstVisibleLine"/>
-      <int Value="5" Name="CurrentLine"/>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.h" Name="FileName"/>
+      <int Value="227" Name="FirstVisibleLine"/>
+      <int Value="251" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/Engine/CircleSelector.cpp" Name="FileName"/>
+      <int Value="394" Name="FirstVisibleLine"/>
+      <int Value="405" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
   </TabInfoArray>

@@ -61,4 +61,26 @@ namespace CircleEngine
 		
 		PairSelectorPtr m_Selector;
 	};
+
+	/////////////////////////////////////////////////////////////////////
+	struct BarProperties
+	{
+		CoordinateType Distance;
+	};	
+	typedef PairUserSelector<BarProperties> PairBarSelector;
+	typedef engine_shared_ptr< PairUserSelector<BarProperties> > PairBarSelectorPtr;
+	
+	class RuleStrongBar : public Rule
+	{
+	public:
+		RuleStrongBar(PairBarSelectorPtr a_Selector);
+		virtual ~RuleStrongBar();
+		
+		virtual void DoStep() override;
+		
+	protected:
+		static void ResolveStrongBar(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const BarProperties& a_Properties);
+
+		PairBarSelectorPtr m_Selector;
+	};
 }
