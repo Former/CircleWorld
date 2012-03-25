@@ -48,7 +48,8 @@
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -84,6 +85,7 @@
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -113,4 +115,11 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="luascript">
+    <File Name="luascript/luascript.cpp"/>
+    <File Name="luascript/luascript.h"/>
+    <VirtualDirectory Name="lua">
+      <File Name="luascript/lua/all.c"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
 </CodeLite_Project>

@@ -3,6 +3,7 @@
 #include "CommonTypes.h"
 #include "CircleSelector.h"
 #include "EngineRules.h"
+#include "luascript/luascript.h"
 
 namespace CircleEngine
 {

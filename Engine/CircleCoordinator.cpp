@@ -45,5 +45,48 @@ namespace CircleEngine
 		{
 			m_Rules[i]->DoStep();
 		}
-	}	
+	}
+	
+	////////////////////////////////////////////////////////////////////////
+	
+	class LuaTestParentFunction
+	{
+	public:
+		LuaTestParentFunction(LuaScript* a_Parent)
+		{
+			m_Parent = static_cast<TestLuaScript*>(a_Parent);
+		}
+
+		static const LuaScript::LuaArgArray* GetInputArgs()
+		{
+			LuaScript::LuaArgArray* args = new LuaScript::LuaArgArray();
+			args->Add(new LuaScript::Int_LuaArg());
+			return args;
+		}
+
+		static const LuaScript::LuaArgArray* GetOutputArgs()
+		{
+			LuaScript::LuaArgArray* args = new LuaScript::LuaArgArray();
+			args->Add(new LuaScript::Bool_LuaArg());
+			return args;
+		}
+
+		static const std::string NameSpace() { return "engine"; }
+		static const std::string Name() { return "check_parent"; }
+
+		void Calc(const LuaScript::LuaArgArray& in, LuaScript::LuaArgArray& out) 
+		{
+		if( !m_Parent )
+		{
+		  dynamic_cast<LuaScript::Bool_LuaArg&>(*out[0]).SetValue(false);
+		  return;
+		}
+		m_Parent->m_TestParametr =
+				dynamic_cast<LuaScript::Int_LuaArg&>(*in[0]).GetValue();
+		dynamic_cast<LuaScript::Bool_LuaArg&>(*out[0]).SetValue(true);
+		}
+	 private:
+	  TestLuaScript* m_Parent;
+	};
+	
 }
