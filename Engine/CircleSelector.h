@@ -209,7 +209,7 @@ namespace CircleEngine
 	
 	///////////////////////////////////////////////////////////////////////
 	
-	// Выбирает все пары объектов, расположенных близко друг другу
+	// Выбирает все пары объектов
 	template <typename UserData>
 	class PairUserSelector : public Selector 
 	{
