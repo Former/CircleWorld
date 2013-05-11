@@ -209,7 +209,208 @@ namespace CircleEngine
 	
 	///////////////////////////////////////////////////////////////////////
 	
-	// Выбирает все пары объектов
+	// Выбирает все пары объектов, расположенных близко друг другу
+	class PairNearSelector : public PairSelector 
+	{
+		friend class Iterator;		
+	public:
+		class Iterator : public PairSelector::Iterator
+		{
+			friend class PairNearSelector;
+		public:
+			Iterator(PairNearSelector* a_Parent);
+			virtual ~Iterator();
+
+			virtual CircleObjectPtr GetFirst() const;
+			virtual CircleObjectPtr GetSecond() const;
+			virtual bool IsEnd() const;
+			virtual void Next();
+		
+		private:
+			void FindNextFullNear();
+		
+			size_t 	m_Index;
+			size_t 	m_NearIndex;
+			PairNearSelector* m_Parent;
+		};
+		
+		PairNearSelector(const CoordinateType& a_ZeroAreaSize)
+		{
+			m_ZeroAreaSize = a_ZeroAreaSize;
+			m_1DivZeroAreaSize = 1.0 / m_ZeroAreaSize;
+		}
+		
+		virtual ~PairNearSelector();
+		
+		void 	Add(const CircleObjectPtr& a_Object)
+		{
+			ObjectPtr new_obj = engine_make_shared<Object>();
+			new_obj->m_CircleObject = a_Object;
+			m_Objects.push_back(new_obj);
+		}
+		
+		virtual void 	Delete(const CircleObjectPtr& a_Object)
+		{
+			//...
+		}
+
+		virtual PairSelector::IteratorPtr Begin()
+		{
+			for (size_t i = 0; i < m_Objects.size(); ++i)
+			{
+				const ObjectPtr& cur_obj = m_Objects[i];
+				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 1.0);
+				
+				m_Areas.Get()
+			}
+		}
+		
+	protected:
+		class Object;
+		typedef engine_shared_ptr<Object> ObjectPtr;
+
+		class Area;
+		typedef engine_shared_ptr<Area> AreaPtr;
+
+		class Object
+		{
+		public:
+			CircleObjectPtr m_CircleObject;
+			std::vector<AreaPtr> NearAreas;
+		};
+
+		typedef int CoordinateAreaType;
+		typedef int OrderAreaType;
+
+		static OrderAreaType GetOrder(const CoordinateType& a_Radius, const CoordinateType& a_ZeroAreaSize, const double& a_Multiple)
+		{
+			OrderAreaType znak = 1.0;
+			
+			CoordinateType div = a_Radius * a_Multiple / a_ZeroAreaSize;
+			if (div == 0.0)
+				return 0;
+				
+			if (div < 1.0)
+			{
+				div = 1.0 / div;
+				znak = -1.0;
+			}
+			
+			return znak * log(div) / log(2.0);
+		}
+		
+		class Area
+		{
+		public:
+			Area()
+			{
+				x = 0;
+				y = 0;
+				z = 0;
+				m_Order = 1;
+			}
+			Area(const CoordinateAreaType& a_X, const CoordinateAreaType& a_Y, const CoordinateAreaType& a_Z, const OrderAreaType& a_Order)
+			{
+				x = a_X;
+				y = a_Y;
+				z = a_Z;
+				m_Order = a_Order;
+			}
+			
+			CoordinateAreaType x;
+			CoordinateAreaType y;
+			CoordinateAreaType z;
+			OrderAreaType m_Order;			
+		
+			void AddObject(const CircleObjectPtr& a_Object)
+			{
+				for (size_t i = 0; i < m_CircleObject.size(); ++i)
+				{
+					if (a_Object == m_CircleObject[i])
+						return;
+				}
+				
+				m_CircleObject.push_back(a_Object);
+			}
+
+			void DeleteObject(const CircleObjectPtr& a_Object)
+			{
+				for (size_t i = 0; i < m_CircleObject.size(); ++i)
+				{
+					if (a_Object == m_CircleObject[i])
+					{
+						m_CircleObject.erase(i);
+						break;		
+					}						
+				}
+			}
+			
+			const std::vector<CircleObjectPtr>& GetObjects() const
+			{
+				return m_CircleObject;
+			}
+		
+		private:
+			std::vector<CircleObjectPtr> m_CircleObject;
+		};
+		
+		class AreaContainer
+		{
+			const CoordinateAreaType s_MASK_COORDINATE = 0x3F;
+		public:
+			AreaPtr Get(const CoordinateAreaType& a_X, const CoordinateAreaType& a_Y, const CoordinateAreaType& a_Z, const OrderAreaType& a_Order)
+			{
+				Container::iterator it_order = m_Container.find(a_Order);
+				
+				VectorZ* cur_vector_z = 0;
+				if (it_order != m_Container.end())
+					cur_vector_z = &(it_order->second);
+				else
+				{
+					cur_vector_z = &(m_Container[a_Order]);
+					cur_vector_z->resize(s_MASK_COORDINATE + 1);
+					
+					for (size_t i = 0; i < cur_vector_y->size(); ++i)
+					{
+						VectorX& cur_vector_x = cur_vector_y[i];
+						cur_vector_x.resize(s_MASK_COORDINATE + 1);
+					}
+				}
+				
+				Areas& cur_areas = cur_vector_z[a_Z & s_MASK_COORDINATE][a_Y & s_MASK_COORDINATE][a_X & s_MASK_COORDINATE];
+				for (size_t i = 0; i < cur_areas.size(); ++i)
+				{
+					AreaPtr& cur_area = cur_areas[i];
+					if (cur_area.x == a_X && cur_area.y == a_Y && cur_area.z == a_Z && cur_area.m_Order == a_Order)
+						return cur_area;
+				}
+				
+				AreaPtr cur_area = engine_make_shared<Area>(a_X, a_Y, a_Z, a_Order);
+				cur_areas.push_back(cur_area);
+				
+				return cur_area;
+			}
+			
+		private:
+			typedef std::vector<AreaPtr> Areas;
+			typedef std::vector<Areas> VectorX;
+			typedef std::vector<VectorX> VectorY;
+			typedef std::vector<VectorY> VectorZ;
+			typedef std::map<OrderAreaType, VectorY> Container;
+			
+			Container m_Container;
+		};
+	
+		std::vector<ObjectPtr> 	m_Objects;
+		AreaContainer           m_Areas;
+		CoordinateType          m_ZeroAreaSize;
+		CoordinateType          m_1DivZeroAreaSize;
+	};
+	typedef engine_shared_ptr<PairNearSelector> PairNearSelectorPtr;
+	
+	///////////////////////////////////////////////////////////////////////
+	
+	// Выбирает все пары объектов, которые были установлены пользователем
 	template <typename UserData>
 	class PairUserSelector : public Selector 
 	{
