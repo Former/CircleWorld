@@ -218,7 +218,11 @@ namespace CircleEngine
 		{
 			friend class PairNearSelector;
 		public:
-			Iterator(PairNearSelector* a_Parent);
+			Iterator(PairNearSelector* a_Parent)
+			{
+				m_ObjectIndex = 0;
+			}
+			
 			virtual ~Iterator();
 
 			virtual CircleObjectPtr GetFirst() const;
@@ -229,7 +233,7 @@ namespace CircleEngine
 		private:
 			void FindNextFullNear();
 		
-			size_t 	m_Index;
+			size_t 	m_ObjectIndex;
 			size_t 	m_NearIndex;
 			PairNearSelector* m_Parent;
 		};
@@ -237,10 +241,12 @@ namespace CircleEngine
 		PairNearSelector(const CoordinateType& a_ZeroAreaSize)
 		{
 			m_ZeroAreaSize = a_ZeroAreaSize;
-			m_1DivZeroAreaSize = 1.0 / m_ZeroAreaSize;
 		}
 		
-		virtual ~PairNearSelector();
+		virtual ~PairNearSelector()
+		{
+			
+		}
 		
 		void 	Add(const CircleObjectPtr& a_Object)
 		{
@@ -253,6 +259,40 @@ namespace CircleEngine
 		{
 			//...
 		}
+		
+		static std::vector<AreaPtr> GetNearAreas(const CircleObjectPtr& a_Object, const OrderAreaType& a_Order)
+		{
+			CoordinateType l_1DivAreaSize = 1.0 / (m_ZeroAreaSize * pow(2.0, a_Order));
+			Point boundary_vectors[] = 
+			{
+				Point(0.0, 0.0, 0.0),
+				Point(a_Object->Radius, a_Object->Radius, a_Object->Radius),
+				Point(a_Object->Radius, a_Object->Radius, -a_Object->Radius),
+				Point(a_Object->Radius, -a_Object->Radius, a_Object->Radius),
+				Point(a_Object->Radius, -a_Object->Radius, -a_Object->Radius),
+				Point(-a_Object->Radius, a_Object->Radius, a_Object->Radius),
+				Point(-a_Object->Radius, a_Object->Radius, -a_Object->Radius),
+				Point(-a_Object->Radius, -a_Object->Radius, a_Object->Radius),
+				Point(-a_Object->Radius, -a_Object->Radius, -a_Object->Radius),
+			};
+			
+			std::vector<AreaPtr> result;
+			
+			for (size_t i = 0; i < sizeof(boundary_vectors) / sizeof(boundary_vectors[0]); ++i)
+			{
+				Point cur_point = a_Object->Center + boundary_vectors[i];
+				CoordinateAreaType x = (CoordinateAreaType)(cur_point.x * l_1DivAreaSize);
+				CoordinateAreaType y = (CoordinateAreaType)(cur_point.y * l_1DivAreaSize);
+				CoordinateAreaType z = (CoordinateAreaType)(cur_point.z * l_1DivAreaSize);
+				
+				AreaPtr cur_area = m_Areas.Get(x, y, z, order);
+				
+				if (std::find(result.begin(), result.end(), cur_area) == result.end())
+					result.push_back(cur_area);
+			}
+			
+			return result;
+		}
 
 		virtual PairSelector::IteratorPtr Begin()
 		{
@@ -261,7 +301,24 @@ namespace CircleEngine
 				const ObjectPtr& cur_obj = m_Objects[i];
 				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 1.0);
 				
-				m_Areas.Get()
+				std::vector<AreaPtr> new_areas = GetNearAreas(cur_obj->m_CircleObject, order);
+				std::vector<AreaPtr>& old_areas = cur_obj->NearAreas;
+				
+				for (size_t j = 0; j < new_areas.size(); ++j)
+				{
+					AreaPtr& cur_area = new_areas[j];
+					if (std::find(old_areas.begin(), old_areas.end(), cur_area) == old_areas.end())
+						cur_area->AddObject(cur_obj);					
+				}
+
+				for (size_t j = 0; j < old_areas.size(); ++j)
+				{
+					AreaPtr& cur_area = old_areas[j];
+					if (std::find(new_areas.begin(), new_areas.end(), cur_area) == new_areas.end())
+						cur_area->DeleteObject(cur_obj);					
+				}
+				
+				old_areas = new_areas;
 			}
 		}
 		
@@ -322,7 +379,7 @@ namespace CircleEngine
 			CoordinateAreaType z;
 			OrderAreaType m_Order;			
 		
-			void AddObject(const CircleObjectPtr& a_Object)
+			void AddObject(const ObjectPtr& a_Object)
 			{
 				for (size_t i = 0; i < m_CircleObject.size(); ++i)
 				{
@@ -333,7 +390,7 @@ namespace CircleEngine
 				m_CircleObject.push_back(a_Object);
 			}
 
-			void DeleteObject(const CircleObjectPtr& a_Object)
+			void DeleteObject(const ObjectPtr& a_Object)
 			{
 				for (size_t i = 0; i < m_CircleObject.size(); ++i)
 				{
@@ -345,13 +402,13 @@ namespace CircleEngine
 				}
 			}
 			
-			const std::vector<CircleObjectPtr>& GetObjects() const
+			const std::vector<ObjectPtr>& GetObjects() const
 			{
 				return m_CircleObject;
 			}
 		
 		private:
-			std::vector<CircleObjectPtr> m_CircleObject;
+			std::vector<ObjectPtr> m_CircleObject;
 		};
 		
 		class AreaContainer
@@ -370,14 +427,19 @@ namespace CircleEngine
 					cur_vector_z = &(m_Container[a_Order]);
 					cur_vector_z->resize(s_MASK_COORDINATE + 1);
 					
-					for (size_t i = 0; i < cur_vector_y->size(); ++i)
+					for (size_t j = 0; j < cur_vector_z->size(); ++j)
 					{
-						VectorX& cur_vector_x = cur_vector_y[i];
-						cur_vector_x.resize(s_MASK_COORDINATE + 1);
+						VectorX& cur_vector_y = (*cur_vector_z)[j];
+						cur_vector_y.resize(s_MASK_COORDINATE + 1);
+						for (size_t i = 0; i < cur_vector_y.size(); ++i)
+						{
+							VectorX& cur_vector_x = cur_vector_y[i];
+							cur_vector_x.resize(s_MASK_COORDINATE + 1);
+						}
 					}
 				}
 				
-				Areas& cur_areas = cur_vector_z[a_Z & s_MASK_COORDINATE][a_Y & s_MASK_COORDINATE][a_X & s_MASK_COORDINATE];
+				Areas& cur_areas = (*cur_vector_z)[a_Z & s_MASK_COORDINATE][a_Y & s_MASK_COORDINATE][a_X & s_MASK_COORDINATE];
 				for (size_t i = 0; i < cur_areas.size(); ++i)
 				{
 					AreaPtr& cur_area = cur_areas[i];
@@ -404,7 +466,6 @@ namespace CircleEngine
 		std::vector<ObjectPtr> 	m_Objects;
 		AreaContainer           m_Areas;
 		CoordinateType          m_ZeroAreaSize;
-		CoordinateType          m_1DivZeroAreaSize;
 	};
 	typedef engine_shared_ptr<PairNearSelector> PairNearSelectorPtr;
 	
