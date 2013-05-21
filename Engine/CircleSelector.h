@@ -389,7 +389,10 @@ protected:
 				GetNext();
 			}
 			
-			virtual ~Iterator();
+			virtual ~Iterator()
+			{
+				
+			}
 
 			virtual CircleObjectPtr GetFirst() const
 			{
@@ -424,7 +427,10 @@ protected:
 					m_CurObject = obj->m_CircleObject;
 					
 					if (m_CurOrderIt == m_Parent->m_Areas.m_Container.end() && !obj->NearAreas.empty())
+					{
 						m_CurOrderIt = m_Parent->m_Areas.m_Container.find(obj->NearAreas[0]->m_Order);
+						m_NearAreas = obj->NearAreas;
+					}	
 					
 					while (m_CurOrderIt != m_Parent->m_Areas.m_Container.end())
 					{
@@ -444,6 +450,8 @@ protected:
 						//
 						OrderAreaType old_order = m_CurOrderIt->first;
 						++m_CurOrderIt;
+						if (m_CurOrderIt == m_Parent->m_Areas.m_Container.end())
+							break;
 						OrderAreaType new_order = m_CurOrderIt->first;
 						
 						std::vector<AreaPtr> new_near_areas;
@@ -538,7 +546,7 @@ protected:
 			for (size_t i = 0; i < m_Objects.size(); ++i)
 			{
 				const ObjectPtr& cur_obj = m_Objects[i];
-				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 1.0);
+				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 10.0);
 				
 				std::vector<AreaPtr> new_areas = GetNearAreas(cur_obj->m_CircleObject, order);
 				std::vector<AreaPtr>& old_areas = cur_obj->NearAreas;
@@ -559,6 +567,8 @@ protected:
 				
 				old_areas = new_areas;
 			}
+			
+			return PairSelector::IteratorPtr(new Iterator(this));
 		}
 		
 	protected:

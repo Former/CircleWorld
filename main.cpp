@@ -162,7 +162,7 @@ int main(int argc, char** argv)
 		{
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(0.6, 0, 0);			
 			objContainer->Detal = 7;
-			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), 0); // rand_pmmax(maxValue)
+			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue)); 
 			obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
 			obj->Radius = 0.3 + rand_pmmax(.2);
 			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;		
@@ -173,7 +173,7 @@ int main(int argc, char** argv)
 	
 	std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
 	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
-	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector(20)); 
+	CircleEngine::PairNearSelectorPtr allCrossNearSelector(new CircleEngine::PairNearSelector(20)); 
 	CircleEngine::CrossSelectorPtr allCrossSelector(new CircleEngine::CrossSelector()); 
 	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
 	for (size_t i = 0; i < objectConts.size(); i++)
