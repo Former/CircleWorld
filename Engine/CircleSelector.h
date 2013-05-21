@@ -221,22 +221,28 @@ namespace CircleEngine
 			Iterator(PairNearSelector* a_Parent)
 			{
 				m_Parent = a_Parent;
-				m_ObjectIndex = 0;
-				m_NearObjectIndexOnThisOrder = 0;
+				m_NearObjectIndexOnCurArea = 0;
+				m_AreaIndex = 0;
 				m_CurOrderIt = m_Parent->m_Areas.m_Container.end();
-				GetCurrent();
+				m_IsEnd = false;
+				GetNext();
 			}
 			
 			virtual ~Iterator();
 
-			virtual CircleObjectPtr GetFirst() const;
-			virtual CircleObjectPtr GetSecond() const;
+			virtual CircleObjectPtr GetFirst() const
+			{
+				return m_CurObject;
+			}
+
+			virtual CircleObjectPtr GetSecond() const
+			{
+				return m_NearObject;
+			}
+
 			virtual bool IsEnd() const
 			{
-				if (m_ObjectIndex == m_Parent->m_Objects.size() && m_CurOrderIt == m_Parent->m_Areas.m_Container.end())
-					return true;
-					
-				return false;
+				return m_IsEnd;
 			}
 			
 			virtual void Next()
@@ -244,21 +250,69 @@ namespace CircleEngine
 				if (IsEnd())
 					return;
 				
-				m_NearObjectIndexOnThisOrder++;
-				GetCurrent();
+				m_NearObjectIndexOnCurArea++;
+				GetNext();
 			}
 		
 		private:
-			virtual void GetCurrent()
+			virtual void GetNext()
 			{
-				
+				for (;m_ObjectIndex < m_Parent->m_Objects.size(); ++m_ObjectIndex)
+				{
+					ObjectPtr& obj = m_Parent->m_Objects[m_ObjectIndex];
+					m_CurObject = obj->m_CircleObject;
+					
+					if (m_CurOrderIt == m_Parent->m_Areas.m_Container.end() && !obj->m_NearAreas.empty())
+						m_CurOrderIt = m_Parent->m_Areas.find(obj->m_NearAreas[0]->m_Order);
+					
+					while (m_CurOrderIt != m_Parent->m_Areas.m_Container.end())
+					{
+						for (;m_AreaIndex < m_NearAreas.size(); ++m_AreaIndex)
+						{
+							AreaPtr& cur_area = m_NearAreas[m_AreaIndex];
+							
+							for (;m_NearObjectIndexOnCurArea < cur_area->GetObjects().size(); ++m_NearObjectIndexOnCurArea)
+							{
+								m_NearObject = cur_area->GetObjects()[m_NearObjectIndexOnCurArea]->m_CircleObject;
+								if (m_CurObject != m_NearObject)
+									return;
+							}
+							m_NearObjectIndexOnCurArea = 0;
+						}
+						m_AreaIndex = 0;
+						//
+						OrderAreaType old_order = m_CurOrderIt->first;
+						++m_CurOrderIt;
+						OrderAreaType new_order = m_CurOrderIt->first;
+						
+						std::vector<AreaPtr> new_near_areas;
+						for (size_t i = 0; i < m_NearAreas.size(); ++i)
+						{
+							AreaPtr& cur_area = m_NearAreas[i];
+							double mult = 1.0 / pow(2.0, new_order - old_order);							
+							AreaPtr new_area = m_Parent->m_Areas.Get(CoordinateAreaType(cur_area->x * mult), CoordinateAreaType(cur_area->y * mult), CoordinateAreaType(cur_area->z * mult), new_order);
+							
+							if (std::find(new_near_areas.begin(), new_near_areas.end(), new_area) == new_near_areas.end())
+								new_near_areas.push_back(new_area);							
+						}
+						
+						m_NearAreas = new_near_areas;
+					}					
+				}
+				m_IsEnd = true;
 			}
 		
+			CircleObjectPtr m_CurObject;
+			CircleObjectPtr m_NearObject;
+
 			size_t 	m_ObjectIndex;
-			size_t 	m_NearObjectIndexOnThisOrder;
 			AreaContainer::Container::iterator m_CurOrderIt;
-			AreaPtr m_CurArea;
+			size_t 	m_AreaIndex;
+			size_t 	m_NearObjectIndexOnCurArea;
+			std::vector<AreaPtr> m_NearAreas;
+
 			PairNearSelector* m_Parent;
+			bool m_IsEnd;
 		};
 		
 		PairNearSelector(const CoordinateType& a_ZeroAreaSize)
