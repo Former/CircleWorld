@@ -220,21 +220,44 @@ namespace CircleEngine
 		public:
 			Iterator(PairNearSelector* a_Parent)
 			{
+				m_Parent = a_Parent;
 				m_ObjectIndex = 0;
+				m_NearObjectIndexOnThisOrder = 0;
+				m_CurOrderIt = m_Parent->m_Areas.m_Container.end();
+				GetCurrent();
 			}
 			
 			virtual ~Iterator();
 
 			virtual CircleObjectPtr GetFirst() const;
 			virtual CircleObjectPtr GetSecond() const;
-			virtual bool IsEnd() const;
-			virtual void Next();
+			virtual bool IsEnd() const
+			{
+				if (m_ObjectIndex == m_Parent->m_Objects.size() && m_CurOrderIt == m_Parent->m_Areas.m_Container.end())
+					return true;
+					
+				return false;
+			}
+			
+			virtual void Next()
+			{
+				if (IsEnd())
+					return;
+				
+				m_NearObjectIndexOnThisOrder++;
+				GetCurrent();
+			}
 		
 		private:
-			void FindNextFullNear();
+			virtual void GetCurrent()
+			{
+				
+			}
 		
 			size_t 	m_ObjectIndex;
-			size_t 	m_NearIndex;
+			size_t 	m_NearObjectIndexOnThisOrder;
+			AreaContainer::Container::iterator m_CurOrderIt;
+			AreaPtr m_CurArea;
 			PairNearSelector* m_Parent;
 		};
 		
@@ -415,6 +438,14 @@ namespace CircleEngine
 		{
 			const CoordinateAreaType s_MASK_COORDINATE = 0x3F;
 		public:
+			typedef std::vector<AreaPtr> Areas;
+			typedef std::vector<Areas> VectorX;
+			typedef std::vector<VectorX> VectorY;
+			typedef std::vector<VectorY> VectorZ;
+			typedef std::map<OrderAreaType, VectorZ> Container;
+			
+			Container m_Container;
+
 			AreaPtr Get(const CoordinateAreaType& a_X, const CoordinateAreaType& a_Y, const CoordinateAreaType& a_Z, const OrderAreaType& a_Order)
 			{
 				Container::iterator it_order = m_Container.find(a_Order);
@@ -443,7 +474,7 @@ namespace CircleEngine
 				for (size_t i = 0; i < cur_areas.size(); ++i)
 				{
 					AreaPtr& cur_area = cur_areas[i];
-					if (cur_area.x == a_X && cur_area.y == a_Y && cur_area.z == a_Z && cur_area.m_Order == a_Order)
+					if (cur_area.x == a_X && cur_area.y == a_Y && cur_area.z == a_Z)
 						return cur_area;
 				}
 				
@@ -452,15 +483,25 @@ namespace CircleEngine
 				
 				return cur_area;
 			}
-			
-		private:
-			typedef std::vector<AreaPtr> Areas;
-			typedef std::vector<Areas> VectorX;
-			typedef std::vector<VectorX> VectorY;
-			typedef std::vector<VectorY> VectorZ;
-			typedef std::map<OrderAreaType, VectorY> Container;
-			
-			Container m_Container;
+
+			AreaPtr Get(const CoordinateAreaType& a_X, const CoordinateAreaType& a_Y, const CoordinateAreaType& a_Z, VectorZ* a_VectorZ, const bool& a_ReadOnly)
+			{
+				Areas& cur_areas = (*a_VectorZ)[a_Z & s_MASK_COORDINATE][a_Y & s_MASK_COORDINATE][a_X & s_MASK_COORDINATE];
+				for (size_t i = 0; i < cur_areas.size(); ++i)
+				{
+					AreaPtr& cur_area = cur_areas[i];
+					if (cur_area.x == a_X && cur_area.y == a_Y && cur_area.z == a_Z)
+						return cur_area;
+				}
+				
+				if (a_ReadOnly)
+					return AreaPtr();
+					
+				AreaPtr cur_area = engine_make_shared<Area>(a_X, a_Y, a_Z, a_Order);
+				cur_areas.push_back(cur_area);
+				
+				return cur_area;
+			}
 		};
 	
 		std::vector<ObjectPtr> 	m_Objects;
