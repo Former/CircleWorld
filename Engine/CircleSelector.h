@@ -381,6 +381,7 @@ protected:
 		public:
 			Iterator(PairNearSelector* a_Parent)
 			{
+				m_ObjectIndex = 0;
 				m_Parent = a_Parent;
 				m_NearObjectIndexOnCurArea = 0;
 				m_AreaIndex = 0;
@@ -546,7 +547,7 @@ protected:
 			for (size_t i = 0; i < m_Objects.size(); ++i)
 			{
 				const ObjectPtr& cur_obj = m_Objects[i];
-				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 10.0);
+				OrderAreaType order = GetOrder(cur_obj->m_CircleObject->Radius, m_ZeroAreaSize, 5.0);
 				
 				std::vector<AreaPtr> new_areas = GetNearAreas(cur_obj->m_CircleObject, order);
 				std::vector<AreaPtr>& old_areas = cur_obj->NearAreas;

@@ -142,7 +142,7 @@ int main(int argc, char** argv)
 	#define rand_pmmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 	#define rand_pmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0))
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer(new CircleEngine::CircleCoordinator::Object);
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
