@@ -5,10 +5,13 @@
 #include <string>
 #include <sstream>
 
+#include <thread>
+#include <mutex>
+
 #include "CircleCoordinator.h"
 #include "GetWorkTime.h"
 
-void resize(int width,int height)
+void OnResize(int width,int height)
 {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
@@ -19,11 +22,32 @@ void resize(int width,int height)
 	glMatrixMode(GL_MODELVIEW);
 }    
 
+void OnExit();
+
 CircleEngine::CircleCoordinator g_CircleCoordinator;
 CircleEngine::PairBarSelectorPtr g_LinesSelector;
-GetWorkTime		g_WorkTime;
+std::mutex g_GuiMutex;
+size_t s_DrawCount = 0;
+GetWorkTime	g_WorkTime;
+size_t s_PhysCount = 0;
+std::thread* g_PhysThreag;
+bool g_NeedExit = false;
 
-void keyboard(unsigned char key, int x, int y)
+struct SExiter
+{
+	~SExiter()
+	{
+		OnExit();
+	}
+} g_Exiter;
+
+void OnExit()
+{
+	g_NeedExit = true;
+	g_PhysThreag->join();
+}
+
+void OnKeyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
@@ -46,7 +70,7 @@ void DebugOtput(const std::string& string)
 {
 	glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
 	glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
-	glRasterPos2i(-10, 50);
+	glRasterPos2i(-10, -50);
 	glColor3d(1.0, 1.0, 1.0);
 	for(int i =0; i < string.size(); i++)
 	{
@@ -56,11 +80,14 @@ void DebugOtput(const std::string& string)
 	glPopAttrib();
 }
 
-void display(void)
+void OnDisplay(void)
 {
-	g_CircleCoordinator.DoStep();
+	std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objects;
+	{
+		std::lock_guard<std::mutex> lock(g_GuiMutex);
 
-	std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objects = g_CircleCoordinator.GetObjects();
+		objects = g_CircleCoordinator.GetObjects();
+	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (size_t i = 0; i < objects.size(); i++)
 	{
@@ -92,19 +119,42 @@ void display(void)
 	glEnd();
 	
 	// Draw FPS
-	static size_t s_executecount = 0;
-	s_executecount++;
+	s_DrawCount++;
 	std::stringstream sstr;
-	sstr << "fps " << s_executecount / g_WorkTime.GetCurrentTime();
+	sstr << "fps " << s_DrawCount / g_WorkTime.GetCurrentTime() << " ph/ps " << s_PhysCount / g_WorkTime.GetCurrentTime();
 	DebugOtput(sstr.str());
 	
-	if (s_executecount > 100)
+	if (s_DrawCount > 100)
 	{
 		g_WorkTime.Start();
-		s_executecount = 0;
+		s_DrawCount = 0;
+		s_PhysCount = 0;
 	}	
 
 	glutSwapBuffers();
+}
+
+void PhysicsThread()
+{
+	try
+	{
+		while (true)
+		{
+			std::chrono::milliseconds sleep_delay(1);
+			std::this_thread::sleep_for(sleep_delay);
+			std::lock_guard<std::mutex> lock(g_GuiMutex);
+			
+			if (g_NeedExit)
+				return;
+			
+			g_CircleCoordinator.DoStep();
+			s_PhysCount++;
+		}
+	}
+	catch(...)
+	{
+		return;
+	}
 }
 
 int main(int argc, char** argv)
@@ -120,10 +170,10 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE | GLUT_ACCUM);
 	glutCreateWindow("Circle World");
 	
-	glutIdleFunc(display);
-	glutDisplayFunc(display);
-	glutReshapeFunc(resize);
-	glutKeyboardFunc(keyboard);
+	glutIdleFunc(OnDisplay);
+	glutDisplayFunc(OnDisplay);
+	glutReshapeFunc(OnResize);
+	glutKeyboardFunc(OnKeyboard);
   
 	glShadeModel(GL_SMOOTH);
 	
@@ -142,7 +192,7 @@ int main(int argc, char** argv)
 	#define rand_pmmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 	#define rand_pmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0))
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer(new CircleEngine::CircleCoordinator::Object);
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
@@ -156,15 +206,15 @@ int main(int argc, char** argv)
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 0);
 			objContainer->Detal = 20;
 			obj->Radius = 15.0;
-			obj->Weight = 1.0;
+			obj->Weight = 3.0;
 		}
 		else
 		{
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(0.6, 0, 0);			
-			objContainer->Detal = 7;
-			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));
+			objContainer->Detal = 6;
+			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));  // 
 			obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
-			obj->Radius = 0.3 + rand_pmmax(.2);
+			obj->Radius = .3 + rand_pmmax(.2);
 			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;		
 		}
 		
@@ -173,7 +223,7 @@ int main(int argc, char** argv)
 	
 	std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
 	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
-	CircleEngine::CrossNearSelectorPtr allCrossNearSelector(new CircleEngine::CrossNearSelector(20)); 
+	CircleEngine::PairNearSelectorPtr allCrossNearSelector(new CircleEngine::PairNearSelector(20)); 
 	CircleEngine::CrossSelectorPtr allCrossSelector(new CircleEngine::CrossSelector()); 
 	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
 	for (size_t i = 0; i < objectConts.size(); i++)
@@ -192,18 +242,18 @@ int main(int argc, char** argv)
 	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
 	g_LinesSelector = pairBarSelector;
 
-	for (size_t i = 1; i < 100; i++)
+	for (size_t i = 1; i < 10; i++)
 	{
 		CircleEngine::BarProperties prop;
 		const CircleEngine::CoordinateType maxDistance = 5.0;		
 		prop.Distance = 5.0;//rand_pmax(maxDistance);
 		
-		const CircleEngine::CoordinateType maxSize = 4;//objects.size() - 1;
-		size_t index1 = 1 + (size_t)rand_pmax(maxSize);
-		size_t index2 = 1 + (size_t)rand_pmax(maxSize);
+		const CircleEngine::CoordinateType maxSize = 9; // 4;
+		//size_t index1 = 1 + (size_t)rand_pmax(maxSize);
+		//size_t index2 = 1 + (size_t)rand_pmax(maxSize);
 		
-		//size_t index1 = i;
-		//size_t index2 = i + 1;
+		size_t index1 = i;
+		size_t index2 = i + 1;
 
 		if (index1 == index2)
 			continue;
@@ -226,6 +276,11 @@ int main(int argc, char** argv)
 		
 	g_WorkTime.Start();
 	
+	std::thread phys_th(PhysicsThread);
+	g_PhysThreag = &phys_th;
+	
     glutMainLoop();
+	OnExit();
+	
 	return 0;
 }
