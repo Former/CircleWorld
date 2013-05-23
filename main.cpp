@@ -22,8 +22,30 @@ void OnResize(int width,int height)
 	glMatrixMode(GL_MODELVIEW);
 }    
 
+void OnExit();
+
 CircleEngine::CircleCoordinator g_CircleCoordinator;
 CircleEngine::PairBarSelectorPtr g_LinesSelector;
+std::mutex g_GuiMutex;
+size_t s_DrawCount = 0;
+GetWorkTime	g_WorkTime;
+size_t s_PhysCount = 0;
+std::thread* g_PhysThreag;
+bool g_NeedExit = false;
+
+struct SExiter
+{
+	~SExiter()
+	{
+		OnExit();
+	}
+} g_Exiter;
+
+void OnExit()
+{
+	g_NeedExit = true;
+	g_PhysThreag->join();
+}
 
 void OnKeyboard(unsigned char key, int x, int y)
 {
@@ -56,19 +78,6 @@ void DebugOtput(const std::string& string)
 	}  
 	glEnable(GL_LIGHTING);
 	glPopAttrib();
-}
-
-std::mutex g_GuiMutex;
-size_t s_DrawCount = 0;
-GetWorkTime	g_WorkTime;
-size_t s_PhysCount = 0;
-std::thread* g_PhysThreag;
-bool g_NeedExit = false;
-
-void OnExit()
-{
-	g_NeedExit = true;
-	g_PhysThreag->join();
 }
 
 void OnDisplay(void)

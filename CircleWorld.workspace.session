@@ -5,20 +5,76 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorld/Engine/CircleSelector.h" Name="FileName"/>
-      <int Value="549" Name="FirstVisibleLine"/>
+      <int Value="546" Name="FirstVisibleLine"/>
       <int Value="547" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/alexei/CurProject/CircleWorld/main.cpp" Name="FileName"/>
-      <int Value="39" Name="FirstVisibleLine"/>
-      <int Value="47" Name="CurrentLine"/>
+      <int Value="46" Name="FirstVisibleLine"/>
+      <int Value="38" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/usr/include/c++/4.6/mutex" Name="FileName"/>
+      <int Value="82" Name="FirstVisibleLine"/>
+      <int Value="83" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/usr/include/c++/4.6/tuple" Name="FileName"/>
+      <int Value="99" Name="FirstVisibleLine"/>
+      <int Value="100" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/usr/include/c++/4.6/ext/atomicity.h" Name="FileName"/>
+      <int Value="50" Name="FirstVisibleLine"/>
+      <int Value="51" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/alexei/CurProject/CircleWorld/Engine/CircleCoordinator.cpp" Name="FileName"/>
+      <int Value="21" Name="FirstVisibleLine"/>
+      <int Value="41" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
     </TabInfo>
   </TabInfoArray>
   <SerializedObject Name="m_breakpoints">
-    <long Value="1" Name="Count"/>
+    <long Value="3" Name="Count"/>
     <SerializedObject Name="Breakpoint0">
+      <wxString Value="/home/alexei/CurProject/CircleWorld/main.cpp" Name="file"/>
+      <int Value="52" Name="lineno"/>
+      <wxString Value="" Name="function_name"/>
+      <wxString Value="" Name="memory_address"/>
+      <int Value="1" Name="bp_type"/>
+      <int Value="0" Name="watchpoint_type"/>
+      <wxString Value="" Name="watchpt_data"/>
+      <CData Name="commandlist"/>
+      <bool Value="0" Name="regex"/>
+      <bool Value="0" Name="is_temp"/>
+      <bool Value="1" Name="is_enabled"/>
+      <int Value="0" Name="ignore_number"/>
+      <wxString Value="" Name="conditions"/>
+      <int Value="0" Name="origin"/>
+    </SerializedObject>
+    <SerializedObject Name="Breakpoint1">
+      <wxString Value="/home/alexei/CurProject/CircleWorld/main.cpp" Name="file"/>
+      <int Value="82" Name="lineno"/>
+      <wxString Value="" Name="function_name"/>
+      <wxString Value="" Name="memory_address"/>
+      <int Value="1" Name="bp_type"/>
+      <int Value="0" Name="watchpoint_type"/>
+      <wxString Value="" Name="watchpt_data"/>
+      <CData Name="commandlist"/>
+      <bool Value="0" Name="regex"/>
+      <bool Value="0" Name="is_temp"/>
+      <bool Value="1" Name="is_enabled"/>
+      <int Value="0" Name="ignore_number"/>
+      <wxString Value="" Name="conditions"/>
+      <int Value="0" Name="origin"/>
+    </SerializedObject>
+    <SerializedObject Name="Breakpoint2">
       <wxString Value="/home/alexei/CurProject/CircleWorldGLUT/CircleWorld.cpp" Name="file"/>
       <int Value="142" Name="lineno"/>
       <wxString Value="" Name="function_name"/>
