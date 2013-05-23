@@ -46,7 +46,7 @@ void DebugOtput(const std::string& string)
 {
 	glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
 	glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
-	glRasterPos2i(-10, 50);
+	glRasterPos2i(-10, -50);
 	glColor3d(1.0, 1.0, 1.0);
 	for(int i =0; i < string.size(); i++)
 	{
@@ -156,15 +156,15 @@ int main(int argc, char** argv)
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 0);
 			objContainer->Detal = 20;
 			obj->Radius = 15.0;
-			obj->Weight = 1.0;
+			obj->Weight = 3.0;
 		}
 		else
 		{
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(0.6, 0, 0);			
 			objContainer->Detal = 7;
-			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue)); 
+			obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));  // 
 			obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
-			obj->Radius = 0.3 + rand_pmmax(.2);
+			obj->Radius = .3 + rand_pmmax(.2);
 			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;		
 		}
 		
