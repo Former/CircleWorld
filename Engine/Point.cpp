@@ -69,4 +69,9 @@ namespace CircleEngine
 	{
 		return Point(x - a_Value.x, y - a_Value.y, z - a_Value.z); 
 	}
+
+	bool Point::operator == (const Point& a_Value) const
+	{
+		return (x == a_Value.x) && (y == a_Value.y) && (z == a_Value.z); 
+	}
 }

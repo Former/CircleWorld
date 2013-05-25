@@ -1,1 +1,1 @@
-Bin/Release/main.o Bin/Release/GetWorkTime.o Bin/Release/Engine_Point.o Bin/Release/Engine_CircleObject.o Bin/Release/Engine_CircleSelector.o Bin/Release/Engine_EngineRules.o Bin/Release/Engine_CircleCoordinator.o
+Bin/Release/main.o Bin/Release/GetWorkTime.o Bin/Release/Import_Obj.o Bin/Release/Engine_Point.o Bin/Release/Engine_CircleObject.o Bin/Release/Engine_CircleSelector.o Bin/Release/Engine_EngineRules.o Bin/Release/Engine_CircleCoordinator.o

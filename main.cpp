@@ -10,6 +10,7 @@
 
 #include "CircleCoordinator.h"
 #include "GetWorkTime.h"
+#include "Import_Obj.h"
 
 void OnResize(int width,int height)
 {
@@ -49,20 +50,30 @@ void OnExit()
 
 void OnKeyboard(unsigned char key, int x, int y)
 {
+	static int index = 5;
 	switch (key)
 	{
-		case 97: // 'a'
-			glRotated(-1, 0, 0, 1); 			
-			break;
-		case 100: // 'd'
-			glRotated(1, 0, 0, 1); 			
-			break;
-		case 119: // 'w'
-			glRotated(-1, 1, 0, 0); 			
-			break;
-		case 115: // 's'
-			glRotated(1, 1, 0, 0); 			
-			break;
+	case 'a':
+		glRotated(-1, 0, 0, 1); 			
+		break;
+	case 'd':
+		glRotated(1, 0, 0, 1); 			
+		break;
+	case 'w':
+		glRotated(-1, 1, 0, 0); 			
+		break;
+	case 's':
+		glRotated(1, 1, 0, 0);
+		break;
+	case 'r':
+		{
+			std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
+			objectConts[index]->Obj->Velocity = (objectConts[index]->Obj->Center - objectConts[index + 1]->Obj->Center) * 20.0;
+		}
+		break;
+	case 'i':
+		index++;
+		break;
 	}
 }
 
@@ -70,7 +81,7 @@ void DebugOtput(const std::string& string)
 {
 	glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
 	glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
-	glRasterPos2i(-10, -50);
+	glRasterPos2i(-10, -100);
 	glColor3d(1.0, 1.0, 1.0);
 	for(int i =0; i < string.size(); i++)
 	{
@@ -105,7 +116,7 @@ void OnDisplay(void)
 	}
 	
 	// Draw lines	
-	glLineWidth(2); // ширина линии 
+	glLineWidth(1); // ширина линии 
 	glBegin(GL_LINES);
 	for (CircleEngine::PairBarSelector::IteratorPtr it = g_LinesSelector->Begin(); !it->IsEnd(); it->Next())
 	{			
@@ -188,25 +199,76 @@ int main(int argc, char** argv)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
 
+	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
+	CircleEngine::PairNearSelectorPtr allCrossNearSelector(new CircleEngine::PairNearSelector(20)); 
+	CircleEngine::CrossSelectorPtr allCrossSelector(new CircleEngine::CrossSelector()); 
+	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
+	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
+	g_LinesSelector = pairBarSelector;
+
+	OBJ_Data obj_data;
+	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
+	{
+		CircleEngine::Point center = CircleEngine::Point(0,-55,0);
+		CircleEngine::Point scale = CircleEngine::Point(15,15,15);
+		
+		for (size_t i = 0; i < obj_data.m_Points.size(); i++)
+		{
+			CircleEngine::CircleCoordinator::ObjectPtr objContainer(new CircleEngine::CircleCoordinator::Object);
+			CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
+			objContainer->Obj = obj;
+			
+			CircleEngine::Point& cur_point = obj_data.m_Points[i];
+			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(0, 1.0, 0);
+			objContainer->Detal = 6;
+			obj->Center = center + CircleEngine::Point(cur_point.x * scale.x, cur_point.y * scale.y, cur_point.z * scale.z);
+			obj->Velocity = CircleEngine::Point(0,0,0);
+			obj->Radius = .5;
+			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 28;
+			
+			g_CircleCoordinator.AddObject(objContainer);		
+		}
+		
+		std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
+		
+		for (size_t i = 0; i < obj_data.m_Edges.size(); i++)
+		{
+			CircleEngine::BarProperties prop;
+			
+			size_t index1 = obj_data.m_Edges[i].first;
+			size_t index2 = obj_data.m_Edges[i].second;
+			
+			if (index1 >= objectConts.size() || index2 >= objectConts.size())
+				continue;
+
+			CircleEngine::CircleObjectPtr obj1 = objectConts[index1]->Obj;
+			CircleEngine::CircleObjectPtr obj2 = objectConts[index2]->Obj;
+			prop.Distance = obj1->Center.Distance(obj2->Center);
+
+			pairBarSelector->Add(obj1, obj2, prop);
+		}
+	}
 
 	#define rand_pmmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 	#define rand_pmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0))
 
-	for (size_t i = 0; i < 10000; i++)
+	const CircleEngine::CoordinateType big_radius = 45.0;
+
+	for (size_t i = 0; i < 1000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer(new CircleEngine::CircleCoordinator::Object);
 		CircleEngine::CircleObjectPtr obj(new CircleEngine::CircleObject);
 		objContainer->Obj = obj;
 		
 		const CircleEngine::CoordinateType maxValue = 80.0;
-		const CircleEngine::CoordinateType maxVelValue = 20.0;
+		const CircleEngine::CoordinateType maxVelValue = 30.0;
 		
 		if (i == 0)
 		{
 			objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 0);
 			objContainer->Detal = 20;
-			obj->Radius = 15.0;
-			obj->Weight = 3.0;
+			obj->Radius = big_radius;
+			obj->Weight = 53.0;
 		}
 		else
 		{
@@ -220,12 +282,8 @@ int main(int argc, char** argv)
 		
 		g_CircleCoordinator.AddObject(objContainer);
 	}
-	
+
 	std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
-	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
-	CircleEngine::PairNearSelectorPtr allCrossNearSelector(new CircleEngine::PairNearSelector(20)); 
-	CircleEngine::CrossSelectorPtr allCrossSelector(new CircleEngine::CrossSelector()); 
-	CircleEngine::SomeToOtherSelectorPtr oneToOtherSelector(new CircleEngine::SomeToOtherSelector); 
 	for (size_t i = 0; i < objectConts.size(); i++)
 	{
 		CircleEngine::CircleObjectPtr obj = objectConts[i]->Obj;
@@ -233,32 +291,10 @@ int main(int argc, char** argv)
 		allSeqSelector->Add(obj);
 		allCrossNearSelector->Add(obj);
 		allCrossSelector->Add(obj);
-		if (i == 0)
+		if (obj->Radius == big_radius)
 			oneToOtherSelector->AddSome(obj);
 		else
 			oneToOtherSelector->AddOther(obj);
-	}
-
-	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
-	g_LinesSelector = pairBarSelector;
-
-	for (size_t i = 1; i < 10; i++)
-	{
-		CircleEngine::BarProperties prop;
-		const CircleEngine::CoordinateType maxDistance = 5.0;		
-		prop.Distance = 5.0;//rand_pmax(maxDistance);
-		
-		const CircleEngine::CoordinateType maxSize = 9; // 4;
-		//size_t index1 = 1 + (size_t)rand_pmax(maxSize);
-		//size_t index2 = 1 + (size_t)rand_pmax(maxSize);
-		
-		size_t index1 = i;
-		size_t index2 = i + 1;
-
-		if (index1 == index2)
-			continue;
-		
-		pairBarSelector->Add(objectConts[index1]->Obj, objectConts[index2]->Obj, prop);
 	}
 
 	CircleEngine::CoordinateType accuracy = 0.005;
@@ -272,7 +308,8 @@ int main(int argc, char** argv)
 	g_CircleCoordinator.AddRule(gravityRule);
 	g_CircleCoordinator.AddRule(strongBarRule);
 	g_CircleCoordinator.AddRule(contactRule);
-	g_CircleCoordinator.AddRule(strongBarRule);
+	for (size_t i = 0; i < 100; ++i)
+		g_CircleCoordinator.AddRule(strongBarRule);
 		
 	g_WorkTime.Start();
 	

@@ -19,6 +19,7 @@ namespace CircleEngine
 		Point operator / (const CoordinateType& a_Value) const;
 		Point operator + (const Point& a_Value) const;
 		Point operator - (const Point& a_Value) const;
+		bool operator == (const Point& a_Value) const;
 
 		CoordinateType x;
 		CoordinateType y;
