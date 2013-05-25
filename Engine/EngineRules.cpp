@@ -64,6 +64,33 @@ namespace CircleEngine
 
 	///////////////////////////////////////////////////////////////////////////////
 
+	RuleFriction::RuleFriction(PairSelectorPtr a_Selector, CoordinateType a_Force)
+	{
+		m_Selector = a_Selector;
+		m_Force = a_Force;
+	}
+		
+	RuleFriction::~RuleFriction()
+	{			
+	}
+		
+	void RuleFriction::DoStep()
+	{
+		for (PairSelector::IteratorPtr it = m_Selector->Begin(); !it->IsEnd(); it->Next())
+		{			
+			const CircleObjectPtr& obj1 = it->GetFirst();
+			const CircleObjectPtr& obj2 = it->GetSecond();
+			
+			CoordinateType dist = obj1->Center.Distance(obj2->Center);
+			if (dist < obj1->Radius)
+			{
+				obj2->Velocity = obj2->Velocity * m_Force;
+			}
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+
 	RuleContact::RuleContact(PairSelectorPtr a_Selector)
 	{
 		m_Selector = a_Selector;
@@ -92,7 +119,7 @@ namespace CircleEngine
 		return a_Object1->Center.CheckConnect(a_Object2->Center, a_Object2->Radius + a_Object1->Radius);	
 	}
 	
-	static void ResolveCollision(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const CoordinateType a_NewDistance, const CoordinateType a_Zapas, const bool a_EqualVelocytyAfterCollision)
+	static void ResolveCollision(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const CoordinateType a_NewDistance, const CoordinateType a_Zapas, const bool a_EqualVelocytyAfterCollision, const bool a_UseVelocyty)
 	{
 		Point& centr1 = a_Object1->Center;
 		Point& centr2 = a_Object2->Center;
@@ -110,29 +137,32 @@ namespace CircleEngine
 		// Ñòàëêèâàíèå (çàêîí ñîõðàíåíèÿ èìïóëüñà)
 		Point normVector = (centr2 - centr1) * onedivdist;
 		
-		Point& vel1 = a_Object1->Velocity;
-		Point& vel2 = a_Object2->Velocity;
-		
-		Point vel2Paralell	= normVector * (normVector * vel2);
-		Point vel2Perp		= vel2 - vel2Paralell;
-
-		Point vel1Paralell	= normVector * (normVector * vel1);
-		Point vel1Perp		= vel1 - vel1Paralell;
-
-		if (a_EqualVelocytyAfterCollision)
+		if (a_UseVelocyty)
 		{
-			// Объекты после соударения остаються с одинаковой скоростью (они соединены "стержнем")
-			Point newVelParalell = (vel1Paralell * weight1 + vel2Paralell * weight2) * one_div_summ_weight;
-			vel1 = vel1Perp + newVelParalell;
-			vel2 = vel2Perp + newVelParalell;
-		}
-		else
-		{
-			// Простое соударение 
-			if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
+			Point& vel1 = a_Object1->Velocity;
+			Point& vel2 = a_Object2->Velocity;
+			
+			Point vel2Paralell	= normVector * (normVector * vel2);
+			Point vel2Perp		= vel2 - vel2Paralell;
+
+			Point vel1Paralell	= normVector * (normVector * vel1);
+			Point vel1Perp		= vel1 - vel1Paralell;
+
+			if (a_EqualVelocytyAfterCollision)
 			{
-				vel1 = vel1Perp + (vel2Paralell * 2.0 * weight2  + vel1Paralell * (weight1 - weight2)) * one_div_summ_weight;
-				vel2 = vel2Perp + (vel1Paralell * 2.0 * weight1 + vel2Paralell * (weight2 - weight1)) * one_div_summ_weight;
+				// Объекты после соударения остаються с одинаковой скоростью (они соединены "стержнем")
+				Point newVelParalell = (vel1Paralell * weight1 + vel2Paralell * weight2) * one_div_summ_weight;
+				vel1 = vel1Perp + newVelParalell;
+				vel2 = vel2Perp + newVelParalell;
+			}
+			else
+			{
+				// Простое соударение 
+				if ((vel1Paralell * normVector) > 0 || (vel2Paralell * normVector) < 0)
+				{
+					vel1 = vel1Perp + (vel2Paralell * 2.0 * weight2  + vel1Paralell * (weight1 - weight2)) * one_div_summ_weight;
+					vel2 = vel2Perp + (vel1Paralell * 2.0 * weight1 + vel2Paralell * (weight2 - weight1)) * one_div_summ_weight;
+				}
 			}
 		}
 		
@@ -143,7 +173,7 @@ namespace CircleEngine
 	
 	void RuleContact::ResolveContact(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2)
 	{
-		ResolveCollision(a_Object1, a_Object2, a_Object1->Radius + a_Object2->Radius, 0.01, false);
+		ResolveCollision(a_Object1, a_Object2, a_Object1->Radius + a_Object2->Radius, 0.001, false, true);
 	}
 	
 	/////////////////////////////////////////////////////////////////////////
@@ -171,6 +201,34 @@ namespace CircleEngine
 	
 	void RuleStrongBar::ResolveStrongBar(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const BarProperties& a_Properties)
 	{
-		ResolveCollision(a_Object1, a_Object2, a_Properties.Distance, 0.00, true);
+		ResolveCollision(a_Object1, a_Object2, a_Properties.Distance, 0.00, true, true);
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	RuleStrongDistance::RuleStrongDistance(PairBarSelectorPtr a_Selector)
+	{
+		m_Selector = a_Selector;
+	}
+	
+	RuleStrongDistance::~RuleStrongDistance()
+	{		
+	}
+	
+	void RuleStrongDistance::DoStep()
+	{
+		for (PairBarSelector::IteratorPtr it = m_Selector->Begin(); !it->IsEnd(); it->Next())
+		{			
+			const CircleObjectPtr& obj1 = it->GetFirst();
+			const CircleObjectPtr& obj2 = it->GetSecond();
+			const BarProperties& data = it->GetUserData();
+			
+			ResolveStrongDistance(obj1, obj2, data);
+		}
+	}
+	
+	void RuleStrongDistance::ResolveStrongDistance(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const BarProperties& a_Properties)
+	{
+		ResolveCollision(a_Object1, a_Object2, a_Properties.Distance, 0.00, false, false);
 	}
 }

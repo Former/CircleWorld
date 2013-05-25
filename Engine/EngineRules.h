@@ -44,6 +44,21 @@ namespace CircleEngine
 		CoordinateType m_Force;
 		CoordinateType m_Accuracy;
 	};
+	
+	/////////////////////////////////////////////////////////////////////
+	
+	class RuleFriction : public Rule
+	{
+	public:
+		RuleFriction(PairSelectorPtr a_Selector, CoordinateType a_Force);
+		virtual ~RuleFriction();
+		
+		virtual void DoStep() override;
+		
+	protected:
+		PairSelectorPtr m_Selector;
+		CoordinateType m_Force;
+	};	
 
 	/////////////////////////////////////////////////////////////////////
 
@@ -83,4 +98,21 @@ namespace CircleEngine
 
 		PairBarSelectorPtr m_Selector;
 	};
+	
+	/////////////////////////////////////////////////////////////////////
+	
+	class RuleStrongDistance : public Rule
+	{
+	public:
+		RuleStrongDistance(PairBarSelectorPtr a_Selector);
+		virtual ~RuleStrongDistance();
+		
+		virtual void DoStep() override;
+		
+	protected:
+		static void ResolveStrongDistance(const CircleObjectPtr& a_Object1, const CircleObjectPtr& a_Object2, const BarProperties& a_Properties);
+
+		PairBarSelectorPtr m_Selector;
+	};
+
 }
