@@ -2,15 +2,16 @@
 
 namespace CircleEngine
 {
-	CircleCoordinator::ObjectColor::ObjectColor(float a_Red, float a_Green, float a_Blue)
+	CircleCoordinator::ObjectColor::ObjectColor(float a_Red, float a_Green, float a_Blue, float a_Alpha)
 	{
 		red 	= a_Red;
 		green 	= a_Green;
 		blue 	= a_Blue;
+		alpha 	= a_Alpha;
 	}	
 
 	CircleCoordinator::Object::Object()
-	:	Color(1, 1, 1)
+	:	Color(1, 1, 1, 1.0)
 	{
 		Detal 	= 10;
 	}	

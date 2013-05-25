@@ -11,11 +11,12 @@ namespace CircleEngine
 	public:
 		struct ObjectColor
 		{
-			ObjectColor(float a_Red, float a_Green, float a_Blue);
+			ObjectColor(float a_Red, float a_Green, float a_Blue, float a_Alpha);
 			
 			float red;
 			float green;
 			float blue;
+			float alpha;
 		};
 		struct Object
 		{
