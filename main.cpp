@@ -50,7 +50,12 @@ void OnExit()
 
 void OnKeyboard(unsigned char key, int x, int y)
 {
-	static int index = 5;
+	std::vector<std::pair<size_t, size_t> > well_index;
+	well_index.push_back(std::pair<size_t, size_t>(5, 6));
+	well_index.push_back(std::pair<size_t, size_t>(57, 58));
+	well_index.push_back(std::pair<size_t, size_t>(116, 118));
+	well_index.push_back(std::pair<size_t, size_t>(145, 147));
+	static int index = 145; // 5, 57, 116(118), 145(147)
 	static double dir = 1.0;
 
 	switch (key)
@@ -69,6 +74,19 @@ void OnKeyboard(unsigned char key, int x, int y)
 		break;
 	case 'r':
 		{
+			for (size_t i = 0; i < well_index.size(); ++i)
+			{
+				const std::pair<size_t, size_t>& cur_pair = well_index[i];
+				
+				std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
+				CircleEngine::Point difCenter = (objectConts[cur_pair.first]->Obj->Center - objectConts[cur_pair.second]->Obj->Center);
+				difCenter = difCenter / difCenter.Distance(CircleEngine::Point(0,0,0));
+				objectConts[cur_pair.first]->Obj->Velocity =  difCenter * 2500.0 * dir;
+			}
+		}
+		break;
+	case 't':
+		{
 			std::vector<CircleEngine::CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
 			objectConts[index]->Obj->Velocity = (objectConts[index]->Obj->Center - objectConts[index + 1]->Obj->Center) * 150.0 * dir;
 		}
@@ -85,7 +103,7 @@ void DebugOtput(const std::string& string)
 {
 	glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
 	glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
-	glRasterPos2i(-10, -100);
+	glRasterPos2i(-10, -200);
 	glColor3d(1.0, 1.0, 1.0);
 	for(int i =0; i < string.size(); i++)
 	{
@@ -120,7 +138,7 @@ void OnDisplay(void)
 	}
 	
 	// Draw lines	
-	glLineWidth(1); // ширина линии 
+	glLineWidth(2); // ширина линии 
 	glBegin(GL_LINES);
 	for (CircleEngine::PairBarSelector::IteratorPtr it = g_LinesSelector->Begin(); !it->IsEnd(); it->Next())
 	{			
@@ -243,8 +261,8 @@ int main(int argc, char** argv)
 
 			obj->Center = center + CircleEngine::Point(cur_point.x * scale.x, cur_point.y * scale.y, cur_point.z * scale.z);
 			obj->Velocity = CircleEngine::Point(0,0,0);
-			obj->Radius = .5;
-			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 100;
+			obj->Radius = 1.0;
+			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 5;
 			
 			g_CircleCoordinator.AddObject(objContainer);		
 		}
@@ -253,8 +271,6 @@ int main(int argc, char** argv)
 		
 		for (size_t i = 0; i < obj_data.m_Edges.size(); i++)
 		{
-			CircleEngine::BarProperties prop;
-			
 			size_t index1 = obj_data.m_Edges[i].first;
 			size_t index2 = obj_data.m_Edges[i].second;
 			
@@ -263,6 +279,7 @@ int main(int argc, char** argv)
 
 			CircleEngine::CircleObjectPtr obj1 = objectConts[index1]->Obj;
 			CircleEngine::CircleObjectPtr obj2 = objectConts[index2]->Obj;
+			CircleEngine::BarProperties prop;
 			prop.Distance = obj1->Center.Distance(obj2->Center);
 
 			pairBarSelector->Add(obj1, obj2, prop);
@@ -272,13 +289,13 @@ int main(int argc, char** argv)
 	#define rand_pmmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0) - (maxValue) / 2.0)
 	#define rand_pmax(maxValue) ((maxValue) * rand() / (RAND_MAX * 1.0))
 
-	const CircleEngine::CoordinateType grav_obj_radius = 145.0;
-	const CircleEngine::CoordinateType fric_obj_radius = grav_obj_radius + 0.15;
+	const CircleEngine::CoordinateType grav_obj_radius = 115.0;
+	const CircleEngine::CoordinateType fric_obj_radius = grav_obj_radius + 1.5;
 
 	CircleEngine::CircleCoordinator::ObjectPtr objGrav = CreateNewObject();
 
 	objGrav->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 0, 1.0);
-	objGrav->Detal = 20;
+	objGrav->Detal = 60;
 	objGrav->Obj->Radius = grav_obj_radius;
 	objGrav->Obj->Weight = 5000;
 
@@ -286,15 +303,21 @@ int main(int argc, char** argv)
 
 	CircleEngine::CircleCoordinator::ObjectPtr objFric = CreateNewObject();
 
-	objFric->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 1, 0.3);
-	objFric->Detal = 20;
+	objFric->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 1, 0.7);
+	objFric->Detal = 60;
 	objFric->Obj->Radius = fric_obj_radius;
 	objFric->Obj->Weight = 0.0;
 
 	g_CircleCoordinator.AddObject(objFric);
 
+	CircleEngine::CircleObjectPtr obj1 = objGrav->Obj;
+	CircleEngine::CircleObjectPtr obj2 = objFric->Obj;
+	CircleEngine::BarProperties prop;
+	prop.Distance = obj1->Center.Distance(obj2->Center);
 
-	for (size_t i = 0; i < 1000; i++)
+	pairBarSelector->Add(obj1, obj2, prop);
+
+	for (size_t i = 0; i < 10000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
@@ -302,13 +325,13 @@ int main(int argc, char** argv)
 		const CircleEngine::CoordinateType maxVelValue = 30.0;
 		
 		objContainer->Color = CircleEngine::CircleCoordinator::ObjectColor(0.6, 0, 0, 1.0);			
-		objContainer->Detal = 6;
+		objContainer->Detal = 4;
 		CircleEngine::CircleObjectPtr& obj = objContainer->Obj;
 
 		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));  // 
 		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
-		obj->Radius = .3 + rand_pmmax(.2);
-		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;		
+		obj->Radius = 1.5 + rand_pmmax(1.1);
+		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 58;		
 		
 		g_CircleCoordinator.AddObject(objContainer);
 	}
@@ -339,18 +362,19 @@ int main(int argc, char** argv)
 	CircleEngine::CoordinateType accuracy = 0.005;
 	CircleEngine::RulePtr moveRule(new CircleEngine::RuleMove(allSeqSelector, accuracy));
 	CircleEngine::RulePtr contactRule(new CircleEngine::RuleContact(allCrossNearSelector));
-	CircleEngine::RulePtr gravityRule(new CircleEngine::RuleGravity(gravOneToOtherSelector, 5000, accuracy));
-	CircleEngine::RulePtr fricRule(new CircleEngine::RuleFriction(fricOneToOtherSelector, 0.7));
+	CircleEngine::RulePtr gravityRule(new CircleEngine::RuleGravity(gravOneToOtherSelector, 15000, accuracy));
+	CircleEngine::RulePtr fricRule(new CircleEngine::RuleFriction(fricOneToOtherSelector, 0.1));
 	CircleEngine::RulePtr strongBarRule(new CircleEngine::RuleStrongBar(pairBarSelector));
 	CircleEngine::RulePtr strongDistanceRule(new CircleEngine::RuleStrongDistance(pairBarSelector));
 	
+	g_CircleCoordinator.AddRule(strongBarRule);
 	g_CircleCoordinator.AddRule(moveRule);
 	g_CircleCoordinator.AddRule(strongBarRule);
 	g_CircleCoordinator.AddRule(gravityRule);
 	g_CircleCoordinator.AddRule(fricRule);
 	g_CircleCoordinator.AddRule(contactRule);
 	for (size_t i = 0; i < 100; ++i)
-		g_CircleCoordinator.AddRule(strongDistanceRule);
+		g_CircleCoordinator.AddRule(strongBarRule);
 		
 	g_WorkTime.Start();
 	

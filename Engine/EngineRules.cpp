@@ -82,7 +82,7 @@ namespace CircleEngine
 			const CircleObjectPtr& obj2 = it->GetSecond();
 			
 			CoordinateType dist = obj1->Center.Distance(obj2->Center);
-			if (dist < obj1->Radius)
+			if (dist  < obj1->Radius + obj2->Radius)
 			{
 				obj2->Velocity = obj2->Velocity * m_Force;
 			}
