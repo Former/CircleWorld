@@ -442,6 +442,9 @@ protected:
 					{
 						m_CurOrderIt = m_Parent->m_Areas.m_Container.find(obj->NearAreas[0]->m_Order);
 						m_NearAreas = obj->NearAreas;
+						
+						for (size_t i = 0; i < m_NearAreas.size(); ++i)
+							m_NearAreasCenters.push_back(m_NearAreas[i]->m_Center);
 					}	
 					
 					while (m_CurOrderIt != m_Parent->m_Areas.m_Container.end())
@@ -467,20 +470,33 @@ protected:
 						OrderAreaType new_order = m_CurOrderIt->first;
 						
 						double mult = 1.0 / pow(2.0, new_order - old_order);
-						std::vector<AreaPtr> new_near_areas;
-						for (size_t i = 0; i < m_NearAreas.size(); ++i)
+						std::vector<AreaPointer> new_near_areas_centers;
+						
+						for (size_t i = 0; i < m_NearAreasCenters.size(); ++i)
 						{
-							AreaPtr& cur_area = m_NearAreas[i];
-							AreaPointer cur_center(CoordinateAreaType(cur_area->m_Center.x * mult), CoordinateAreaType(cur_area->m_Center.y * mult), CoordinateAreaType(cur_area->m_Center.z * mult));
-							AreaPtr new_area = m_Parent->m_Areas.Get(cur_center, new_order);
+							const AreaPointer& old_center = m_NearAreasCenters[i];
+							AreaPointer cur_center(CoordinateAreaType(old_center.x * mult), CoordinateAreaType(old_center.y * mult), CoordinateAreaType(old_center.z * mult));
+							new_near_areas_centers.push_back(cur_center);
+						}
+						
+						std::vector<AreaPointer>::iterator it;
+						it = std::unique(new_near_areas_centers.begin(), new_near_areas_centers.end());
+						new_near_areas_centers.resize(std::distance(new_near_areas_centers.begin(), it)); 
+
+						m_NearAreasCenters = new_near_areas_centers;
+
+						std::vector<AreaPtr> new_near_areas;
+						for (size_t i = 0; i < m_NearAreasCenters.size(); ++i)
+						{
+							AreaPtr new_area = m_Parent->m_Areas.Get(m_NearAreasCenters[i], new_order);
 							
-							if (std::find(new_near_areas.begin(), new_near_areas.end(), new_area) == new_near_areas.end())
-								new_near_areas.push_back(new_area);							
+							new_near_areas.push_back(new_area);
 						}
 						
 						m_NearAreas = new_near_areas;
 					}
 					m_NearAreas.clear();
+					m_NearAreasCenters.clear();
 					
 					if (m_ObjectIndex + 1 < m_Parent->m_Objects.size())
 						m_CurObject = m_Parent->m_Objects[m_ObjectIndex + 1]->m_CircleObject;
@@ -496,6 +512,7 @@ protected:
 			size_t 	m_AreaIndex;
 			size_t 	m_NearObjectIndexOnCurArea;
 			std::vector<AreaPtr> m_NearAreas;
+			std::vector<AreaPointer> m_NearAreasCenters;
 
 			PairNearSelector* m_Parent;
 			bool m_IsEnd;
@@ -550,9 +567,12 @@ protected:
 				CoordinateAreaType z = (CoordinateAreaType)(cur_point.z * a_DivOrder);
 				AreaPointer cur_center(x, y, z);
 				
-				if (std::find(centers.begin(), centers.end(), cur_center) == centers.end())
-					centers.push_back(cur_center);
+				centers.push_back(cur_center);
 			}
+			
+			std::vector<AreaPointer>::iterator it;
+			it = std::unique(centers.begin(), centers.end());
+			centers.resize(std::distance(centers.begin(), it)); 
 
 			std::vector<AreaPtr> result;
 			for (size_t i = 0; i < centers.size(); ++i)

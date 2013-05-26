@@ -165,7 +165,6 @@ void OnDisplay(void)
 	}	
 
 	glutSwapBuffers();
-	glFlush();
 }
 
 void PhysicsThread()
@@ -318,7 +317,7 @@ int main(int argc, char** argv)
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 15000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
