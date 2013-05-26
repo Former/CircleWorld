@@ -19,7 +19,7 @@ void OnResize(int width,int height)
 	glLoadIdentity();
 	if (height)
 		gluPerspective(30.0f, width / height, 0.1f, 1500.0f);
-	gluLookAt(0,-450,20, 0,0,0, 0,1,0);
+	gluLookAt(0,-800,20, 0,0,0, 0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 }    
 
@@ -165,6 +165,7 @@ void OnDisplay(void)
 	}	
 
 	glutSwapBuffers();
+	glFlush();
 }
 
 void PhysicsThread()
@@ -201,7 +202,7 @@ CircleEngine::CircleCoordinator::ObjectPtr CreateNewObject()
 
 int main(int argc, char** argv)
 {
-	float pos[4] = {0,0,0,1};
+	float pos[4] = {0,0,300,1};
 	float dir[3] = {-1,-1,-1};
 	GLfloat mat_specular[] = {1,1,1,1};
 
@@ -248,7 +249,7 @@ int main(int argc, char** argv)
 	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
 	{
 		CircleEngine::Point center = CircleEngine::Point(0,-175,0);
-		CircleEngine::Point scale = CircleEngine::Point(25,25,25);
+		CircleEngine::Point scale = CircleEngine::Point(30,30,30);
 		
 		for (size_t i = 0; i < obj_data.m_Points.size(); i++)
 		{
@@ -261,8 +262,8 @@ int main(int argc, char** argv)
 
 			obj->Center = center + CircleEngine::Point(cur_point.x * scale.x, cur_point.y * scale.y, cur_point.z * scale.z);
 			obj->Velocity = CircleEngine::Point(0,0,0);
-			obj->Radius = 1.0;
-			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 5;
+			obj->Radius = 2.5;
+			obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;
 			
 			g_CircleCoordinator.AddObject(objContainer);		
 		}
@@ -294,7 +295,7 @@ int main(int argc, char** argv)
 
 	CircleEngine::CircleCoordinator::ObjectPtr objGrav = CreateNewObject();
 
-	objGrav->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 0, 1.0);
+	objGrav->Color = CircleEngine::CircleCoordinator::ObjectColor(0, 0.7, 0.2, 1.0);
 	objGrav->Detal = 60;
 	objGrav->Obj->Radius = grav_obj_radius;
 	objGrav->Obj->Weight = 5000;
@@ -303,7 +304,7 @@ int main(int argc, char** argv)
 
 	CircleEngine::CircleCoordinator::ObjectPtr objFric = CreateNewObject();
 
-	objFric->Color = CircleEngine::CircleCoordinator::ObjectColor(1, 1, 1, 0.7);
+	objFric->Color = CircleEngine::CircleCoordinator::ObjectColor(0, 0, 0, 0.2);
 	objFric->Detal = 60;
 	objFric->Obj->Radius = fric_obj_radius;
 	objFric->Obj->Weight = 0.0;
@@ -317,7 +318,7 @@ int main(int argc, char** argv)
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 10000; i++)
+	for (size_t i = 0; i < 5000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
@@ -330,8 +331,8 @@ int main(int argc, char** argv)
 
 		obj->Center = CircleEngine::Point(rand_pmmax(maxValue), rand_pmmax(maxValue), rand_pmmax(maxValue));  // 
 		obj->Velocity = CircleEngine::Point(rand_pmmax(maxVelValue), rand_pmmax(maxVelValue), 0); // CircleEngine::Point(0,0,0);
-		obj->Radius = 1.5 + rand_pmmax(1.1);
-		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 58;		
+		obj->Radius = 1.8 + rand_pmmax(0.2);
+		obj->Weight = obj->Radius * obj->Radius * obj->Radius / 8;		
 		
 		g_CircleCoordinator.AddObject(objContainer);
 	}
