@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="/home/alexei/CurProject/CircleWorld/CircleWorld.workspace">
+<Session Name="/home/alexei/CurProject/EclipseWorkspace/CircleWorld/CircleWorld.workspace">
   <int Value="0" Name="m_selectedTab"/>
-  <wxString Value="/home/alexei/CurProject/CircleWorld/CircleWorld.workspace" Name="m_workspaceName"/>
-  <TabInfoArray Name="TabInfoArray">
-    <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorld/main.cpp" Name="FileName"/>
-      <int Value="354" Name="FirstVisibleLine"/>
-      <int Value="365" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorld/Engine/EngineRules.cpp" Name="FileName"/>
-      <int Value="62" Name="FirstVisibleLine"/>
-      <int Value="84" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/alexei/CurProject/CircleWorld/Engine/EngineRules.h" Name="FileName"/>
-      <int Value="90" Name="FirstVisibleLine"/>
-      <int Value="106" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-    </TabInfo>
-  </TabInfoArray>
+  <wxString Value="/home/alexei/CurProject/EclipseWorkspace/CircleWorld/CircleWorld.workspace" Name="m_workspaceName"/>
+  <TabInfoArray Name="TabInfoArray"/>
   <SerializedObject Name="m_breakpoints">
     <long Value="1" Name="Count"/>
     <SerializedObject Name="Breakpoint0">

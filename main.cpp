@@ -93,6 +93,7 @@ void OnKeyboard(unsigned char key, int x, int y)
 		break;
 	case 'i':
 		index++;
+		break;
 	case 'o':
 		dir *= -1.0;
 		break;

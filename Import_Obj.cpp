@@ -21,7 +21,7 @@ static bool ReadAllFileToVectorString(std::vector<std::string>* a_FileData, cons
 			a_FileData->push_back(tmp);
 		}
 	} 
-	catch (std::ifstream::failure e)
+	catch (const std::ifstream::failure & e)
 	{
 		if (!in.eof())
 		{
