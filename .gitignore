@@ -12,3 +12,4 @@ core
 *.session
 *.clang
 *.codelite
+*.build*

@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="irrlicht" InternalType="Library">
+  <Plugins>
+    <Plugin Name="CMakePlugin">
+      <![CDATA[[{
+		"name":	"Debug",
+		"enabled":	false,
+		"buildDirectory":	"build",
+		"sourceDirectory":	"$(ProjectPath)",
+		"generator":	"",
+		"buildType":	"",
+		"arguments":	[],
+		"parentProject":	""
+	}, {
+		"name":	"Release",
+		"enabled":	false,
+		"buildDirectory":	"build",
+		"sourceDirectory":	"$(ProjectPath)",
+		"generator":	"",
+		"buildType":	"",
+		"arguments":	[],
+		"parentProject":	""
+	}]]]>
+    </Plugin>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="source">
+    <File Name="source/BuiltInFont.h"/>
+    <File Name="source/C3DSMeshFileLoader.cpp"/>
+    <File Name="source/C3DSMeshFileLoader.h"/>
+    <File Name="source/CAnimatedMeshHalfLife.cpp"/>
+    <File Name="source/CAnimatedMeshHalfLife.h"/>
+    <File Name="source/CAnimatedMeshMD2.cpp"/>
+    <File Name="source/CAnimatedMeshMD2.h"/>
+    <File Name="source/CAnimatedMeshMD3.cpp"/>
+    <File Name="source/CAnimatedMeshMD3.h"/>
+    <File Name="source/CAnimatedMeshSceneNode.cpp"/>
+    <File Name="source/CAnimatedMeshSceneNode.h"/>
+    <File Name="source/CAttributeImpl.h"/>
+    <File Name="source/CAttributes.cpp"/>
+    <File Name="source/CAttributes.h"/>
+    <File Name="source/CB3DMeshFileLoader.cpp"/>
+    <File Name="source/CB3DMeshFileLoader.h"/>
+    <File Name="source/CBillboardSceneNode.cpp"/>
+    <File Name="source/CBillboardSceneNode.h"/>
+    <File Name="source/CBlit.h"/>
+    <File Name="source/CBoneSceneNode.cpp"/>
+    <File Name="source/CBoneSceneNode.h"/>
+    <File Name="source/CBSPMeshFileLoader.cpp"/>
+    <File Name="source/CBSPMeshFileLoader.h"/>
+    <File Name="source/CBurningShader_Raster_Reference.cpp"/>
+    <File Name="source/CCameraSceneNode.cpp"/>
+    <File Name="source/CCameraSceneNode.h"/>
+    <File Name="source/CCgMaterialRenderer.cpp"/>
+    <File Name="source/CCgMaterialRenderer.h"/>
+    <File Name="source/CColladaFileLoader.cpp"/>
+    <File Name="source/CColladaFileLoader.h"/>
+    <File Name="source/CColladaMeshWriter.cpp"/>
+    <File Name="source/CColladaMeshWriter.h"/>
+    <File Name="source/CColorConverter.cpp"/>
+    <File Name="source/CColorConverter.h"/>
+    <File Name="source/CCSMLoader.cpp"/>
+    <File Name="source/CCSMLoader.h"/>
+    <File Name="source/CCubeSceneNode.cpp"/>
+    <File Name="source/CCubeSceneNode.h"/>
+    <File Name="source/CD3D8Driver.cpp"/>
+    <File Name="source/CD3D8Driver.h"/>
+    <File Name="source/CD3D8MaterialRenderer.h"/>
+    <File Name="source/CD3D8NormalMapRenderer.cpp"/>
+    <File Name="source/CD3D8NormalMapRenderer.h"/>
+    <File Name="source/CD3D8ParallaxMapRenderer.cpp"/>
+    <File Name="source/CD3D8ParallaxMapRenderer.h"/>
+    <File Name="source/CD3D8ShaderMaterialRenderer.cpp"/>
+    <File Name="source/CD3D8ShaderMaterialRenderer.h"/>
+    <File Name="source/CD3D8Texture.cpp"/>
+    <File Name="source/CD3D8Texture.h"/>
+    <File Name="source/CD3D9CgMaterialRenderer.cpp"/>
+    <File Name="source/CD3D9CgMaterialRenderer.h"/>
+    <File Name="source/CD3D9Driver.cpp"/>
+    <File Name="source/CD3D9Driver.h"/>
+    <File Name="source/CD3D9HLSLMaterialRenderer.cpp"/>
+    <File Name="source/CD3D9HLSLMaterialRenderer.h"/>
+    <File Name="source/CD3D9MaterialRenderer.h"/>
+    <File Name="source/CD3D9NormalMapRenderer.cpp"/>
+    <File Name="source/CD3D9NormalMapRenderer.h"/>
+    <File Name="source/CD3D9ParallaxMapRenderer.cpp"/>
+    <File Name="source/CD3D9ParallaxMapRenderer.h"/>
+    <File Name="source/CD3D9ShaderMaterialRenderer.cpp"/>
+    <File Name="source/CD3D9ShaderMaterialRenderer.h"/>
+    <File Name="source/CD3D9Texture.cpp"/>
+    <File Name="source/CD3D9Texture.h"/>
+    <File Name="source/CDefaultGUIElementFactory.cpp"/>
+    <File Name="source/CDefaultGUIElementFactory.h"/>
+    <File Name="source/CDefaultSceneNodeAnimatorFactory.cpp"/>
+    <File Name="source/CDefaultSceneNodeAnimatorFactory.h"/>
+    <File Name="source/CDefaultSceneNodeFactory.cpp"/>
+    <File Name="source/CDefaultSceneNodeFactory.h"/>
+    <File Name="source/CDepthBuffer.cpp"/>
+    <File Name="source/CDepthBuffer.h"/>
+    <File Name="source/CDMFLoader.cpp"/>
+    <File Name="source/CDMFLoader.h"/>
+    <File Name="source/CDummyTransformationSceneNode.cpp"/>
+    <File Name="source/CDummyTransformationSceneNode.h"/>
+    <File Name="source/CEmptySceneNode.cpp"/>
+    <File Name="source/CEmptySceneNode.h"/>
+    <File Name="source/CFileList.cpp"/>
+    <File Name="source/CFileList.h"/>
+    <File Name="source/CFileSystem.cpp"/>
+    <File Name="source/CFileSystem.h"/>
+    <File Name="source/CFPSCounter.cpp"/>
+    <File Name="source/CFPSCounter.h"/>
+    <File Name="source/CGeometryCreator.cpp"/>
+    <File Name="source/CGeometryCreator.h"/>
+    <File Name="source/CGUIButton.cpp"/>
+    <File Name="source/CGUIButton.h"/>
+    <File Name="source/CGUICheckBox.cpp"/>
+    <File Name="source/CGUICheckBox.h"/>
+    <File Name="source/CGUIColorSelectDialog.cpp"/>
+    <File Name="source/CGUIColorSelectDialog.h"/>
+    <File Name="source/CGUIComboBox.cpp"/>
+    <File Name="source/CGUIComboBox.h"/>
+    <File Name="source/CGUIContextMenu.cpp"/>
+    <File Name="source/CGUIContextMenu.h"/>
+    <File Name="source/CGUIEditBox.cpp"/>
+    <File Name="source/CGUIEditBox.h"/>
+    <File Name="source/CGUIEnvironment.cpp"/>
+    <File Name="source/CGUIEnvironment.h"/>
+    <File Name="source/CGUIFileOpenDialog.cpp"/>
+    <File Name="source/CGUIFileOpenDialog.h"/>
+    <File Name="source/CGUIFont.cpp"/>
+    <File Name="source/CGUIFont.h"/>
+    <File Name="source/CGUIImage.cpp"/>
+    <File Name="source/CGUIImage.h"/>
+    <File Name="source/CGUIImageList.cpp"/>
+    <File Name="source/CGUIImageList.h"/>
+    <File Name="source/CGUIInOutFader.cpp"/>
+    <File Name="source/CGUIInOutFader.h"/>
+    <File Name="source/CGUIListBox.cpp"/>
+    <File Name="source/CGUIListBox.h"/>
+    <File Name="source/CGUIMenu.cpp"/>
+    <File Name="source/CGUIMenu.h"/>
+    <File Name="source/CGUIMeshViewer.cpp"/>
+    <File Name="source/CGUIMeshViewer.h"/>
+    <File Name="source/CGUIMessageBox.cpp"/>
+    <File Name="source/CGUIMessageBox.h"/>
+    <File Name="source/CGUIModalScreen.cpp"/>
+    <File Name="source/CGUIModalScreen.h"/>
+    <File Name="source/CGUIScrollBar.cpp"/>
+    <File Name="source/CGUIScrollBar.h"/>
+    <File Name="source/CGUISkin.cpp"/>
+    <File Name="source/CGUISkin.h"/>
+    <File Name="source/CGUISpinBox.cpp"/>
+    <File Name="source/CGUISpinBox.h"/>
+    <File Name="source/CGUISpriteBank.cpp"/>
+    <File Name="source/CGUISpriteBank.h"/>
+    <File Name="source/CGUIStaticText.cpp"/>
+    <File Name="source/CGUIStaticText.h"/>
+    <File Name="source/CGUITabControl.cpp"/>
+    <File Name="source/CGUITabControl.h"/>
+    <File Name="source/CGUITable.cpp"/>
+    <File Name="source/CGUITable.h"/>
+    <File Name="source/CGUIToolBar.cpp"/>
+    <File Name="source/CGUIToolBar.h"/>
+    <File Name="source/CGUITreeView.cpp"/>
+    <File Name="source/CGUITreeView.h"/>
+    <File Name="source/CGUIWindow.cpp"/>
+    <File Name="source/CGUIWindow.h"/>
+    <File Name="source/CImage.cpp"/>
+    <File Name="source/CImage.h"/>
+    <File Name="source/CImageLoaderBMP.cpp"/>
+    <File Name="source/CImageLoaderBMP.h"/>
+    <File Name="source/CImageLoaderDDS.cpp"/>
+    <File Name="source/CImageLoaderDDS.h"/>
+    <File Name="source/CImageLoaderJPG.cpp"/>
+    <File Name="source/CImageLoaderJPG.h"/>
+    <File Name="source/CImageLoaderPCX.cpp"/>
+    <File Name="source/CImageLoaderPCX.h"/>
+    <File Name="source/CImageLoaderPNG.cpp"/>
+    <File Name="source/CImageLoaderPNG.h"/>
+    <File Name="source/CImageLoaderPPM.cpp"/>
+    <File Name="source/CImageLoaderPPM.h"/>
+    <File Name="source/CImageLoaderPSD.cpp"/>
+    <File Name="source/CImageLoaderPSD.h"/>
+    <File Name="source/CImageLoaderRGB.cpp"/>
+    <File Name="source/CImageLoaderRGB.h"/>
+    <File Name="source/CImageLoaderTGA.cpp"/>
+    <File Name="source/CImageLoaderTGA.h"/>
+    <File Name="source/CImageLoaderWAL.cpp"/>
+    <File Name="source/CImageLoaderWAL.h"/>
+    <File Name="source/CImageWriterBMP.cpp"/>
+    <File Name="source/CImageWriterBMP.h"/>
+    <File Name="source/CImageWriterJPG.cpp"/>
+    <File Name="source/CImageWriterJPG.h"/>
+    <File Name="source/CImageWriterPCX.cpp"/>
+    <File Name="source/CImageWriterPCX.h"/>
+    <File Name="source/CImageWriterPNG.cpp"/>
+    <File Name="source/CImageWriterPNG.h"/>
+    <File Name="source/CImageWriterPPM.cpp"/>
+    <File Name="source/CImageWriterPPM.h"/>
+    <File Name="source/CImageWriterPSD.cpp"/>
+    <File Name="source/CImageWriterPSD.h"/>
+    <File Name="source/CImageWriterTGA.cpp"/>
+    <File Name="source/CImageWriterTGA.h"/>
+    <File Name="source/CIrrDeviceConsole.cpp"/>
+    <File Name="source/CIrrDeviceConsole.h"/>
+    <File Name="source/CIrrDeviceFB.cpp"/>
+    <File Name="source/CIrrDeviceFB.h"/>
+    <File Name="source/CIrrDeviceLinux.cpp"/>
+    <File Name="source/CIrrDeviceLinux.h"/>
+    <File Name="source/CIrrDeviceSDL.cpp"/>
+    <File Name="source/CIrrDeviceSDL.h"/>
+    <File Name="source/CIrrDeviceStub.cpp"/>
+    <File Name="source/CIrrDeviceStub.h"/>
+    <File Name="source/CIrrDeviceWin32.cpp"/>
+    <File Name="source/CIrrDeviceWin32.h"/>
+    <File Name="source/CIrrDeviceWinCE.cpp"/>
+    <File Name="source/CIrrDeviceWinCE.h"/>
+    <File Name="source/CIrrMeshFileLoader.cpp"/>
+    <File Name="source/CIrrMeshFileLoader.h"/>
+    <File Name="source/CIrrMeshWriter.cpp"/>
+    <File Name="source/CIrrMeshWriter.h"/>
+    <File Name="source/CLightSceneNode.cpp"/>
+    <File Name="source/CLightSceneNode.h"/>
+    <File Name="source/CLimitReadFile.cpp"/>
+    <File Name="source/CLimitReadFile.h"/>
+    <File Name="source/CLMTSMeshFileLoader.cpp"/>
+    <File Name="source/CLMTSMeshFileLoader.h"/>
+    <File Name="source/CLogger.cpp"/>
+    <File Name="source/CLogger.h"/>
+    <File Name="source/CLWOMeshFileLoader.cpp"/>
+    <File Name="source/CLWOMeshFileLoader.h"/>
+    <File Name="source/CMD2MeshFileLoader.cpp"/>
+    <File Name="source/CMD2MeshFileLoader.h"/>
+    <File Name="source/CMD3MeshFileLoader.cpp"/>
+    <File Name="source/CMD3MeshFileLoader.h"/>
+    <File Name="source/CMemoryFile.cpp"/>
+    <File Name="source/CMemoryFile.h"/>
+    <File Name="source/CMeshCache.cpp"/>
+    <File Name="source/CMeshCache.h"/>
+    <File Name="source/CMeshManipulator.cpp"/>
+    <File Name="source/CMeshManipulator.h"/>
+    <File Name="source/CMeshSceneNode.cpp"/>
+    <File Name="source/CMeshSceneNode.h"/>
+    <File Name="source/CMetaTriangleSelector.cpp"/>
+    <File Name="source/CMetaTriangleSelector.h"/>
+    <File Name="source/CMountPointReader.cpp"/>
+    <File Name="source/CMountPointReader.h"/>
+    <File Name="source/CMS3DMeshFileLoader.cpp"/>
+    <File Name="source/CMS3DMeshFileLoader.h"/>
+    <File Name="source/CMY3DHelper.h"/>
+    <File Name="source/CMY3DMeshFileLoader.cpp"/>
+    <File Name="source/CMY3DMeshFileLoader.h"/>
+    <File Name="source/CNPKReader.cpp"/>
+    <File Name="source/CNPKReader.h"/>
+    <File Name="source/CNullDriver.cpp"/>
+    <File Name="source/CNullDriver.h"/>
+    <File Name="source/COBJMeshFileLoader.cpp"/>
+    <File Name="source/COBJMeshFileLoader.h"/>
+    <File Name="source/COBJMeshWriter.cpp"/>
+    <File Name="source/COBJMeshWriter.h"/>
+    <File Name="source/COCTLoader.cpp"/>
+    <File Name="source/COCTLoader.h"/>
+    <File Name="source/COctreeSceneNode.cpp"/>
+    <File Name="source/COctreeSceneNode.h"/>
+    <File Name="source/COctreeTriangleSelector.cpp"/>
+    <File Name="source/COctreeTriangleSelector.h"/>
+    <File Name="source/COgreMeshFileLoader.cpp"/>
+    <File Name="source/COgreMeshFileLoader.h"/>
+    <File Name="source/COpenGLCgMaterialRenderer.cpp"/>
+    <File Name="source/COpenGLCgMaterialRenderer.h"/>
+    <File Name="source/COpenGLDriver.cpp"/>
+    <File Name="source/COpenGLDriver.h"/>
+    <File Name="source/COpenGLExtensionHandler.cpp"/>
+    <File Name="source/COpenGLExtensionHandler.h"/>
+    <File Name="source/COpenGLMaterialRenderer.h"/>
+    <File Name="source/COpenGLNormalMapRenderer.cpp"/>
+    <File Name="source/COpenGLNormalMapRenderer.h"/>
+    <File Name="source/COpenGLParallaxMapRenderer.cpp"/>
+    <File Name="source/COpenGLParallaxMapRenderer.h"/>
+    <File Name="source/COpenGLShaderMaterialRenderer.cpp"/>
+    <File Name="source/COpenGLShaderMaterialRenderer.h"/>
+    <File Name="source/COpenGLSLMaterialRenderer.cpp"/>
+    <File Name="source/COpenGLSLMaterialRenderer.h"/>
+    <File Name="source/COpenGLTexture.cpp"/>
+    <File Name="source/COpenGLTexture.h"/>
+    <File Name="source/COSOperator.cpp"/>
+    <File Name="source/COSOperator.h"/>
+    <File Name="source/CPakReader.cpp"/>
+    <File Name="source/CPakReader.h"/>
+    <File Name="source/CParticleAnimatedMeshSceneNodeEmitter.cpp"/>
+    <File Name="source/CParticleAnimatedMeshSceneNodeEmitter.h"/>
+    <File Name="source/CParticleAttractionAffector.cpp"/>
+    <File Name="source/CParticleAttractionAffector.h"/>
+    <File Name="source/CParticleBoxEmitter.cpp"/>
+    <File Name="source/CParticleBoxEmitter.h"/>
+    <File Name="source/CParticleCylinderEmitter.cpp"/>
+    <File Name="source/CParticleCylinderEmitter.h"/>
+    <File Name="source/CParticleFadeOutAffector.cpp"/>
+    <File Name="source/CParticleFadeOutAffector.h"/>
+    <File Name="source/CParticleGravityAffector.cpp"/>
+    <File Name="source/CParticleGravityAffector.h"/>
+    <File Name="source/CParticleMeshEmitter.cpp"/>
+    <File Name="source/CParticleMeshEmitter.h"/>
+    <File Name="source/CParticlePointEmitter.cpp"/>
+    <File Name="source/CParticlePointEmitter.h"/>
+    <File Name="source/CParticleRingEmitter.cpp"/>
+    <File Name="source/CParticleRingEmitter.h"/>
+    <File Name="source/CParticleRotationAffector.cpp"/>
+    <File Name="source/CParticleRotationAffector.h"/>
+    <File Name="source/CParticleScaleAffector.cpp"/>
+    <File Name="source/CParticleScaleAffector.h"/>
+    <File Name="source/CParticleSphereEmitter.cpp"/>
+    <File Name="source/CParticleSphereEmitter.h"/>
+    <File Name="source/CParticleSystemSceneNode.cpp"/>
+    <File Name="source/CParticleSystemSceneNode.h"/>
+    <File Name="source/CPLYMeshFileLoader.cpp"/>
+    <File Name="source/CPLYMeshFileLoader.h"/>
+    <File Name="source/CPLYMeshWriter.cpp"/>
+    <File Name="source/CPLYMeshWriter.h"/>
+    <File Name="source/CQ3LevelMesh.cpp"/>
+    <File Name="source/CQ3LevelMesh.h"/>
+    <File Name="source/CQuake3ShaderSceneNode.cpp"/>
+    <File Name="source/CQuake3ShaderSceneNode.h"/>
+    <File Name="source/CReadFile.cpp"/>
+    <File Name="source/CReadFile.h"/>
+    <File Name="source/CSceneCollisionManager.cpp"/>
+    <File Name="source/CSceneCollisionManager.h"/>
+    <File Name="source/CSceneLoaderIrr.cpp"/>
+    <File Name="source/CSceneLoaderIrr.h"/>
+    <File Name="source/CSceneManager.cpp"/>
+    <File Name="source/CSceneManager.h"/>
+    <File Name="source/CSceneNodeAnimatorCameraFPS.cpp"/>
+    <File Name="source/CSceneNodeAnimatorCameraFPS.h"/>
+    <File Name="source/CSceneNodeAnimatorCameraMaya.cpp"/>
+    <File Name="source/CSceneNodeAnimatorCameraMaya.h"/>
+    <File Name="source/CSceneNodeAnimatorCollisionResponse.cpp"/>
+    <File Name="source/CSceneNodeAnimatorCollisionResponse.h"/>
+    <File Name="source/CSceneNodeAnimatorDelete.cpp"/>
+    <File Name="source/CSceneNodeAnimatorDelete.h"/>
+    <File Name="source/CSceneNodeAnimatorFlyCircle.cpp"/>
+    <File Name="source/CSceneNodeAnimatorFlyCircle.h"/>
+    <File Name="source/CSceneNodeAnimatorFlyStraight.cpp"/>
+    <File Name="source/CSceneNodeAnimatorFlyStraight.h"/>
+    <File Name="source/CSceneNodeAnimatorFollowSpline.cpp"/>
+    <File Name="source/CSceneNodeAnimatorFollowSpline.h"/>
+    <File Name="source/CSceneNodeAnimatorRotation.cpp"/>
+    <File Name="source/CSceneNodeAnimatorRotation.h"/>
+    <File Name="source/CSceneNodeAnimatorTexture.cpp"/>
+    <File Name="source/CSceneNodeAnimatorTexture.h"/>
+    <File Name="source/CShadowVolumeSceneNode.cpp"/>
+    <File Name="source/CShadowVolumeSceneNode.h"/>
+    <File Name="source/CSkinnedMesh.cpp"/>
+    <File Name="source/CSkinnedMesh.h"/>
+    <File Name="source/CSkyBoxSceneNode.cpp"/>
+    <File Name="source/CSkyBoxSceneNode.h"/>
+    <File Name="source/CSkyDomeSceneNode.cpp"/>
+    <File Name="source/CSkyDomeSceneNode.h"/>
+    <File Name="source/CSMFMeshFileLoader.cpp"/>
+    <File Name="source/CSMFMeshFileLoader.h"/>
+    <File Name="source/CSoftware2MaterialRenderer.h"/>
+    <File Name="source/CSoftwareDriver.cpp"/>
+    <File Name="source/CSoftwareDriver.h"/>
+    <File Name="source/CSoftwareDriver2.cpp"/>
+    <File Name="source/CSoftwareDriver2.h"/>
+    <File Name="source/CSoftwareTexture.cpp"/>
+    <File Name="source/CSoftwareTexture.h"/>
+    <File Name="source/CSoftwareTexture2.cpp"/>
+    <File Name="source/CSoftwareTexture2.h"/>
+    <File Name="source/CSphereSceneNode.cpp"/>
+    <File Name="source/CSphereSceneNode.h"/>
+    <File Name="source/CSTLMeshFileLoader.cpp"/>
+    <File Name="source/CSTLMeshFileLoader.h"/>
+    <File Name="source/CSTLMeshWriter.cpp"/>
+    <File Name="source/CSTLMeshWriter.h"/>
+    <File Name="source/CTarReader.cpp"/>
+    <File Name="source/CTarReader.h"/>
+    <File Name="source/CTerrainSceneNode.cpp"/>
+    <File Name="source/CTerrainSceneNode.h"/>
+    <File Name="source/CTerrainTriangleSelector.cpp"/>
+    <File Name="source/CTerrainTriangleSelector.h"/>
+    <File Name="source/CTextSceneNode.cpp"/>
+    <File Name="source/CTextSceneNode.h"/>
+    <File Name="source/CTimer.h"/>
+    <File Name="source/CTRFlat.cpp"/>
+    <File Name="source/CTRFlatWire.cpp"/>
+    <File Name="source/CTRGouraud.cpp"/>
+    <File Name="source/CTRGouraud2.cpp"/>
+    <File Name="source/CTRGouraudAlpha2.cpp"/>
+    <File Name="source/CTRGouraudAlphaNoZ2.cpp"/>
+    <File Name="source/CTRGouraudWire.cpp"/>
+    <File Name="source/CTriangleBBSelector.cpp"/>
+    <File Name="source/CTriangleBBSelector.h"/>
+    <File Name="source/CTriangleSelector.cpp"/>
+    <File Name="source/CTriangleSelector.h"/>
+    <File Name="source/CTRNormalMap.cpp"/>
+    <File Name="source/CTRStencilShadow.cpp"/>
+    <File Name="source/CTRTextureBlend.cpp"/>
+    <File Name="source/CTRTextureDetailMap2.cpp"/>
+    <File Name="source/CTRTextureFlat.cpp"/>
+    <File Name="source/CTRTextureFlatWire.cpp"/>
+    <File Name="source/CTRTextureGouraud.cpp"/>
+    <File Name="source/CTRTextureGouraud.h"/>
+    <File Name="source/CTRTextureGouraud2.cpp"/>
+    <File Name="source/CTRTextureGouraudAdd.cpp"/>
+    <File Name="source/CTRTextureGouraudAdd2.cpp"/>
+    <File Name="source/CTRTextureGouraudAddNoZ2.cpp"/>
+    <File Name="source/CTRTextureGouraudAlpha.cpp"/>
+    <File Name="source/CTRTextureGouraudAlphaNoZ.cpp"/>
+    <File Name="source/CTRTextureGouraudNoZ.cpp"/>
+    <File Name="source/CTRTextureGouraudNoZ2.cpp"/>
+    <File Name="source/CTRTextureGouraudVertexAlpha2.cpp"/>
+    <File Name="source/CTRTextureGouraudWire.cpp"/>
+    <File Name="source/CTRTextureLightMap2_Add.cpp"/>
+    <File Name="source/CTRTextureLightMap2_M1.cpp"/>
+    <File Name="source/CTRTextureLightMap2_M2.cpp"/>
+    <File Name="source/CTRTextureLightMap2_M4.cpp"/>
+    <File Name="source/CTRTextureLightMapGouraud2_M4.cpp"/>
+    <File Name="source/CTRTextureWire2.cpp"/>
+    <File Name="source/CVideoModeList.cpp"/>
+    <File Name="source/CVideoModeList.h"/>
+    <File Name="source/CVolumeLightSceneNode.cpp"/>
+    <File Name="source/CVolumeLightSceneNode.h"/>
+    <File Name="source/CWADReader.cpp"/>
+    <File Name="source/CWADReader.h"/>
+    <File Name="source/CWaterSurfaceSceneNode.cpp"/>
+    <File Name="source/CWaterSurfaceSceneNode.h"/>
+    <File Name="source/CWriteFile.cpp"/>
+    <File Name="source/CWriteFile.h"/>
+    <File Name="source/CXMeshFileLoader.cpp"/>
+    <File Name="source/CXMeshFileLoader.h"/>
+    <File Name="source/CXMLReader.cpp"/>
+    <File Name="source/CXMLReader.h"/>
+    <File Name="source/CXMLReaderImpl.h"/>
+    <File Name="source/CXMLWriter.cpp"/>
+    <File Name="source/CXMLWriter.h"/>
+    <File Name="source/CZBuffer.cpp"/>
+    <File Name="source/CZBuffer.h"/>
+    <File Name="source/CZipReader.cpp"/>
+    <File Name="source/CZipReader.h"/>
+    <File Name="source/dmfsupport.h"/>
+    <File Name="source/glext.h"/>
+    <File Name="source/glxext.h"/>
+    <File Name="source/IAttribute.h"/>
+    <File Name="source/IBurningShader.cpp"/>
+    <File Name="source/IBurningShader.h"/>
+    <File Name="source/IDepthBuffer.h"/>
+    <File Name="source/IImagePresenter.h"/>
+    <File Name="source/Irrlicht.aps"/>
+    <File Name="source/Irrlicht.cpp"/>
+    <File Name="source/Irrlicht.dev"/>
+    <File Name="source/irrXML.cpp"/>
+    <File Name="source/ISceneNodeAnimatorFinishing.h"/>
+    <File Name="source/ITriangleRenderer.h"/>
+    <File Name="source/IZBuffer.h"/>
+    <File Name="source/Octree.h"/>
+    <File Name="source/os.cpp"/>
+    <File Name="source/os.h"/>
+    <File Name="source/resource.h"/>
+    <File Name="source/S2DVertex.h"/>
+    <File Name="source/S4DVertex.h"/>
+    <File Name="source/SoftwareDriver2_compile_config.h"/>
+    <File Name="source/SoftwareDriver2_helper.h"/>
+    <File Name="source/wglext.h"/>
+    <VirtualDirectory Name="aesGladman">
+      <File Name="source/aesGladman/aes.h"/>
+      <File Name="source/aesGladman/aescrypt.cpp"/>
+      <File Name="source/aesGladman/aeskey.cpp"/>
+      <File Name="source/aesGladman/aesopt.h"/>
+      <File Name="source/aesGladman/aestab.cpp"/>
+      <File Name="source/aesGladman/fileenc.cpp"/>
+      <File Name="source/aesGladman/fileenc.h"/>
+      <File Name="source/aesGladman/hmac.cpp"/>
+      <File Name="source/aesGladman/hmac.h"/>
+      <File Name="source/aesGladman/prng.cpp"/>
+      <File Name="source/aesGladman/prng.h"/>
+      <File Name="source/aesGladman/pwd2key.cpp"/>
+      <File Name="source/aesGladman/pwd2key.h"/>
+      <File Name="source/aesGladman/Readme.txt"/>
+      <File Name="source/aesGladman/sha1.cpp"/>
+      <File Name="source/aesGladman/sha1.h"/>
+      <File Name="source/aesGladman/sha2.cpp"/>
+      <File Name="source/aesGladman/sha2.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="jpeglib">
+      <File Name="source/jpeglib/jaricom.c"/>
+      <File Name="source/jpeglib/jcapimin.c"/>
+      <File Name="source/jpeglib/jcapistd.c"/>
+      <File Name="source/jpeglib/jcarith.c"/>
+      <File Name="source/jpeglib/jccoefct.c"/>
+      <File Name="source/jpeglib/jccolor.c"/>
+      <File Name="source/jpeglib/jcdctmgr.c"/>
+      <File Name="source/jpeglib/jchuff.c"/>
+      <File Name="source/jpeglib/jcinit.c"/>
+      <File Name="source/jpeglib/jcmainct.c"/>
+      <File Name="source/jpeglib/jcmarker.c"/>
+      <File Name="source/jpeglib/jcmaster.c"/>
+      <File Name="source/jpeglib/jcomapi.c"/>
+      <File Name="source/jpeglib/jconfig.cfg"/>
+      <File Name="source/jpeglib/jconfig.h"/>
+      <File Name="source/jpeglib/jcparam.c"/>
+      <File Name="source/jpeglib/jcprepct.c"/>
+      <File Name="source/jpeglib/jcsample.c"/>
+      <File Name="source/jpeglib/jctrans.c"/>
+      <File Name="source/jpeglib/jdapimin.c"/>
+      <File Name="source/jpeglib/jdapistd.c"/>
+      <File Name="source/jpeglib/jdarith.c"/>
+      <File Name="source/jpeglib/jdatadst.c"/>
+      <File Name="source/jpeglib/jdatasrc.c"/>
+      <File Name="source/jpeglib/jdcoefct.c"/>
+      <File Name="source/jpeglib/jdcolor.c"/>
+      <File Name="source/jpeglib/jdct.h"/>
+      <File Name="source/jpeglib/jddctmgr.c"/>
+      <File Name="source/jpeglib/jdhuff.c"/>
+      <File Name="source/jpeglib/jdinput.c"/>
+      <File Name="source/jpeglib/jdmainct.c"/>
+      <File Name="source/jpeglib/jdmarker.c"/>
+      <File Name="source/jpeglib/jdmaster.c"/>
+      <File Name="source/jpeglib/jdmerge.c"/>
+      <File Name="source/jpeglib/jdpostct.c"/>
+      <File Name="source/jpeglib/jdsample.c"/>
+      <File Name="source/jpeglib/jdtrans.c"/>
+      <File Name="source/jpeglib/jerror.c"/>
+      <File Name="source/jpeglib/jerror.h"/>
+      <File Name="source/jpeglib/jfdctflt.c"/>
+      <File Name="source/jpeglib/jfdctfst.c"/>
+      <File Name="source/jpeglib/jfdctint.c"/>
+      <File Name="source/jpeglib/jidctflt.c"/>
+      <File Name="source/jpeglib/jidctfst.c"/>
+      <File Name="source/jpeglib/jidctint.c"/>
+      <File Name="source/jpeglib/jinclude.h"/>
+      <File Name="source/jpeglib/jmemmgr.c"/>
+      <File Name="source/jpeglib/jmemnobs.c"/>
+      <File Name="source/jpeglib/jmemsys.h"/>
+      <File Name="source/jpeglib/jmorecfg.h"/>
+      <File Name="source/jpeglib/jpegint.h"/>
+      <File Name="source/jpeglib/jpeglib.h"/>
+      <File Name="source/jpeglib/jpegtran.c"/>
+      <File Name="source/jpeglib/jquant1.c"/>
+      <File Name="source/jpeglib/jquant2.c"/>
+      <File Name="source/jpeglib/jutils.c"/>
+      <File Name="source/jpeglib/jversion.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="libpng">
+      <File Name="source/libpng/png.c"/>
+      <File Name="source/libpng/png.h"/>
+      <File Name="source/libpng/pngconf.h"/>
+      <File Name="source/libpng/pngdebug.h"/>
+      <File Name="source/libpng/pngerror.c"/>
+      <File Name="source/libpng/pngget.c"/>
+      <File Name="source/libpng/pnginfo.h"/>
+      <File Name="source/libpng/pnglibconf.h"/>
+      <File Name="source/libpng/pngmem.c"/>
+      <File Name="source/libpng/pngpread.c"/>
+      <File Name="source/libpng/pngpriv.h"/>
+      <File Name="source/libpng/pngread.c"/>
+      <File Name="source/libpng/pngrio.c"/>
+      <File Name="source/libpng/pngrtran.c"/>
+      <File Name="source/libpng/pngrutil.c"/>
+      <File Name="source/libpng/pngset.c"/>
+      <File Name="source/libpng/pngstruct.h"/>
+      <File Name="source/libpng/pngtest.c"/>
+      <File Name="source/libpng/pngtrans.c"/>
+      <File Name="source/libpng/pngwio.c"/>
+      <File Name="source/libpng/pngwrite.c"/>
+      <File Name="source/libpng/pngwtran.c"/>
+      <File Name="source/libpng/pngwutil.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="bzip2">
+      <File Name="source/bzip2/blocksort.c"/>
+      <File Name="source/bzip2/bzcompress.c"/>
+      <File Name="source/bzip2/bzlib.c"/>
+      <File Name="source/bzip2/crctable.c"/>
+      <File Name="source/bzip2/decompress.c"/>
+      <File Name="source/bzip2/huffman.c"/>
+      <File Name="source/bzip2/randtable.c"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="lzma">
+      <File Name="source/lzma/LzmaDec.c"/>
+      <File Name="source/lzma/LzmaDec.h"/>
+      <File Name="source/lzma/Types.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="zlib">
+      <File Name="source/zlib/adler32.c"/>
+      <File Name="source/zlib/compress.c"/>
+      <File Name="source/zlib/crc32.c"/>
+      <File Name="source/zlib/crc32.h"/>
+      <File Name="source/zlib/deflate.c"/>
+      <File Name="source/zlib/deflate.h"/>
+      <File Name="source/zlib/gzclose.c"/>
+      <File Name="source/zlib/gzguts.h"/>
+      <File Name="source/zlib/gzlib.c"/>
+      <File Name="source/zlib/gzread.c"/>
+      <File Name="source/zlib/gzwrite.c"/>
+      <File Name="source/zlib/infback.c"/>
+      <File Name="source/zlib/inffast.c"/>
+      <File Name="source/zlib/inffast.h"/>
+      <File Name="source/zlib/inffixed.h"/>
+      <File Name="source/zlib/inflate.c"/>
+      <File Name="source/zlib/inflate.h"/>
+      <File Name="source/zlib/inftrees.c"/>
+      <File Name="source/zlib/inftrees.h"/>
+      <File Name="source/zlib/trees.c"/>
+      <File Name="source/zlib/trees.h"/>
+      <File Name="source/zlib/uncompr.c"/>
+      <File Name="source/zlib/zconf.h"/>
+      <File Name="source/zlib/zutil.c"/>
+      <File Name="source/zlib/zutil.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="include/aabbox3d.h"/>
+    <File Name="include/CDynamicMeshBuffer.h"/>
+    <File Name="include/CIndexBuffer.h"/>
+    <File Name="include/CMeshBuffer.h"/>
+    <File Name="include/coreutil.h"/>
+    <File Name="include/CVertexBuffer.h"/>
+    <File Name="include/dimension2d.h"/>
+    <File Name="include/driverChoice.h"/>
+    <File Name="include/EAttributes.h"/>
+    <File Name="include/ECullingTypes.h"/>
+    <File Name="include/EDebugSceneTypes.h"/>
+    <File Name="include/EDeviceTypes.h"/>
+    <File Name="include/EDriverFeatures.h"/>
+    <File Name="include/EDriverTypes.h"/>
+    <File Name="include/EGUIAlignment.h"/>
+    <File Name="include/EGUIElementTypes.h"/>
+    <File Name="include/EHardwareBufferFlags.h"/>
+    <File Name="include/EMaterialFlags.h"/>
+    <File Name="include/EMaterialTypes.h"/>
+    <File Name="include/EMeshWriterEnums.h"/>
+    <File Name="include/EMessageBoxFlags.h"/>
+    <File Name="include/EPrimitiveTypes.h"/>
+    <File Name="include/ESceneNodeAnimatorTypes.h"/>
+    <File Name="include/ESceneNodeTypes.h"/>
+    <File Name="include/EShaderTypes.h"/>
+    <File Name="include/ETerrainElements.h"/>
+    <File Name="include/fast_atof.h"/>
+    <File Name="include/heapsort.h"/>
+    <File Name="include/IAnimatedMesh.h"/>
+    <File Name="include/IAnimatedMeshMD2.h"/>
+    <File Name="include/IAnimatedMeshMD3.h"/>
+    <File Name="include/IAnimatedMeshSceneNode.h"/>
+    <File Name="include/IAttributeExchangingObject.h"/>
+    <File Name="include/IAttributes.h"/>
+    <File Name="include/IBillboardSceneNode.h"/>
+    <File Name="include/IBillboardTextSceneNode.h"/>
+    <File Name="include/IBoneSceneNode.h"/>
+    <File Name="include/ICameraSceneNode.h"/>
+    <File Name="include/IColladaMeshWriter.h"/>
+    <File Name="include/ICursorControl.h"/>
+    <File Name="include/IDummyTransformationSceneNode.h"/>
+    <File Name="include/IDynamicMeshBuffer.h"/>
+    <File Name="include/IEventReceiver.h"/>
+    <File Name="include/IFileArchive.h"/>
+    <File Name="include/IFileList.h"/>
+    <File Name="include/IFileSystem.h"/>
+    <File Name="include/IGeometryCreator.h"/>
+    <File Name="include/IGPUProgrammingServices.h"/>
+    <File Name="include/IGUIButton.h"/>
+    <File Name="include/IGUICheckBox.h"/>
+    <File Name="include/IGUIColorSelectDialog.h"/>
+    <File Name="include/IGUIComboBox.h"/>
+    <File Name="include/IGUIContextMenu.h"/>
+    <File Name="include/IGUIEditBox.h"/>
+    <File Name="include/IGUIElement.h"/>
+    <File Name="include/IGUIElementFactory.h"/>
+    <File Name="include/IGUIEnvironment.h"/>
+    <File Name="include/IGUIFileOpenDialog.h"/>
+    <File Name="include/IGUIFont.h"/>
+    <File Name="include/IGUIFontBitmap.h"/>
+    <File Name="include/IGUIImage.h"/>
+    <File Name="include/IGUIImageList.h"/>
+    <File Name="include/IGUIInOutFader.h"/>
+    <File Name="include/IGUIListBox.h"/>
+    <File Name="include/IGUIMeshViewer.h"/>
+    <File Name="include/IGUIScrollBar.h"/>
+    <File Name="include/IGUISkin.h"/>
+    <File Name="include/IGUISpinBox.h"/>
+    <File Name="include/IGUISpriteBank.h"/>
+    <File Name="include/IGUIStaticText.h"/>
+    <File Name="include/IGUITabControl.h"/>
+    <File Name="include/IGUITable.h"/>
+    <File Name="include/IGUIToolbar.h"/>
+    <File Name="include/IGUITreeView.h"/>
+    <File Name="include/IGUIWindow.h"/>
+    <File Name="include/IImage.h"/>
+    <File Name="include/IImageLoader.h"/>
+    <File Name="include/IImageWriter.h"/>
+    <File Name="include/IIndexBuffer.h"/>
+    <File Name="include/ILightManager.h"/>
+    <File Name="include/ILightSceneNode.h"/>
+    <File Name="include/ILogger.h"/>
+    <File Name="include/IMaterialRenderer.h"/>
+    <File Name="include/IMaterialRendererServices.h"/>
+    <File Name="include/IMesh.h"/>
+    <File Name="include/IMeshBuffer.h"/>
+    <File Name="include/IMeshCache.h"/>
+    <File Name="include/IMeshLoader.h"/>
+    <File Name="include/IMeshManipulator.h"/>
+    <File Name="include/IMeshSceneNode.h"/>
+    <File Name="include/IMeshWriter.h"/>
+    <File Name="include/IMetaTriangleSelector.h"/>
+    <File Name="include/IOSOperator.h"/>
+    <File Name="include/IParticleAffector.h"/>
+    <File Name="include/IParticleAnimatedMeshSceneNodeEmitter.h"/>
+    <File Name="include/IParticleAttractionAffector.h"/>
+    <File Name="include/IParticleBoxEmitter.h"/>
+    <File Name="include/IParticleCylinderEmitter.h"/>
+    <File Name="include/IParticleEmitter.h"/>
+    <File Name="include/IParticleFadeOutAffector.h"/>
+    <File Name="include/IParticleGravityAffector.h"/>
+    <File Name="include/IParticleMeshEmitter.h"/>
+    <File Name="include/IParticleRingEmitter.h"/>
+    <File Name="include/IParticleRotationAffector.h"/>
+    <File Name="include/IParticleSphereEmitter.h"/>
+    <File Name="include/IParticleSystemSceneNode.h"/>
+    <File Name="include/IQ3LevelMesh.h"/>
+    <File Name="include/IQ3Shader.h"/>
+    <File Name="include/IRandomizer.h"/>
+    <File Name="include/IReadFile.h"/>
+    <File Name="include/IReferenceCounted.h"/>
+    <File Name="include/irrAllocator.h"/>
+    <File Name="include/irrArray.h"/>
+    <File Name="include/IrrCompileConfig.h"/>
+    <File Name="include/irrlicht.h"/>
+    <File Name="include/IrrlichtDevice.h"/>
+    <File Name="include/irrList.h"/>
+    <File Name="include/irrMap.h"/>
+    <File Name="include/irrMath.h"/>
+    <File Name="include/irrpack.h"/>
+    <File Name="include/irrString.h"/>
+    <File Name="include/irrTypes.h"/>
+    <File Name="include/irrunpack.h"/>
+    <File Name="include/irrXML.h"/>
+    <File Name="include/ISceneCollisionManager.h"/>
+    <File Name="include/ISceneLoader.h"/>
+    <File Name="include/ISceneManager.h"/>
+    <File Name="include/ISceneNode.h"/>
+    <File Name="include/ISceneNodeAnimator.h"/>
+    <File Name="include/ISceneNodeAnimatorCameraFPS.h"/>
+    <File Name="include/ISceneNodeAnimatorCameraMaya.h"/>
+    <File Name="include/ISceneNodeAnimatorCollisionResponse.h"/>
+    <File Name="include/ISceneNodeAnimatorFactory.h"/>
+    <File Name="include/ISceneNodeFactory.h"/>
+    <File Name="include/ISceneUserDataSerializer.h"/>
+    <File Name="include/IShaderConstantSetCallBack.h"/>
+    <File Name="include/IShadowVolumeSceneNode.h"/>
+    <File Name="include/ISkinnedMesh.h"/>
+    <File Name="include/ITerrainSceneNode.h"/>
+    <File Name="include/ITextSceneNode.h"/>
+    <File Name="include/ITexture.h"/>
+    <File Name="include/ITimer.h"/>
+    <File Name="include/ITriangleSelector.h"/>
+    <File Name="include/IVertexBuffer.h"/>
+    <File Name="include/IVideoDriver.h"/>
+    <File Name="include/IVideoModeList.h"/>
+    <File Name="include/IVolumeLightSceneNode.h"/>
+    <File Name="include/IWriteFile.h"/>
+    <File Name="include/IXMLReader.h"/>
+    <File Name="include/IXMLWriter.h"/>
+    <File Name="include/Keycodes.h"/>
+    <File Name="include/line2d.h"/>
+    <File Name="include/line3d.h"/>
+    <File Name="include/matrix4.h"/>
+    <File Name="include/path.h"/>
+    <File Name="include/plane3d.h"/>
+    <File Name="include/position2d.h"/>
+    <File Name="include/quaternion.h"/>
+    <File Name="include/rect.h"/>
+    <File Name="include/S3DVertex.h"/>
+    <File Name="include/SAnimatedMesh.h"/>
+    <File Name="include/SceneParameters.h"/>
+    <File Name="include/SColor.h"/>
+    <File Name="include/SExposedVideoData.h"/>
+    <File Name="include/SIrrCreationParameters.h"/>
+    <File Name="include/SKeyMap.h"/>
+    <File Name="include/SLight.h"/>
+    <File Name="include/SMaterial.h"/>
+    <File Name="include/SMaterialLayer.h"/>
+    <File Name="include/SMesh.h"/>
+    <File Name="include/SMeshBuffer.h"/>
+    <File Name="include/SMeshBufferLightMap.h"/>
+    <File Name="include/SMeshBufferTangents.h"/>
+    <File Name="include/SParticle.h"/>
+    <File Name="include/SSharedMeshBuffer.h"/>
+    <File Name="include/SSkinMeshBuffer.h"/>
+    <File Name="include/SVertexIndex.h"/>
+    <File Name="include/SVertexManipulator.h"/>
+    <File Name="include/SViewFrustum.h"/>
+    <File Name="include/triangle3d.h"/>
+    <File Name="include/vector2d.h"/>
+    <File Name="include/vector3d.h"/>
+  </VirtualDirectory>
+  <Settings Type="Static Library">
+    <GlobalSettings>
+      <Compiler Options="-Wno-unused-parameter;-fno-exceptions" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+        <IncludePath Value="./include"/>
+        <IncludePath Value="./source"/>
+        <IncludePath Value="./source/zlib"/>
+        <IncludePath Value="./source/libpng"/>
+        <IncludePath Value="./source/jpeglib"/>
+        <Preprocessor Value="_IRR_STATIC_LIB_"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="/usr/X11R6/lib"/>
+        <LibraryPath Value="/usr/local/lib"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;" C_Options="-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <Preprocessor Value="_DEBUG"/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="../Bin/Debug/irrlicht" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O3;" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/lib$(ProjectName).a" IntermediateDirectory="../Bin/Release/irrlicht" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

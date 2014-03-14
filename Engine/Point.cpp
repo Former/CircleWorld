@@ -26,7 +26,7 @@ namespace CircleEngine
 		const CoordinateType absY = abs(y - a_OtherPoint.y);
 		const CoordinateType absZ = abs(z - a_OtherPoint.z);
 
-		if (absX > a_Distance || absY > a_Distance || absY > a_Distance)
+		if (absX > a_Distance || absY > a_Distance || absZ > a_Distance)
 			return false;
 		
 		const CoordinateType dist2 = (absX * absX) + (absY * absY) + (absZ * absZ);
