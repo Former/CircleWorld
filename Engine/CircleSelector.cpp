@@ -486,7 +486,7 @@ namespace CircleEngine
 	{
 		a_NearData->NearObjects.resize(0);
 		a_NearData->NearArray.resize(0);
-		const CircleObjectPtr& curObj 	= m_Objects[a_CurIndex];
+
 		for (size_t i = 0; i < m_Objects.size(); i++)
 		{
 			if (i == a_CurIndex)

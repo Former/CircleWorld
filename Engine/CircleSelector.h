@@ -255,7 +255,12 @@ protected:
 		public:
 			CircleObjectPtr m_CircleObject;
 			OrderAreaType m_Order;
-			CoordinateType m_DivOrder;
+			CoordinateType m_DivAreaRadius;
+			CoordinateType m_AreaRadius;
+
+			Point m_AreaPointOne;
+			Point m_AreaPointTwo;
+
 			std::vector<AreaPtr> NearAreas;
 		};
 
@@ -533,7 +538,8 @@ protected:
 			ObjectPtr new_obj(new Object());
 			new_obj->m_CircleObject = a_Object;
 			new_obj->m_Order = GetOrder(new_obj->m_CircleObject->Radius, m_ZeroAreaSize, 5.0);
-			new_obj->m_DivOrder = 1.0 / (m_ZeroAreaSize * pow(2.0, new_obj->m_Order));
+			new_obj->m_AreaRadius = m_ZeroAreaSize * pow(2.0, new_obj->m_Order);
+			new_obj->m_DivAreaRadius = 1.0 / new_obj->m_AreaRadius;
 			m_Objects.push_back(new_obj);
 		}
 		
@@ -591,7 +597,15 @@ protected:
 				const ObjectPtr& cur_obj = m_Objects[i];
 				const OrderAreaType& order = cur_obj->m_Order;
 				
-				std::vector<AreaPtr> new_areas = GetNearAreas(cur_obj->m_CircleObject, order, cur_obj->m_DivOrder);
+				if (!(cur_obj->m_AreaPointOne == Point()))
+				{
+					Point one = cur_obj->m_CircleObject->Center - cur_obj->m_AreaPointOne;
+					Point two = cur_obj->m_AreaPointTwo - cur_obj->m_CircleObject->Center;
+					if (one.x > 0 && one.y > 0 && one.z > 0 && two.x > 0 && two.y > 0 && two.z > 0)
+						continue;
+				}
+
+				std::vector<AreaPtr> new_areas = GetNearAreas(cur_obj->m_CircleObject, order, cur_obj->m_DivAreaRadius);
 				std::vector<AreaPtr>& old_areas = cur_obj->NearAreas;
 				
 				for (size_t j = 0; j < new_areas.size(); ++j)
@@ -608,6 +622,19 @@ protected:
 						cur_area->DeleteObject(cur_obj);					
 				}
 				
+				if (new_areas.size() == 1)
+				{
+					AreaPtr& cur_area = new_areas[0];
+
+					cur_obj->m_AreaPointOne = Point(cur_area->m_Center.x * cur_obj->m_AreaRadius, cur_area->m_Center.y * cur_obj->m_AreaRadius, cur_area->m_Center.z * cur_obj->m_AreaRadius);
+					cur_obj->m_AreaPointTwo = Point(cur_obj->m_AreaRadius, cur_obj->m_AreaRadius, cur_obj->m_AreaRadius);
+				}
+				else
+				{
+					cur_obj->m_AreaPointOne = Point();
+					cur_obj->m_AreaPointTwo = Point();
+				}
+
 				old_areas = new_areas;
 			}
 			

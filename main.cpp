@@ -106,7 +106,7 @@ void DebugOtput(const std::string& string)
 	glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
 	glRasterPos2i(-10, -200);
 	glColor3d(1.0, 1.0, 1.0);
-	for(int i =0; i < string.size(); i++)
+	for(size_t i =0; i < string.size(); i++)
 	{
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
 	}  
@@ -246,7 +246,7 @@ int main(int argc, char** argv)
 	g_LinesSelector = pairBarSelector;
 
 	OBJ_Data obj_data;
-	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
+	if (LoadObjFile(&obj_data, "FullCar.obj"))
 	{
 		CircleEngine::Point center = CircleEngine::Point(0,-175,0);
 		CircleEngine::Point scale = CircleEngine::Point(30,30,30);
@@ -318,7 +318,7 @@ int main(int argc, char** argv)
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 15000; i++)
+	for (size_t i = 0; i < 7000; i++)
 	{
 		CircleEngine::CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
