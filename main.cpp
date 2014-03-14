@@ -246,7 +246,7 @@ int main(int argc, char** argv)
 	g_LinesSelector = pairBarSelector;
 
 	OBJ_Data obj_data;
-	if (LoadObjFile(&obj_data, "FullCar.obj"))
+	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
 	{
 		CircleEngine::Point center = CircleEngine::Point(0,-175,0);
 		CircleEngine::Point scale = CircleEngine::Point(30,30,30);

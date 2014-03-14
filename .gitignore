@@ -10,3 +10,5 @@ core
 *.[Tt][Uu]
 *.[Dd][Bb]
 *.session
+*.clang
+*.codelite
