@@ -21,15 +21,16 @@ CircleCoordinator::CircleCoordinator()
 
 void CircleCoordinator::AddObject(const ObjectPtr& a_Object, irr::video::IVideoDriver* a_Driver, irr::scene::ISceneManager* a_SMgr)
 {
-	irr::scene::ISceneNode* sphere_node = a_SMgr->addSphereSceneNode(m_Scale * a_Object->Obj->Radius);
+	/*irr::scene::ISceneNode* sphere_node = a_SMgr->addSphereSceneNode(m_Scale * a_Object->Obj->Radius, a_Object->Detal);
     if (sphere_node)
     {
-        sphere_node->setPosition(irr::core::vector3df(0,0,0));		
-        sphere_node->setMaterialTexture(0, a_Driver->getTexture("../../media/wall.jpg"));
-        sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		sphere_node->setPosition(irr::core::vector3df(0,0,0));
+		sphere_node->setMaterialTexture(0, a_Driver->getTexture("../../media/wall.jpg"));
+		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     }
 
-	a_Object->IrrObject = sphere_node;
+	a_Object->IrrObject = sphere_node;*/
+	a_Object->IrrObject = 0;
 	m_Objects[a_Object->Obj->GetID()] = a_Object;
 }
 

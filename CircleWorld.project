@@ -54,7 +54,6 @@
         <IncludePath Value="."/>
         <IncludePath Value="./Engine"/>
         <IncludePath Value="./irrlicht/include"/>
-        <Preprocessor Value="__WX__"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>

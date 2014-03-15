@@ -1,6 +1,9 @@
-//#include <GL/gl.h>
-//#include <GL/glu.h>
-//#include <GL/glut.h>
+#include <irrlicht.h>
+#include "driverChoice.h"
+
+#ifdef _MSC_VER
+#pragma comment(lib, "Irrlicht.lib")
+#endif
 
 #include <string>
 #include <sstream>
@@ -17,91 +20,6 @@ std::mutex g_GuiMutex;
 size_t s_PhysCount = 0;
 GetWorkTime	g_WorkTime;
 
-/*
-void OnResize(int width,int height)
-{
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	if (height)
-		gluPerspective(30.0f, width / height, 0.1f, 1500.0f);
-	gluLookAt(0,-800,20, 0,0,0, 0,1,0);
-	glMatrixMode(GL_MODELVIEW);
-}    
-
-void OnExit();
-
-CircleCoordinator g_CircleCoordinator;
-CircleEngine::PairBarSelectorPtr g_LinesSelector;
-size_t s_DrawCount = 0;
-std::thread* g_PhysThreag;
-
-struct SExiter
-{
-	~SExiter()
-	{
-		OnExit();
-	}
-} g_Exiter;
-
-void OnExit()
-{
-	g_NeedExit = true;
-	//g_PhysThreag->join();
-}
-
-void OnKeyboard(unsigned char key, int x, int y)
-{
-	std::vector<std::pair<size_t, size_t> > well_index;
-	well_index.push_back(std::pair<size_t, size_t>(5, 6));
-	well_index.push_back(std::pair<size_t, size_t>(57, 58));
-	well_index.push_back(std::pair<size_t, size_t>(116, 118));
-	well_index.push_back(std::pair<size_t, size_t>(145, 147));
-	static int index = 145; // 5, 57, 116(118), 145(147)
-	static double dir = 1.0;
-
-	switch (key)
-	{
-	case 'a':
-		glRotated(-1, 0, 0, 1); 			
-		break;
-	case 'd':
-		glRotated(1, 0, 0, 1); 			
-		break;
-	case 'w':
-		glRotated(-1, 1, 0, 0); 			
-		break;
-	case 's':
-		glRotated(1, 1, 0, 0);
-		break;
-	case 'r':
-		{
-			for (size_t i = 0; i < well_index.size(); ++i)
-			{
-				const std::pair<size_t, size_t>& cur_pair = well_index[i];
-				
-				std::vector<CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
-				CircleEngine::Point difCenter = (objectConts[cur_pair.first]->Obj->Center - objectConts[cur_pair.second]->Obj->Center);
-				difCenter = difCenter / difCenter.Distance(CircleEngine::Point(0,0,0));
-				objectConts[cur_pair.first]->Obj->Velocity =  difCenter * 2500.0 * dir;
-			}
-		}
-		break;
-	case 't':
-		{
-			std::vector<CircleCoordinator::ObjectPtr> objectConts = g_CircleCoordinator.GetObjects();
-			objectConts[index]->Obj->Velocity = (objectConts[index]->Obj->Center - objectConts[index + 1]->Obj->Center) * 150.0 * dir;
-		}
-		break;
-	case 'i':
-		index++;
-		break;
-	case 'o':
-		dir *= -1.0;
-		break;
-	}
-}
-*/
 void PhysicsThread(CircleCoordinator& a_Coordinator)
 {
 	try
@@ -131,33 +49,43 @@ CircleCoordinator::ObjectPtr CreateNewObject()
 	return objContainer;
 }
 
-#include <irrlicht.h>
-#include "driverChoice.h"
-
-#ifdef _MSC_VER
-#pragma comment(lib, "Irrlicht.lib")
-#endif
-
-class MyEventReceiver : public irr::IEventReceiver
+class SystemEventReceiver : public irr::IEventReceiver
 {
 public:
 
-	MyEventReceiver(irr::scene::ISceneNode* skydome) :
-		Skydome(skydome), showDebug(false)
+	SystemEventReceiver(irr::scene::ISceneNode* skydome, CircleCoordinator& a_Coordinator) :
+		Skydome(skydome), m_Coordinator(a_Coordinator)
 	{
 		Skydome->setVisible(true);
 	}
 
 	bool OnEvent(const irr::SEvent& event)
 	{
-		// check if user presses the key 'W' or 'D'
-		if (event.EventType == irr::EET_KEY_INPUT_EVENT && !event.KeyInput.PressedDown)
+		std::vector<std::pair<size_t, size_t> > well_index;
+		well_index.push_back(std::pair<size_t, size_t>(5, 6));
+		well_index.push_back(std::pair<size_t, size_t>(57, 58));
+		well_index.push_back(std::pair<size_t, size_t>(116, 118));
+		well_index.push_back(std::pair<size_t, size_t>(145, 147));
+		static int index = 145; // 5, 57, 116(118), 145(147)
+		static double dir = 1.0;
+
+		if (event.EventType == irr::EET_KEY_INPUT_EVENT) //  && !event.KeyInput.PressedDown
 		{
 			switch (event.KeyInput.Key)
 			{
-			case irr::KEY_KEY_X: // toggle debug information
-				showDebug=!showDebug;
-				return true;
+			case irr::KEY_KEY_R:
+				{
+					for (size_t i = 0; i < well_index.size(); ++i)
+					{
+						const std::pair<size_t, size_t>& cur_pair = well_index[i];
+						
+						std::vector<CircleCoordinator::ObjectPtr> objectConts = m_Coordinator.GetObjects();
+						CircleEngine::Point difCenter = (objectConts[cur_pair.first]->Obj->Center - objectConts[cur_pair.second]->Obj->Center);
+						difCenter = difCenter / difCenter.Distance(CircleEngine::Point(0,0,0));
+						objectConts[cur_pair.first]->Obj->Velocity =  difCenter * 2500.0 * dir;
+					}
+				}
+				break;
 			default:
 				break;
 			}
@@ -168,7 +96,7 @@ public:
 
 private:
 	irr::scene::ISceneNode* Skydome;
-	bool showDebug;
+	CircleCoordinator& m_Coordinator;
 };
 
 void OnDisplay(CircleCoordinator& a_Coordinator)
@@ -186,37 +114,43 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 		CircleEngine::CircleObjectPtr circle_obj = obj->Obj;
 		
 		CircleEngine::Point draw_point = circle_obj->Center * a_Coordinator.m_Scale;
-		obj->IrrObject->setPosition(irr::core::vector3df(draw_point.x, draw_point.y, draw_point.z));
+		if (obj->IrrObject)
+			obj->IrrObject->setPosition(irr::core::vector3df(draw_point.x, draw_point.y, draw_point.z));
 	}
-	
-/*	// Draw lines	
-	glLineWidth(2); // ширина линии 
-	glBegin(GL_LINES);
-	for (CircleEngine::PairBarSelector::IteratorPtr it = g_LinesSelector->Begin(); !it->IsEnd(); it->Next())
-	{			
-		const CircleEngine::CircleObjectPtr& obj1 = it->GetFirst();
-		const CircleEngine::CircleObjectPtr& obj2 = it->GetSecond();
-		
-		glColor3d(1, 1, 1);
-		glVertex3d(obj1->Center.x, obj1->Center.y, obj1->Center.z);
-		glVertex3d(obj2->Center.x, obj2->Center.y, obj2->Center.z);
-	}
-	glEnd();
-	
-	// Draw FPS
-	s_DrawCount++;
-	std::stringstream sstr;
-	sstr << "fps " << s_DrawCount / g_WorkTime.GetCurrentTime() << " ph/ps " << s_PhysCount / g_WorkTime.GetCurrentTime();
-	DebugOtput(sstr.str());
-	
-	if (s_DrawCount > 100)
-	{
-		g_WorkTime.Start();
-		s_DrawCount = 0;
-		s_PhysCount = 0;
-	}	
+}
 
-	glutSwapBuffers();*/
+irr::scene::SMeshBuffer* CreateMeshFromArray(irr::core::vector3df a_CenterPoint, const irr::video::SMaterial& a_Material)
+{
+	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer();
+	
+	return buffer;
+}
+
+irr::scene::SMeshBuffer* CreateMeshScuare(irr::core::vector3df a_Point, const irr::video::SMaterial& a_Material)
+{
+	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer();
+
+	irr::u32 u[6] = {0, 1, 2, 0, 3, 1};
+	buffer->Indices.set_used(6);
+	for (irr::u32 i = 0; i < 6; ++i)
+		buffer->Indices[i] = u[i];
+
+	buffer->Vertices.set_used(4);
+
+	double SIZEh = 500.0;
+	
+	irr::video::SColor clr(255,255,255,255);
+	irr::video::SColor clr1(255,0,0,255);
+	
+	buffer->Vertices[0] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh, -1, 1,-1, clr, 1, 1);
+	buffer->Vertices[1] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh,  1, 1, 1, clr1, 0, 0);
+	buffer->Vertices[2] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh,  1, 1,-1, clr1, 0, 1);
+	buffer->Vertices[3] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh, -1, 1, 1, clr, 1, 0);
+
+	buffer->Material = a_Material;
+	buffer->setDirty();
+	
+	return buffer;
 }
 
 int main()
@@ -258,14 +192,6 @@ int main()
 
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
-	
-	irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(500.0);
-    if (sphere_node)
-    {
-        sphere_node->setPosition(irr::core::vector3df(0,0,30));
-        sphere_node->setMaterialTexture(0, driver->getTexture("../../media/wall.jpg"));
-        sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    }
 	
 	CircleEngine::SequenceSelectorPtr allSeqSelector(new CircleEngine::SequenceSelector); 
 	CircleEngine::PairNearSelectorPtr allCrossNearSelector(new CircleEngine::PairNearSelector(20)); 
@@ -347,7 +273,7 @@ int main()
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 7000; i++)
+	for (size_t i = 0; i < 5000; i++)
 	{
 		CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
@@ -411,12 +337,35 @@ int main()
 	std::thread phys_th(PhysicsThread, std::ref(circle_coordinator));
 
 	driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
-	irr::scene::ISceneNode* skydome=smgr->addSkyDomeSceneNode(driver->getTexture("../../media/Tycho_catalog_skymap_v2.0_(threshold_magnitude_3.0,_low-res).png"),16,8,0.95f,2.0f);
+	irr::scene::ISceneNode* skydome = smgr->addSkyDomeSceneNode(driver->getTexture("../../media/Tycho_catalog_skymap_v2.0_(threshold_magnitude_3.0,_low-res).png"),16,8,0.95f,2.0f);
 	driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, true);
 
-	// create event receiver
-	MyEventReceiver receiver(skydome);
+	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
+
+
+	irr::video::SMaterial newMaterial;
+	newMaterial.setTexture(0, driver->getTexture("../../media/wall.jpg"));
+	irr::video::SMaterial newMaterial1;
+	newMaterial1.setTexture(0, driver->getTexture("../../media/wall1.jpg"));
+	
+	irr::core::vector3df point = irr::core::vector3df(0, 0, 0);
+	irr::core::vector3df point1 = irr::core::vector3df(1000, 0, 0);
+
+	irr::scene::SMeshBuffer* buffer = CreateMeshScuare(point, newMaterial);
+	irr::scene::SMeshBuffer* buffer1 = CreateMeshScuare(point1, newMaterial1);
+
+	irr::scene::SMesh* mesh = new irr::scene::SMesh();
+	mesh->addMeshBuffer(buffer);
+	mesh->addMeshBuffer(buffer1);
+	mesh->recalculateBoundingBox();
+
+	irr::scene::ISceneNode* new_node = smgr->addMeshSceneNode(mesh);
+    if (new_node)
+    {
+		new_node->setPosition(irr::core::vector3df(0,0,0));
+		new_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }	
 
 	OnDisplay(circle_coordinator);
 
@@ -446,7 +395,6 @@ int main()
 			device->setWindowCaption(str.c_str());
 			lastFPS = fps;
 		}
-		sphere_node->setPosition(sphere_node->getPosition() + irr::core::vector3df(0,0,1));
 		OnDisplay(circle_coordinator);
 	}
 
