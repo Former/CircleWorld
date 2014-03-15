@@ -119,11 +119,216 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 	}
 }
 
-irr::scene::SMeshBuffer* CreateMeshFromArray(irr::core::vector3df a_CenterPoint, const irr::video::SMaterial& a_Material)
+struct CircleItem
+{
+	CircleItem()
+	{
+		m_Type = tpNone;
+	}
+	
+	enum Type
+	{
+		tpNone,
+		tpSolid,
+	};
+	
+	Type m_Type;
+	irr::video::SColor m_Color;
+};
+
+typedef std::vector<CircleItem> CircleVectorX;
+typedef std::vector<CircleVectorX> CircleVectorY;
+typedef std::vector<CircleVectorY> CircleVectorZ;
+
+static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const irr::u32 a_PointNumbers[4])
+{
+	const irr::u32 used[6] = {1, 3, 0, 2, 1, 0}; // {0, 1, 2, 0, 3, 1}; // 
+	for (irr::u32 i = 0; i < 6; ++i)
+		a_MeshBuffer->Indices.push_back(a_PointNumbers[used[i]]);
+}
+
+typedef std::shared_ptr<irr::video::SMaterial> SMaterialPtr;
+
+static SMaterialPtr GetMaterialFromType(const CircleItem::Type& a_Type)
+{
+	static SMaterialPtr result;
+	if (!result)
+	{
+		result = SMaterialPtr(new irr::video::SMaterial);
+		//result->setTexture(0, driver->getTexture("../../media/wall.jpg"))
+	}
+	
+	return result;
+}
+
+static irr::core::vector3df MakeCurPoint(const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
+{
+	irr::core::vector3df result = a_Diff;
+	result.X += (a_CurPoint[0] * a_Step) - a_MaxPoint[0] * a_Step * 0.5;
+	result.Y += (a_CurPoint[1] * a_Step) - a_MaxPoint[1] * a_Step * 0.5;
+	result.Z += (a_CurPoint[2] * a_Step) - a_MaxPoint[2] * a_Step * 0.5;
+	
+	return result;
+}
+
+static irr::scene::SMeshBuffer* CreateMeshBuffer(const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
 {
 	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer();
 	
+	const double& step = a_Step;
+	const irr::core::vector3df points[8] = 
+	{
+		irr::core::vector3df(0, 0, 0),
+		irr::core::vector3df(0, step, 0),
+		irr::core::vector3df(step, 0, 0),
+		irr::core::vector3df(step, step, 0),
+		irr::core::vector3df(0, 0, step),
+		irr::core::vector3df(0, step, step),
+		irr::core::vector3df(step, 0, step),
+		irr::core::vector3df(step, step, step),
+	}; 
+
+	const irr::core::vector2d<irr::f32> texture_index[8] = 
+	{
+		irr::core::vector2d<irr::f32>(1, 1),
+		irr::core::vector2d<irr::f32>(0, 0),
+		irr::core::vector2d<irr::f32>(0, 1),
+		irr::core::vector2d<irr::f32>(1, 0),
+		irr::core::vector2d<irr::f32>(1, 1),
+		irr::core::vector2d<irr::f32>(0, 0),
+		irr::core::vector2d<irr::f32>(0, 1),
+		irr::core::vector2d<irr::f32>(1, 0),
+	};
+	
+	const irr::video::SColor& color1 = a_Item.m_Color;
+	const irr::video::SColor color[8]
+	{
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+		irr::video::SColor(color1),
+	};
+
+	buffer->Vertices.set_used(0);
+	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
+	{
+		irr::core::vector3df point = MakeCurPoint(a_CurPoint, a_MaxPoint, a_Step, points[i]);
+		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), color[i], texture_index[i]);
+		
+		buffer->Vertices.push_back(new_item);
+	}
+
+	buffer->Material = *GetMaterialFromType(a_Item.m_Type);
+	
 	return buffer;
+}
+
+static std::vector<int> SummVector(const std::vector<int>& a_Point1, const std::vector<int>& a_Point2)
+{
+	std::vector<int> result = a_Point1;
+	for (size_t i = 0; i < result.size() && i < a_Point2.size(); ++i)
+		result[i] += a_Point2[i];
+
+	return result;
+}
+
+static bool CheckInsideVector(const std::vector<int>& a_Point, const std::vector<int>& a_MaxPoint)
+{
+	for (size_t i = 0; i < a_Point.size() && i < a_MaxPoint.size(); ++i)
+	{
+		const int& cur_index = a_Point[i];
+		const int& cur_max_index = a_MaxPoint[i];
+		if (cur_index < 0)
+			return false;
+
+		if (cur_index >= cur_max_index)
+			return false;
+	}
+
+	return true;
+}
+
+static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
+{
+	if (a_Item.m_Type == CircleItem::tpNone)
+		return 0;
+		
+	irr::scene::SMeshBuffer* buffer = 0;
+	
+	const irr::u32 point_numbers[6][4] = 
+	{
+		{0, 3, 1, 2},
+		{2, 7, 3, 6},
+		{6, 5, 7, 4},
+		{4, 1, 5, 0},
+		{3, 5, 1, 7},
+		{0, 6, 2, 4},
+	};
+
+	const std::vector< std::vector<int> > near_item_index =
+	{
+		{0, 0, -1},
+		{1, 0, 0},
+		{0, 0, 1},
+		{-1, 0, 0},
+		{0, 1, 0},
+		{0, -1, 0},		
+	};
+
+	for (size_t i = 0; i < near_item_index.size(); ++i)
+	{
+		const std::vector<int>& cur_index = near_item_index[i];
+ 		std::vector<int> near_item_index = SummVector(cur_index, a_CurPoint);
+		
+		if (CheckInsideVector(near_item_index, a_MaxPoint))
+		{		
+			const CircleItem& near_item = a_ObjectData[near_item_index[2]][near_item_index[1]][near_item_index[0]];
+			if (near_item.m_Type != CircleItem::tpNone)
+				continue;
+		}
+		
+		if (!buffer)
+			buffer = CreateMeshBuffer(a_Item, a_CurPoint, a_MaxPoint, a_Step);
+			
+		AddMeshFace(buffer, point_numbers[i]);
+	}
+
+	if (buffer)
+		buffer->setDirty();
+	
+	return buffer;
+}
+
+irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step)
+{
+	irr::scene::SMesh* mesh = new irr::scene::SMesh();
+	
+	for (size_t z = 0; z < a_ObjectData.size(); ++z)
+	{
+		const CircleVectorY& y_items = a_ObjectData[z];
+		for (size_t y = 0; y < y_items.size(); ++y)
+		{
+			const CircleVectorX& x_items = y_items[y];
+			for (size_t x = 0; x < x_items.size(); ++x)
+			{
+				const CircleItem& item = x_items[x];
+				
+				std::vector<int> cur_point = {int(x), int(y), int(z)};
+				std::vector<int> max_point = {int(x_items.size()), int(y_items.size()), int(a_ObjectData.size())};
+				
+				irr::scene::SMeshBuffer* buffer = CreateMeshItem(a_ObjectData, item, cur_point, max_point, a_Step);
+				if (buffer)
+					mesh->addMeshBuffer(buffer);
+			}
+		}
+	}
+	
+	mesh->recalculateBoundingBox();
+	return mesh;
 }
 
 irr::scene::SMeshBuffer* CreateMeshScuare(irr::core::vector3df a_Point, const irr::video::SMaterial& a_Material)
@@ -142,10 +347,10 @@ irr::scene::SMeshBuffer* CreateMeshScuare(irr::core::vector3df a_Point, const ir
 	irr::video::SColor clr(255,255,255,255);
 	irr::video::SColor clr1(255,0,0,255);
 	
-	buffer->Vertices[0] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh, -1, 1,-1, clr, 1, 1);
-	buffer->Vertices[1] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh,  1, 1, 1, clr1, 0, 0);
-	buffer->Vertices[2] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh,  1, 1,-1, clr1, 0, 1);
-	buffer->Vertices[3] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh, -1, 1, 1, clr, 1, 0);
+	buffer->Vertices[0] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh, 0, 0, 1, clr, 1, 1);
+	buffer->Vertices[1] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh, 0, 0, 1, clr1, 0, 0);
+	buffer->Vertices[2] = irr::video::S3DVertex(a_Point.X+SIZEh, a_Point.Y+SIZEh, a_Point.Z-SIZEh, 0, 0, 1, clr1, 0, 1);
+	buffer->Vertices[3] = irr::video::S3DVertex(a_Point.X-SIZEh, a_Point.Y+SIZEh, a_Point.Z+SIZEh, 0, 0, 1, clr, 1, 0);
 
 	buffer->Material = a_Material;
 	buffer->setDirty();
@@ -366,7 +571,42 @@ int main()
 		new_node->setPosition(irr::core::vector3df(0,0,0));
 		new_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     }	
-
+	
+	size_t size = 32;
+	CircleVectorZ object;
+	object.resize(size);
+	for (size_t z = 0; z < object.size(); ++z)
+	{
+		CircleVectorY& y_items = object[z];
+		y_items.resize(size);
+		for (size_t y = 0; y < y_items.size(); ++y)
+		{
+			CircleVectorX& x_items = y_items[y];
+			x_items.resize(size);
+			for (size_t x = 0; x < x_items.size(); ++x)
+			{
+				CircleItem& item = x_items[x];
+				item.m_Color = irr::video::SColor(x * 255 / size, y * 255 / size, z * 255 / size, 255);
+				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
+				irr::core::vector3df max_vector(x_items.size(), y_items.size(), object.size());
+				irr::core::vector3df center_vector = cur_vector - max_vector * 0.5;
+				if (center_vector.getLengthSQ() < 0.25 * size * size)
+					item.m_Type = CircleItem::tpSolid;
+			}
+		}		
+	}
+	
+	irr::scene::SMesh* mesh1 = CreateMeshFromObjectData(object, 50.0);
+	irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh1);
+    if (object_node)
+    {
+		object_node->setPosition(irr::core::vector3df(0,0,0));
+		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		object_node->setMaterialFlag(irr::video::EMF_GOURAUD_SHADING, false);
+		object_node->setMaterialFlag(irr::video::EMF_BILINEAR_FILTER, false);	
+		object_node->setMaterialFlag(irr::video::EMF_ANTI_ALIASING, false);
+    }
+	
 	OnDisplay(circle_coordinator);
 
 	int lastFPS = -1;
