@@ -171,6 +171,27 @@ static irr::core::vector3df MakeCurPoint(const std::vector<int>& a_CurPoint, con
 	return result;
 }
 
+static void Append(irr::scene::SMeshBuffer* a_InOut, const irr::scene::SMeshBuffer* const a_Other)
+{
+	if (a_InOut == a_Other)
+		return;
+
+	const irr::u32 vertexCount = a_InOut->getVertexCount();
+
+	a_InOut->Vertices.reallocate(vertexCount+a_Other->getVertexCount());
+	for (irr::u32 i=0; i<a_Other->getVertexCount(); ++i)
+	{
+		a_InOut->Vertices.push_back(reinterpret_cast<const irr::video::S3DVertex*>(a_Other->getVertices())[i]);
+	}
+
+	a_InOut->Indices.reallocate(a_InOut->getIndexCount()+a_Other->getIndexCount());
+	for (irr::u32 i=0; i<a_Other->getIndexCount(); ++i)
+	{
+		a_InOut->Indices.push_back(a_Other->getIndices()[i]+vertexCount);
+	}
+	a_InOut->BoundingBox.addInternalBox(a_Other->getBoundingBox());
+}
+
 static irr::scene::SMeshBuffer* CreateMeshBuffer(const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
 {
 	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer();
@@ -222,7 +243,7 @@ static irr::scene::SMeshBuffer* CreateMeshBuffer(const CircleItem& a_Item, const
 		buffer->Vertices.push_back(new_item);
 	}
 
-	buffer->Material = *GetMaterialFromType(a_Item.m_Type);
+	//buffer->Material = *GetMaterialFromType(a_Item.m_Type);
 	
 	return buffer;
 }
@@ -251,6 +272,8 @@ static bool CheckInsideVector(const std::vector<int>& a_Point, const std::vector
 
 	return true;
 }
+
+static int s_AddFaceCount = 0;
 
 static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
 {
@@ -293,7 +316,8 @@ static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData
 		
 		if (!buffer)
 			buffer = CreateMeshBuffer(a_Item, a_CurPoint, a_MaxPoint, a_Step);
-			
+		
+		++s_AddFaceCount;
 		AddMeshFace(buffer, point_numbers[i]);
 	}
 
@@ -306,6 +330,7 @@ static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData
 irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step)
 {
 	irr::scene::SMesh* mesh = new irr::scene::SMesh();
+	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer;
 	
 	for (size_t z = 0; z < a_ObjectData.size(); ++z)
 	{
@@ -320,13 +345,16 @@ irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, c
 				std::vector<int> cur_point = {int(x), int(y), int(z)};
 				std::vector<int> max_point = {int(x_items.size()), int(y_items.size()), int(a_ObjectData.size())};
 				
-				irr::scene::SMeshBuffer* buffer = CreateMeshItem(a_ObjectData, item, cur_point, max_point, a_Step);
-				if (buffer)
-					mesh->addMeshBuffer(buffer);
+				irr::scene::SMeshBuffer* new_buffer = CreateMeshItem(a_ObjectData, item, cur_point, max_point, a_Step);
+				if (new_buffer)
+					Append(buffer, new_buffer);
+					//mesh->addMeshBuffer(new_buffer);
 			}
 		}
 	}
 	
+	buffer->setDirty();
+	mesh->addMeshBuffer(buffer);
 	mesh->recalculateBoundingBox();
 	return mesh;
 }
@@ -478,7 +506,7 @@ int main()
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 5000; i++)
+	for (size_t i = 0; i < 500; i++)
 	{
 		CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 		
@@ -598,14 +626,21 @@ int main()
 	
 	irr::scene::SMesh* mesh1 = CreateMeshFromObjectData(object, 50.0);
 	irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh1);
-    if (object_node)
-    {
+	if (object_node)
+	{
 		object_node->setPosition(irr::core::vector3df(0,0,0));
 		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		object_node->setMaterialFlag(irr::video::EMF_GOURAUD_SHADING, false);
 		object_node->setMaterialFlag(irr::video::EMF_BILINEAR_FILTER, false);	
 		object_node->setMaterialFlag(irr::video::EMF_ANTI_ALIASING, false);
-    }
+	}
+	
+	/*irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(500, 200);
+	if (sphere_node)
+	{
+		sphere_node->setPosition(irr::core::vector3df(0,0,0));
+		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	}*/
 	
 	OnDisplay(circle_coordinator);
 
@@ -635,11 +670,12 @@ int main()
 			device->setWindowCaption(str.c_str());
 			lastFPS = fps;
 		}
-		OnDisplay(circle_coordinator);
+		//OnDisplay(circle_coordinator);
 	}
 
 	device->drop();
 	
+	std::cout << s_AddFaceCount << " ";
 	g_NeedExit = true;
 	phys_th.join();
 	
