@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="CircleWorld" InternalType="GUI">
   <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
 		"name":	"Debug",
@@ -22,9 +25,6 @@
 		"parentProject":	""
 	}]]]>
     </Plugin>
-    <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
-    </Plugin>
   </Plugins>
   <Description/>
   <Dependencies/>
@@ -33,8 +33,8 @@
     <File Name="GetWorkTime.cpp"/>
     <File Name="Import_Obj.h"/>
     <File Name="Import_Obj.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="include">
+    <File Name="CircleCoordinator.cpp"/>
+    <File Name="CircleCoordinator.h"/>
     <File Name="GetWorkTime.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Engine">
@@ -47,29 +47,30 @@
     <File Name="Engine/CircleSelector.cpp"/>
     <File Name="Engine/EngineRules.h"/>
     <File Name="Engine/EngineRules.cpp"/>
-    <File Name="Engine/CircleCoordinator.h"/>
-    <File Name="Engine/CircleCoordinator.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
-      <Compiler Options="-lrt;-std=c++0x" C_Options="-lrt" Assembler="">
+      <Compiler Options="-std=c++0x" C_Options="" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="./Engine"/>
         <IncludePath Value="./irrlicht/include"/>
         <Preprocessor Value="__WX__"/>
       </Compiler>
-      <Linker Options="-lrt;-lirrlicht">
+      <Linker Options="">
         <LibraryPath Value="."/>
         <LibraryPath Value="./$(IntermediateDirectory)/irrlicht"/>
+        <LibraryPath Value="/usr/X11R6/lib"/>
+        <LibraryPath Value="/usr/local/lib"/>
+        <Library Value="irrlicht"/>
+        <Library Value="rt"/>
         <Library Value="GLU"/>
         <Library Value="GL"/>
-        <Library Value="glut"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
-      <Linker Options="-mwindows;$(shell wx-config --libs --cxxflags --gl-libs --debug=yes --libs --unicode=yes)" Required="yes"/>
+      <Compiler Options="-g;" C_Options="-g;" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Linker Options="" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
@@ -104,8 +105,8 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;-O3;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-g;-O3;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
-      <Linker Options="-g;-O3;-mwindows;-s;$(shell wx-config --debug=no --libs --unicode=yes)" Required="yes"/>
+      <Compiler Options="-g;-O3" C_Options="-g;-O3" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Linker Options="-g;-O3;" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Release" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
