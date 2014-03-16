@@ -1,5 +1,6 @@
 #include "CreateMeshFromObjectData.h"
 #include <tr1/memory>
+#include <future>
 
 #define IN
 #define OUT
@@ -21,27 +22,6 @@ static irr::core::vector3df MakeCurPoint(const std::vector<int>& a_CurPoint, con
 	result.Z += (a_CurPoint[2] * a_Step) - a_MaxPoint[2] * a_Step * 0.5;
 	
 	return result;
-}
-
-static void Append(irr::scene::SMeshBuffer* a_InOut, const irr::scene::SMeshBuffer* const a_Other)
-{
-	if (a_InOut == a_Other)
-		return;
-
-	const irr::u32 vertexCount = a_InOut->getVertexCount();
-
-	a_InOut->Vertices.reallocate(vertexCount+a_Other->getVertexCount());
-	for (irr::u32 i=0; i<a_Other->getVertexCount(); ++i)
-	{
-		a_InOut->Vertices.push_back(reinterpret_cast<const irr::video::S3DVertex*>(a_Other->getVertices())[i]);
-	}
-
-	a_InOut->Indices.reallocate(a_InOut->getIndexCount()+a_Other->getIndexCount());
-	for (irr::u32 i=0; i<a_Other->getIndexCount(); ++i)
-	{
-		a_InOut->Indices.push_back(a_Other->getIndices()[i]+vertexCount);
-	}
-	a_InOut->BoundingBox.addInternalBox(a_Other->getBoundingBox());
 }
 
 static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
@@ -71,23 +51,10 @@ static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const Cir
 		irr::core::vector2d<irr::f32>(1, 0),
 	};
 	
-	const irr::video::SColor& color1 = a_Item.m_Color;
-	const irr::video::SColor color[8]
-	{
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-		irr::video::SColor(color1),
-	};
-
 	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
 	{
 		irr::core::vector3df point = MakeCurPoint(a_CurPoint, a_MaxPoint, a_Step, points[i]);
-		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), color[i], texture_index[i]);
+		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), a_Item.m_Color, texture_index[i]);
 		
 		a_Buffer->Vertices.push_back(new_item);
 	}
@@ -180,21 +147,36 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	}
 }
 
-irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep)
+namespace
 {
-	irr::scene::SMesh* mesh = new irr::scene::SMesh();
-	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer;
+	struct Point
+	{
+		Point(const int& a_X, const int& a_Y, const int& a_Z);
+		
+		int x;
+		int y;
+		int z;
+	};
 	
+	Point::Point(const int& a_X, const int& a_Y, const int& a_Z)
+	{
+		x = a_X;
+		y = a_Y;
+		z = a_Z;
+	}
+}
+
+static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep)
+{
 	ObjectBufferVector object_buffers;
 	
-	size_t i = 0;
-	for (size_t z = 0; z < a_ObjectData.size(); z += a_DrawStep)
+	for (size_t z = a_StartPoint.z; z < a_EndPoint.z; z += a_DrawStep)
 	{
 		const CircleVectorY& y_items = a_ObjectData[z];
-		for (size_t y = 0; y < y_items.size(); y += a_DrawStep)
+		for (size_t y = a_StartPoint.y; y < a_EndPoint.y; y += a_DrawStep)
 		{
 			const CircleVectorX& x_items = y_items[y];
-			for (size_t x = 0; x < x_items.size(); x += a_DrawStep)
+			for (size_t x = a_StartPoint.x; x < a_EndPoint.x; x += a_DrawStep)
 			{
 				const CircleItem& item = x_items[x];
 				
@@ -206,9 +188,16 @@ irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, c
 		}
 	}
 	
-	for (size_t type = 0; type < object_buffers.size(); ++type)
+	return object_buffers;	
+}
+
+static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVector& a_ObjectBuffer)
+{
+	irr::scene::SMesh* mesh = new irr::scene::SMesh();
+	
+	for (size_t type = 0; type < a_ObjectBuffer.size(); ++type)
 	{
-		const std::vector<irr::scene::SMeshBuffer*>& buffers = object_buffers[type];
+		const std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffer[type];
 		for (size_t i = 0; i < buffers.size(); ++i)
 		{
 			irr::scene::SMeshBuffer* buffer = buffers[i];
@@ -223,3 +212,68 @@ irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, c
 	
 	return mesh;
 }
+
+typedef std::pair<Point, Point> StartEndItem;
+typedef std::vector<std::pair<Point, Point>> StartEndVector;
+
+static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep)
+{
+	SMeshVector result;
+	for (size_t i = 0; i < a_Items.size(); ++i)
+	{
+		const StartEndItem& item = a_Items[i];
+		ObjectBufferVector cur_buf = CreateMeshFromObjectDataItem(item.first, item.second, a_ObjectData, a_Step, a_DrawStep);
+		
+		result.push_back(CreateMeshFormObjectBuffers(cur_buf));
+	}
+	
+	return result;
+}
+
+SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
+{	
+	const size_t max_z = int(a_ObjectData.size());
+	if (!max_z)
+		return SMeshVector();
+	const size_t max_y = int(a_ObjectData[0].size());
+	if (!max_y)
+		return SMeshVector();
+	const size_t max_x = int(a_ObjectData[0][0].size());
+	
+	size_t num_of_cpu = sysconf(_SC_NPROCESSORS_ONLN);
+	std::vector<StartEndVector> items(num_of_cpu);
+	size_t cur_cpu = 0;
+	
+	for (size_t z = 0; z < max_z; z += a_DivStep)
+	{
+		for (size_t y = 0; y < max_y; y += a_DivStep)
+		{
+			for (size_t x = 0; x < max_x; x += a_DivStep)
+			{
+				Point start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
+				Point end((std::min)(x + a_DivStep, max_x), (std::min)(y + a_DivStep, max_y), (std::min)(z + a_DivStep, max_z));
+				
+				items[cur_cpu].push_back(StartEndItem(start, end));
+				cur_cpu++;
+				if (cur_cpu >= num_of_cpu)
+					cur_cpu = 0;
+			}
+		}
+	}
+	
+	std::vector<std::future<SMeshVector>> worker_results;
+	for (size_t i = 0; i < items.size(); ++i)
+		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, std::ref(items[i]), std::ref(a_ObjectData), std::ref(a_Step), std::ref(a_DrawStep)));
+	
+	SMeshVector result;
+	for (size_t i = 0; i < worker_results.size(); ++i)
+	{
+		const SMeshVector& cur_tesult = worker_results[i].get();
+		
+		result.insert(result.end(), cur_tesult.begin(), cur_tesult.end());
+	}
+	
+	return result;
+}
+
+

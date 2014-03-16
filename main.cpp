@@ -341,18 +341,19 @@ int main()
 	
 	int nprocs = sysconf(_SC_NPROCESSORS_ONLN);
 	
-	size_t step = 1;
-	irr::scene::SMesh* mesh1 = CreateMeshFromObjectData(object, 50.0, step);
-	irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh1);
-	if (object_node)
+	size_t div_step = 20;
+	size_t draw_step = 1;
+	SMeshVector meshs = CreateMeshFromObjectData(object, 50.0, draw_step, div_step);
+	
+	for (size_t i = 0; i < meshs.size(); ++i)
 	{
-		object_node->setPosition(irr::core::vector3df(0,0,0));
-		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-		//object_node->setMaterialFlag(irr::video::EMF_GOURAUD_SHADING, false);
-		//object_node->setMaterialFlag(irr::video::EMF_BILINEAR_FILTER, false);	
-		//object_node->setMaterialFlag(irr::video::EMF_ANTI_ALIASING, false);
-		//object_node->setMaterialFlag(irr::video::EMF_WIREFRAME, true);
-		//object_node->setMaterialFlag(irr::video::EMF_POINTCLOUD, true);
+		irr::scene::SMesh* mesh = meshs[i];
+		irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh);
+		if (object_node)
+		{
+			object_node->setPosition(irr::core::vector3df(0,0,0));
+			object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		}
 	}
 	
 	OnDisplay(circle_coordinator);
