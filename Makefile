@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ irrlicht - Debug ]----------"
-	@cd "irrlicht" && $(MAKE) -f  "irrlicht.mk"
+	@echo "----------Building project:[ CircleWorld - Release ]----------"
+	@$(MAKE) -f  "CircleWorld.mk"
 clean:
-	@echo "----------Cleaning project:[ irrlicht - Debug ]----------"
-	@cd "irrlicht" && $(MAKE) -f  "irrlicht.mk" clean
+	@echo "----------Cleaning project:[ CircleWorld - Release ]----------"
+	@$(MAKE) -f  "CircleWorld.mk" clean

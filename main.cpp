@@ -319,6 +319,8 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
+	//static 
+
 	size_t size = 256;
 	CircleVectorZ object;
 	object.resize(size);
@@ -333,7 +335,7 @@ int main()
 			for (size_t x = 0; x < x_items.size(); ++x)
 			{
 				CircleItem& item = x_items[x];
-				item.m_Color = irr::video::SColor(x * 255 / size, y * 255 / size, z * 255 / size, 255);
+				item.m_Color = irr::video::SColor(x * 255 / size, y * 255 / size, z * 255 / size, 100);
 				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
 				irr::core::vector3df max_vector(x_items.size(), y_items.size(), object.size());
 				irr::core::vector3df center_vector = cur_vector - max_vector * 0.5;
