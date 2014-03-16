@@ -36,6 +36,8 @@
     <File Name="CircleCoordinator.cpp"/>
     <File Name="CircleCoordinator.h"/>
     <File Name="GetWorkTime.h"/>
+    <File Name="CreateMeshFromObjectData.h"/>
+    <File Name="CreateMeshFromObjectData.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Engine">
     <File Name="Engine/Point.h"/>
