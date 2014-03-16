@@ -38,6 +38,9 @@
     <File Name="GetWorkTime.h"/>
     <File Name="CreateMeshFromObjectData.h"/>
     <File Name="CreateMeshFromObjectData.cpp"/>
+    <File Name="LOD_Object.h"/>
+    <File Name="LOD_Object.cpp"/>
+    <File Name="Common.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Engine">
     <File Name="Engine/Point.h"/>

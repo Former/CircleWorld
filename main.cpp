@@ -1,23 +1,13 @@
-#include <irrlicht.h>
-#include "driverChoice.h"
-
-#ifdef _MSC_VER
-#pragma comment(lib, "Irrlicht.lib")
-#endif
-
-#include <string>
-#include <sstream>
-
-#include <thread>
-#include <mutex>
+#include "Common.h"
 
 #include "CircleCoordinator.h"
 #include "CreateMeshFromObjectData.h"
 #include "GetWorkTime.h"
 #include "Import_Obj.h"
 
-#define IN
-#define OUT
+#ifdef _MSC_VER
+#pragma comment(lib, "Irrlicht.lib")
+#endif
 
 bool g_NeedExit = false;
 std::mutex g_GuiMutex;
@@ -339,8 +329,6 @@ int main()
 		}		
 	}
 	
-	int nprocs = sysconf(_SC_NPROCESSORS_ONLN);
-	
 	size_t div_step = 20;
 	size_t draw_step = 1;
 	SMeshVector meshs = CreateMeshFromObjectData(object, 50.0, draw_step, div_step);
@@ -351,6 +339,7 @@ int main()
 		irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh);
 		if (object_node)
 		{
+			object_node->setDebugDataVisible(irr::scene::EDS_BBOX);
 			object_node->setPosition(irr::core::vector3df(0,0,0));
 			object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		}

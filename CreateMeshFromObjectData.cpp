@@ -1,9 +1,4 @@
 #include "CreateMeshFromObjectData.h"
-#include <tr1/memory>
-#include <future>
-
-#define IN
-#define OUT
 
 static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_VerticesCount, const irr::u32 a_PointNumbers[4])
 {
@@ -201,6 +196,7 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 		for (size_t i = 0; i < buffers.size(); ++i)
 		{
 			irr::scene::SMeshBuffer* buffer = buffers[i];
+			buffer->recalculateBoundingBox();
 			if (!buffer->Vertices.empty())
 				mesh->addMeshBuffer(buffer);
 		}

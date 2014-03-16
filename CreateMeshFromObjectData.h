@@ -1,7 +1,6 @@
 #pragma once
 
-#include <irrlicht.h>
-#include <vector>
+#include "Common.h"
 
 struct CircleItem
 {
