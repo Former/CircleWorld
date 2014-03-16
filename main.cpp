@@ -15,6 +15,9 @@
 #include "GetWorkTime.h"
 #include "Import_Obj.h"
 
+#define IN
+#define OUT
+
 bool g_NeedExit = false;
 std::mutex g_GuiMutex;
 size_t s_PhysCount = 0;
@@ -128,8 +131,9 @@ struct CircleItem
 	
 	enum Type
 	{
-		tpNone,
+		tpNone = 0,
 		tpSolid,
+		tpCount,
 	};
 	
 	Type m_Type;
@@ -140,26 +144,14 @@ typedef std::vector<CircleItem> CircleVectorX;
 typedef std::vector<CircleVectorX> CircleVectorY;
 typedef std::vector<CircleVectorY> CircleVectorZ;
 
-static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const irr::u32 a_PointNumbers[4])
+static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_VerticesCount, const irr::u32 a_PointNumbers[4])
 {
-	const irr::u32 used[6] = {1, 3, 0, 2, 1, 0}; // {0, 1, 2, 0, 3, 1}; // 
+	const irr::u32 used[6] = {1, 3, 0, 2, 1, 0};
 	for (irr::u32 i = 0; i < 6; ++i)
-		a_MeshBuffer->Indices.push_back(a_PointNumbers[used[i]]);
+		a_MeshBuffer->Indices.push_back(a_VerticesCount + a_PointNumbers[used[i]]);
 }
 
 typedef std::shared_ptr<irr::video::SMaterial> SMaterialPtr;
-
-static SMaterialPtr GetMaterialFromType(const CircleItem::Type& a_Type)
-{
-	static SMaterialPtr result;
-	if (!result)
-	{
-		result = SMaterialPtr(new irr::video::SMaterial);
-		//result->setTexture(0, driver->getTexture("../../media/wall.jpg"))
-	}
-	
-	return result;
-}
 
 static irr::core::vector3df MakeCurPoint(const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
 {
@@ -192,11 +184,9 @@ static void Append(irr::scene::SMeshBuffer* a_InOut, const irr::scene::SMeshBuff
 	a_InOut->BoundingBox.addInternalBox(a_Other->getBoundingBox());
 }
 
-static irr::scene::SMeshBuffer* CreateMeshBuffer(const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
+static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
-	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer();
-	
-	const double& step = a_Step;
+	const double& step = a_Step * a_DrawStep;
 	const irr::core::vector3df points[8] = 
 	{
 		irr::core::vector3df(0, 0, 0),
@@ -234,18 +224,13 @@ static irr::scene::SMeshBuffer* CreateMeshBuffer(const CircleItem& a_Item, const
 		irr::video::SColor(color1),
 	};
 
-	buffer->Vertices.set_used(0);
 	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
 	{
 		irr::core::vector3df point = MakeCurPoint(a_CurPoint, a_MaxPoint, a_Step, points[i]);
 		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), color[i], texture_index[i]);
 		
-		buffer->Vertices.push_back(new_item);
+		a_Buffer->Vertices.push_back(new_item);
 	}
-
-	//buffer->Material = *GetMaterialFromType(a_Item.m_Type);
-	
-	return buffer;
 }
 
 static std::vector<int> SummVector(const std::vector<int>& a_Point1, const std::vector<int>& a_Point2)
@@ -275,13 +260,13 @@ static bool CheckInsideVector(const std::vector<int>& a_Point, const std::vector
 
 static int s_AddFaceCount = 0;
 
-static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step)
+typedef std::vector< std::vector<irr::scene::SMeshBuffer*> > ObjectBufferVector;
+
+static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	if (a_Item.m_Type == CircleItem::tpNone)
-		return 0;
+		return;
 		
-	irr::scene::SMeshBuffer* buffer = 0;
-	
 	const irr::u32 point_numbers[6][4] = 
 	{
 		{0, 3, 1, 2},
@@ -292,16 +277,29 @@ static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData
 		{0, 6, 2, 4},
 	};
 
+	int step = a_DrawStep;
 	const std::vector< std::vector<int> > near_item_index =
 	{
-		{0, 0, -1},
-		{1, 0, 0},
-		{0, 0, 1},
-		{-1, 0, 0},
-		{0, 1, 0},
-		{0, -1, 0},		
+		{0, 0, -step},
+		{step, 0, 0},
+		{0, 0, step},
+		{-step, 0, 0},
+		{0, step, 0},
+		{0, -step, 0},		
 	};
+	
+	if (a_ObjectBuffers.size() < CircleItem::tpCount)
+		a_ObjectBuffers.resize(CircleItem::tpCount);
 
+	const CircleItem::Type cur_type = a_Item.m_Type;
+	std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffers[cur_type];
+	if (buffers.empty() || buffers.back()->Indices.size() > 30000)
+		buffers.push_back(new irr::scene::SMeshBuffer);
+	
+	irr::scene::SMeshBuffer* buffer = buffers.back();
+	const size_t vertices_count = buffer->Vertices.size();
+	
+	bool add_vertices = false;
 	for (size_t i = 0; i < near_item_index.size(); ++i)
 	{
 		const std::vector<int>& cur_index = near_item_index[i];
@@ -314,48 +312,55 @@ static irr::scene::SMeshBuffer* CreateMeshItem(const CircleVectorZ& a_ObjectData
 				continue;
 		}
 		
-		if (!buffer)
-			buffer = CreateMeshBuffer(a_Item, a_CurPoint, a_MaxPoint, a_Step);
+		if (!add_vertices)
+			AddVerticesToMeshBuffer(buffer, a_Item, a_CurPoint, a_MaxPoint, a_Step, a_DrawStep);		
 		
 		++s_AddFaceCount;
-		AddMeshFace(buffer, point_numbers[i]);
+		AddMeshFace(buffer, vertices_count, point_numbers[i]);
 	}
-
-	if (buffer)
-		buffer->setDirty();
-	
-	return buffer;
 }
 
-irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step)
+irr::scene::SMesh* CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep = 1)
 {
 	irr::scene::SMesh* mesh = new irr::scene::SMesh();
 	irr::scene::SMeshBuffer* buffer = new irr::scene::SMeshBuffer;
 	
-	for (size_t z = 0; z < a_ObjectData.size(); ++z)
+	ObjectBufferVector object_buffers;
+	
+	size_t i = 0;
+	for (size_t z = 0; z < a_ObjectData.size(); z += a_DrawStep)
 	{
 		const CircleVectorY& y_items = a_ObjectData[z];
-		for (size_t y = 0; y < y_items.size(); ++y)
+		for (size_t y = 0; y < y_items.size(); y += a_DrawStep)
 		{
 			const CircleVectorX& x_items = y_items[y];
-			for (size_t x = 0; x < x_items.size(); ++x)
+			for (size_t x = 0; x < x_items.size(); x += a_DrawStep)
 			{
 				const CircleItem& item = x_items[x];
 				
 				std::vector<int> cur_point = {int(x), int(y), int(z)};
 				std::vector<int> max_point = {int(x_items.size()), int(y_items.size()), int(a_ObjectData.size())};
 				
-				irr::scene::SMeshBuffer* new_buffer = CreateMeshItem(a_ObjectData, item, cur_point, max_point, a_Step);
-				if (new_buffer)
-					Append(buffer, new_buffer);
-					//mesh->addMeshBuffer(new_buffer);
+				CreateMeshItem(object_buffers, a_ObjectData, item, cur_point, max_point, a_Step, a_DrawStep);
 			}
 		}
 	}
 	
-	buffer->setDirty();
-	mesh->addMeshBuffer(buffer);
+	for (size_t type = 0; type < object_buffers.size(); ++type)
+	{
+		const std::vector<irr::scene::SMeshBuffer*>& buffers = object_buffers[type];
+		for (size_t i = 0; i < buffers.size(); ++i)
+		{
+			irr::scene::SMeshBuffer* buffer = buffers[i];
+			if (!buffer->Vertices.empty())
+				mesh->addMeshBuffer(buffer);
+		}
+	}
+	
+	mesh->setDirty();
 	mesh->recalculateBoundingBox();
+	mesh->setHardwareMappingHint(irr::scene::EHM_STATIC);
+	
 	return mesh;
 }
 
@@ -421,7 +426,7 @@ int main()
 
 	camera->setPosition(irr::core::vector3df(2700*2,255*2,2600*2));
 	camera->setTarget(irr::core::vector3df(2397*2,343*2,2700*2));
-	camera->setFarValue(42000.0f);
+	camera->setFarValue(42000.0f);	
 
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
@@ -600,7 +605,7 @@ int main()
 		new_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     }	
 	
-	size_t size = 32;
+	size_t size = 256;
 	CircleVectorZ object;
 	object.resize(size);
 	for (size_t z = 0; z < object.size(); ++z)
@@ -624,23 +629,19 @@ int main()
 		}		
 	}
 	
-	irr::scene::SMesh* mesh1 = CreateMeshFromObjectData(object, 50.0);
+	size_t step = 1;
+	irr::scene::SMesh* mesh1 = CreateMeshFromObjectData(object, 50.0, step);
 	irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh1);
 	if (object_node)
 	{
 		object_node->setPosition(irr::core::vector3df(0,0,0));
 		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-		object_node->setMaterialFlag(irr::video::EMF_GOURAUD_SHADING, false);
-		object_node->setMaterialFlag(irr::video::EMF_BILINEAR_FILTER, false);	
-		object_node->setMaterialFlag(irr::video::EMF_ANTI_ALIASING, false);
+		//object_node->setMaterialFlag(irr::video::EMF_GOURAUD_SHADING, false);
+		//object_node->setMaterialFlag(irr::video::EMF_BILINEAR_FILTER, false);	
+		//object_node->setMaterialFlag(irr::video::EMF_ANTI_ALIASING, false);
+		//object_node->setMaterialFlag(irr::video::EMF_WIREFRAME, true);
+		//object_node->setMaterialFlag(irr::video::EMF_POINTCLOUD, true);
 	}
-	
-	/*irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(500, 200);
-	if (sphere_node)
-	{
-		sphere_node->setPosition(irr::core::vector3df(0,0,0));
-		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}*/
 	
 	OnDisplay(circle_coordinator);
 
