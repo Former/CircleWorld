@@ -10,6 +10,8 @@ struct LOD_Object_Item
 	double m_Distance;
 };
 
+typedef std::vector<LOD_Object_Item> LOD_Object_Vector;
+
 class LOD_Object
 {
 public:
@@ -20,3 +22,5 @@ public:
 private:
 	std::vector<LOD_Object_Item> m_Items;
 };
+
+typedef std::shared_ptr<LOD_Object> LOD_ObjectPtr;

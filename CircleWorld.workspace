@@ -3,11 +3,11 @@
   <Project Name="CircleWorld" Path="CircleWorld.project" Active="Yes"/>
   <Project Name="irrlicht" Path="irrlicht/irrlicht.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="CircleWorld" ConfigName="Debug"/>
       <Project Name="irrlicht" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="CircleWorld" ConfigName="Release"/>
       <Project Name="irrlicht" ConfigName="Release"/>
     </WorkspaceConfiguration>

@@ -14,3 +14,5 @@
 
 #define IN
 #define OUT
+
+#define ARRAY_SIZE(a_Array) (sizeof(a_Array)/sizeof(a_Array[0]))

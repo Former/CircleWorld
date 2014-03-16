@@ -1,1 +1,1 @@
-Bin/Release/main.o Bin/Release/GetWorkTime.o Bin/Release/Import_Obj.o Bin/Release/CircleCoordinator.o Bin/Release/CreateMeshFromObjectData.o Bin/Release/LOD_Object.o Bin/Release/Engine_Point.o Bin/Release/Engine_CircleObject.o Bin/Release/Engine_CircleSelector.o Bin/Release/Engine_EngineRules.o
+Bin/Debug/main.o Bin/Debug/GetWorkTime.o Bin/Debug/Import_Obj.o Bin/Debug/CircleCoordinator.o Bin/Debug/CreateMeshFromObjectData.o Bin/Debug/LOD_Object.o Bin/Debug/Engine_Point.o Bin/Debug/Engine_CircleObject.o Bin/Debug/Engine_CircleSelector.o Bin/Debug/Engine_EngineRules.o

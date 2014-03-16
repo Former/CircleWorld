@@ -4,6 +4,7 @@
 #include "CreateMeshFromObjectData.h"
 #include "GetWorkTime.h"
 #include "Import_Obj.h"
+#include "LOD_Object.h"
 
 #ifdef _MSC_VER
 #pragma comment(lib, "Irrlicht.lib")
@@ -115,6 +116,19 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 
 extern int s_AddFaceCount;
 
+static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr)
+{
+	irr::scene::ISceneNode* object_node = a_SMgr->addMeshSceneNode(a_Mesh);
+	if (object_node)
+	{
+		object_node->setDebugDataVisible(irr::scene::EDS_BBOX);
+		object_node->setPosition(irr::core::vector3df(0,0,0));
+		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	}
+	
+	return object_node;
+}
+
 int main()
 {
 	CircleCoordinator circle_coordinator;
@@ -150,7 +164,7 @@ int main()
 
 	camera->setPosition(irr::core::vector3df(2700*2,255*2,2600*2));
 	camera->setTarget(irr::core::vector3df(2397*2,343*2,2700*2));
-	camera->setFarValue(42000.0f);	
+	camera->setFarValue(200000.0f);	
 
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
@@ -329,20 +343,47 @@ int main()
 		}		
 	}
 	
-	size_t div_step = 20;
-	size_t draw_step = 1;
-	SMeshVector meshs = CreateMeshFromObjectData(object, 50.0, draw_step, div_step);
-	
-	for (size_t i = 0; i < meshs.size(); ++i)
+	struct LOD_Settings
 	{
-		irr::scene::SMesh* mesh = meshs[i];
-		irr::scene::ISceneNode* object_node = smgr->addMeshSceneNode(mesh);
-		if (object_node)
+		double m_Distance;
+		size_t m_DrawStep;
+	};
+	
+	const LOD_Settings settings[] = 
+	{
+		{10000, 1},
+		{40000, 4},
+		{160000, 16},
+	};
+	
+	size_t div_step = 64;
+	
+	std::vector<LOD_Object_Vector> lod_objects_vectors;
+	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
+	{
+		const LOD_Settings& item = settings[i];
+		SMeshVector meshs = CreateMeshFromObjectData(object, 50.0, item.m_DrawStep, div_step);
+	
+		lod_objects_vectors.resize(meshs.size());
+
+		for (size_t j = 0; j < meshs.size(); ++j)
 		{
-			object_node->setDebugDataVisible(irr::scene::EDS_BBOX);
-			object_node->setPosition(irr::core::vector3df(0,0,0));
-			object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			irr::scene::SMesh* mesh = meshs[j];
+			irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, smgr);
+			
+			LOD_Object_Item new_item(object_node, item.m_Distance);
+			lod_objects_vectors[j].push_back(new_item);
 		}
+	}
+	
+	object.clear();
+	
+	std::vector<LOD_ObjectPtr> lod_objects;
+	for (size_t i = 0; i < lod_objects_vectors.size(); ++i)
+	{
+		LOD_ObjectPtr lod_item(new LOD_Object(lod_objects_vectors[i]));
+		
+		lod_objects.push_back(lod_item);
 	}
 	
 	OnDisplay(circle_coordinator);
@@ -366,14 +407,14 @@ int main()
 			str += driver->getName();
 			str += "] FPS:";
 			str += fps;
-			// Also print terrain height of current camera position
-			// We can use camera position because terrain is located at coordinate origin
-			str += " Height: ";
 
 			device->setWindowCaption(str.c_str());
 			lastFPS = fps;
 		}
 		//OnDisplay(circle_coordinator);
+
+		for (size_t i = 0; i < lod_objects.size(); ++i)
+			lod_objects[i]->SetVisibleOneItem(camera->getAbsolutePosition());
 	}
 
 	device->drop();
