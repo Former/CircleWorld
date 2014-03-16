@@ -129,6 +129,57 @@ static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::
 	return object_node;
 }
 
+static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, const irr::core::vector3df& a_Center, const double& a_Radius, const CircleItem::Type& a_Type)
+{
+	size_t size = a_Size;
+	a_Object.resize(size);
+	for (size_t z = 0; z < a_Object.size(); ++z)
+	{
+		CircleVectorY& y_items = a_Object[z];
+		y_items.resize(size);
+		for (size_t y = 0; y < y_items.size(); ++y)
+		{
+			CircleVectorX& x_items = y_items[y];
+			x_items.resize(size);
+			for (size_t x = 0; x < x_items.size(); ++x)
+			{
+				CircleItem& item = x_items[x];
+				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
+				irr::core::vector3df max_vector(x_items.size(), y_items.size(), a_Object.size());
+				irr::core::vector3df vector = cur_vector - a_Center;
+				if (vector.getLengthSQ() < a_Radius * a_Radius)
+					item.m_Type = a_Type;
+			}
+		}		
+	}
+}
+
+class CObjectCreationStrategy : public ObjectCreationStrategy
+{
+public:
+	CObjectCreationStrategy(irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
+	{
+		m_Driver = a_Driver;
+		m_Size = a_Size;
+		m_Material.setTexture(0, m_Driver->getTexture("../../media/wall.jpg"));
+	}
+	
+	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) override
+	{
+		return irr::video::SColor(a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size);
+	}
+	
+	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) override
+	{
+		return m_Material;
+	}
+	
+private:
+	irr::video::IVideoDriver* m_Driver;
+	size_t m_Size;
+	irr::video::SMaterial m_Material;
+};
+
 int main()
 {
 	CircleCoordinator circle_coordinator;
@@ -319,31 +370,13 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	//static 
-
 	size_t size = 256;
 	CircleVectorZ object;
-	object.resize(size);
-	for (size_t z = 0; z < object.size(); ++z)
-	{
-		CircleVectorY& y_items = object[z];
-		y_items.resize(size);
-		for (size_t y = 0; y < y_items.size(); ++y)
-		{
-			CircleVectorX& x_items = y_items[y];
-			x_items.resize(size);
-			for (size_t x = 0; x < x_items.size(); ++x)
-			{
-				CircleItem& item = x_items[x];
-				item.m_Color = irr::video::SColor(x * 255 / size, y * 255 / size, z * 255 / size, 100);
-				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
-				irr::core::vector3df max_vector(x_items.size(), y_items.size(), object.size());
-				irr::core::vector3df center_vector = cur_vector - max_vector * 0.5;
-				if (center_vector.getLengthSQ() < 0.25 * size * size)
-					item.m_Type = CircleItem::tpSolid;
-			}
-		}		
-	}
+	irr::core::vector3df max_vector(size, size, size);
+	FillItems(object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
+
+	FillItems(object, size, max_vector * 0.25, size * 0.15, CircleItem::tpNone);
+	FillItems(object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	
 	struct LOD_Settings
 	{
@@ -359,12 +392,13 @@ int main()
 	};
 	
 	size_t div_step = 64;
+	ObjectCreationStrategyPtr strategy(new CObjectCreationStrategy(driver, size));
 	
 	std::vector<LOD_Object_Vector> lod_objects_vectors;
 	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
 	{
 		const LOD_Settings& item = settings[i];
-		SMeshVector meshs = CreateMeshFromObjectData(object, 50.0, item.m_DrawStep, div_step);
+		SMeshVector meshs = CreateMeshFromObjectData(object, strategy, 50.0, item.m_DrawStep, div_step);
 	
 		lod_objects_vectors.resize(meshs.size());
 

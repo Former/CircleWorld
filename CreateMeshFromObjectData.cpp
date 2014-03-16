@@ -1,5 +1,12 @@
 #include "CreateMeshFromObjectData.h"
 
+Point::Point(const int& a_X, const int& a_Y, const int& a_Z)
+{
+	x = a_X;
+	y = a_Y;
+	z = a_Z;
+}
+
 static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_VerticesCount, const irr::u32 a_PointNumbers[4])
 {
 	const irr::u32 used[6] = {1, 3, 0, 2, 1, 0};
@@ -9,17 +16,17 @@ static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_V
 
 typedef std::shared_ptr<irr::video::SMaterial> SMaterialPtr;
 
-static irr::core::vector3df MakeCurPoint(const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
+static irr::core::vector3df MakeCurPoint(const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
 {
 	irr::core::vector3df result = a_Diff;
-	result.X += (a_CurPoint[0] * a_Step) - a_MaxPoint[0] * a_Step * 0.5;
-	result.Y += (a_CurPoint[1] * a_Step) - a_MaxPoint[1] * a_Step * 0.5;
-	result.Z += (a_CurPoint[2] * a_Step) - a_MaxPoint[2] * a_Step * 0.5;
+	result.X += (a_CurPoint.x * a_Step) - a_MaxPoint.x * a_Step * 0.5;
+	result.Y += (a_CurPoint.y * a_Step) - a_MaxPoint.y * a_Step * 0.5;
+	result.Z += (a_CurPoint.z * a_Step) - a_MaxPoint.z * a_Step * 0.5;
 	
 	return result;
 }
 
-static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const ObjectCreationStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	const double& step = a_Step * a_DrawStep;
 	const irr::core::vector3df points[8] = 
@@ -40,42 +47,33 @@ static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const Cir
 		irr::core::vector2d<irr::f32>(0, 0),
 		irr::core::vector2d<irr::f32>(0, 1),
 		irr::core::vector2d<irr::f32>(1, 0),
-		irr::core::vector2d<irr::f32>(1, 1),
-		irr::core::vector2d<irr::f32>(0, 0),
-		irr::core::vector2d<irr::f32>(0, 1),
 		irr::core::vector2d<irr::f32>(1, 0),
+		irr::core::vector2d<irr::f32>(0, 1),
+		irr::core::vector2d<irr::f32>(0, 0),
+		irr::core::vector2d<irr::f32>(1, 1),
 	};
 	
 	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
 	{
 		irr::core::vector3df point = MakeCurPoint(a_CurPoint, a_MaxPoint, a_Step, points[i]);
-		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), a_Item.m_Color, texture_index[i]);
+		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), a_Strategy->GetColor(a_Item, a_CurPoint), texture_index[i]);
 		
 		a_Buffer->Vertices.push_back(new_item);
 	}
 }
 
-static std::vector<int> SummVector(const std::vector<int>& a_Point1, const std::vector<int>& a_Point2)
+static Point SummPoint(const Point& a_Point1, const Point& a_Point2)
 {
-	std::vector<int> result = a_Point1;
-	for (size_t i = 0; i < result.size() && i < a_Point2.size(); ++i)
-		result[i] += a_Point2[i];
-
-	return result;
+	return Point(a_Point1.x + a_Point2.x, a_Point1.y + a_Point2.y, a_Point1.z + a_Point2.z);
 }
 
-static bool CheckInsideVector(const std::vector<int>& a_Point, const std::vector<int>& a_MaxPoint)
+static bool CheckInsideVector(const Point& a_Point, const Point& a_MaxPoint)
 {
-	for (size_t i = 0; i < a_Point.size() && i < a_MaxPoint.size(); ++i)
-	{
-		const int& cur_index = a_Point[i];
-		const int& cur_max_index = a_MaxPoint[i];
-		if (cur_index < 0)
-			return false;
+	if (a_Point.x < 0 || a_Point.y < 0 || a_Point.z < 0)
+		return false;
 
-		if (cur_index >= cur_max_index)
-			return false;
-	}
+	if (a_Point.x >= a_MaxPoint.x || a_Point.y >= a_MaxPoint.y || a_Point.z >= a_MaxPoint.z)
+		return false;
 
 	return true;
 }
@@ -84,7 +82,7 @@ int s_AddFaceCount = 0;
 
 typedef std::vector< std::vector<irr::scene::SMeshBuffer*> > ObjectBufferVector;
 
-static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const CircleItem& a_Item, const std::vector<int>& a_CurPoint, const std::vector<int>& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	if (a_Item.m_Type == CircleItem::tpNone)
 		return;
@@ -100,14 +98,14 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	};
 
 	int step = a_DrawStep;
-	const std::vector< std::vector<int> > near_item_index =
+	const std::vector< Point > near_item_index =
 	{
-		{0, 0, -step},
-		{step, 0, 0},
-		{0, 0, step},
-		{-step, 0, 0},
-		{0, step, 0},
-		{0, -step, 0},		
+		Point(0, 0, -step),
+		Point(step, 0, 0),
+		Point(0, 0, step),
+		Point(-step, 0, 0),
+		Point(0, step, 0),
+		Point(0, -step, 0),		
 	};
 	
 	if (a_ObjectBuffers.size() < CircleItem::tpCount)
@@ -116,7 +114,11 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	const CircleItem::Type cur_type = a_Item.m_Type;
 	std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffers[cur_type];
 	if (buffers.empty() || buffers.back()->Indices.size() > 30000)
-		buffers.push_back(new irr::scene::SMeshBuffer);
+	{
+		irr::scene::SMeshBuffer* new_buffer = new irr::scene::SMeshBuffer;
+		buffers.push_back(new_buffer);
+		new_buffer->Material = a_Strategy->GetMaterial(a_Item);
+	}
 	
 	irr::scene::SMeshBuffer* buffer = buffers.back();
 	const size_t vertices_count = buffer->Vertices.size();
@@ -124,44 +126,25 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	bool add_vertices = false;
 	for (size_t i = 0; i < near_item_index.size(); ++i)
 	{
-		const std::vector<int>& cur_index = near_item_index[i];
- 		std::vector<int> near_item_index = SummVector(cur_index, a_CurPoint);
+		const Point& cur_index = near_item_index[i];
+ 		Point near_point = SummPoint(cur_index, a_CurPoint);
 		
-		if (CheckInsideVector(near_item_index, a_MaxPoint))
+		if (CheckInsideVector(near_point, a_MaxPoint))
 		{		
-			const CircleItem& near_item = a_ObjectData[near_item_index[2]][near_item_index[1]][near_item_index[0]];
+			const CircleItem& near_item = a_ObjectData[near_point.z][near_point.y][near_point.x];
 			if (near_item.m_Type != CircleItem::tpNone)
 				continue;
 		}
 		
 		if (!add_vertices)
-			AddVerticesToMeshBuffer(buffer, a_Item, a_CurPoint, a_MaxPoint, a_Step, a_DrawStep);		
+			AddVerticesToMeshBuffer(buffer, a_Strategy, a_Item, a_CurPoint, a_MaxPoint, a_Step, a_DrawStep);		
 		
 		++s_AddFaceCount;
 		AddMeshFace(buffer, vertices_count, point_numbers[i]);
 	}
 }
 
-namespace
-{
-	struct Point
-	{
-		Point(const int& a_X, const int& a_Y, const int& a_Z);
-		
-		int x;
-		int y;
-		int z;
-	};
-	
-	Point::Point(const int& a_X, const int& a_Y, const int& a_Z)
-	{
-		x = a_X;
-		y = a_Y;
-		z = a_Z;
-	}
-}
-
-static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep)
+static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	ObjectBufferVector object_buffers;
 	
@@ -175,10 +158,10 @@ static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPo
 			{
 				const CircleItem& item = x_items[x];
 				
-				std::vector<int> cur_point = {int(x), int(y), int(z)};
-				std::vector<int> max_point = {int(x_items.size()), int(y_items.size()), int(a_ObjectData.size())};
+				Point cur_point = Point(int(x), int(y), int(z));
+				Point max_point = Point(int(x_items.size()), int(y_items.size()), int(a_ObjectData.size()));
 				
-				CreateMeshItem(object_buffers, a_ObjectData, item, cur_point, max_point, a_Step, a_DrawStep);
+				CreateMeshItem(object_buffers, a_ObjectData, a_Strategy, item, cur_point, max_point, a_Step, a_DrawStep);
 			}
 		}
 	}
@@ -195,7 +178,7 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 		const std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffer[type];
 		for (size_t i = 0; i < buffers.size(); ++i)
 		{
-			irr::scene::SMeshBuffer* buffer = buffers[i];
+			irr::scene::SMeshBuffer* buffer = buffers[i];			
 			buffer->recalculateBoundingBox();
 			if (!buffer->Vertices.empty())
 				mesh->addMeshBuffer(buffer);
@@ -212,13 +195,13 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 typedef std::pair<Point, Point> StartEndItem;
 typedef std::vector<std::pair<Point, Point>> StartEndVector;
 
-static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep)
+static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	SMeshVector result;
 	for (size_t i = 0; i < a_Items.size(); ++i)
 	{
 		const StartEndItem& item = a_Items[i];
-		ObjectBufferVector cur_buf = CreateMeshFromObjectDataItem(item.first, item.second, a_ObjectData, a_Step, a_DrawStep);
+		ObjectBufferVector cur_buf = CreateMeshFromObjectDataItem(item.first, item.second, a_ObjectData, a_Strategy, a_Step, a_DrawStep);
 		
 		result.push_back(CreateMeshFormObjectBuffers(cur_buf));
 	}
@@ -226,7 +209,7 @@ static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Ite
 	return result;
 }
 
-SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
+SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
 {	
 	const size_t max_z = int(a_ObjectData.size());
 	if (!max_z)
@@ -259,7 +242,7 @@ SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const do
 	
 	std::vector<std::future<SMeshVector>> worker_results;
 	for (size_t i = 0; i < items.size(); ++i)
-		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, std::ref(items[i]), std::ref(a_ObjectData), std::ref(a_Step), std::ref(a_DrawStep)));
+		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, std::ref(items[i]), std::ref(a_ObjectData), std::ref(a_Strategy), std::ref(a_Step), std::ref(a_DrawStep)));
 	
 	SMeshVector result;
 	for (size_t i = 0; i < worker_results.size(); ++i)
@@ -271,5 +254,24 @@ SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const do
 	
 	return result;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
