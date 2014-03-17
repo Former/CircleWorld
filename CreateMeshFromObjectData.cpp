@@ -41,16 +41,17 @@ static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const Obj
 		irr::core::vector3df(step, step, step),
 	}; 
 
+	const int tstep = a_DrawStep;	
 	const irr::core::vector2d<irr::f32> texture_index[8] = 
 	{
-		irr::core::vector2d<irr::f32>(1, 1),
+		irr::core::vector2d<irr::f32>(tstep, tstep),
 		irr::core::vector2d<irr::f32>(0, 0),
-		irr::core::vector2d<irr::f32>(0, 1),
-		irr::core::vector2d<irr::f32>(1, 0),
-		irr::core::vector2d<irr::f32>(1, 0),
-		irr::core::vector2d<irr::f32>(0, 1),
+		irr::core::vector2d<irr::f32>(0, tstep),
+		irr::core::vector2d<irr::f32>(tstep, 0),
+		irr::core::vector2d<irr::f32>(tstep, 0),
+		irr::core::vector2d<irr::f32>(0, tstep),
 		irr::core::vector2d<irr::f32>(0, 0),
-		irr::core::vector2d<irr::f32>(1, 1),
+		irr::core::vector2d<irr::f32>(tstep, tstep),
 	};
 	
 	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
