@@ -131,8 +131,7 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 		
 		if (CheckInsideVector(near_point, a_MaxPoint))
 		{		
-			const CircleItem& near_item = a_ObjectData[near_point.z][near_point.y][near_point.x];
-			if (near_item.m_Type != CircleItem::tpNone)
+			if (!a_Strategy->AddFace(cur_index, near_point, a_DrawStep))
 				continue;
 		}
 		

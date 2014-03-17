@@ -13,11 +13,11 @@ struct CircleItem
 	{
 		tpNone = 0,
 		tpSolid,
+		tpWater,
 		tpCount,
 	};
 	
 	Type m_Type;
-	irr::video::SColor m_Color;
 };
 
 struct Point
@@ -37,6 +37,8 @@ public:
 	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) = 0;
 	
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) = 0;
+	
+	virtual bool AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep) = 0;
 };
 
 typedef std::shared_ptr<ObjectCreationStrategy> ObjectCreationStrategyPtr;
