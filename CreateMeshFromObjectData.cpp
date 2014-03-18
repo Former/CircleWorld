@@ -26,7 +26,7 @@ static irr::core::vector3df MakeCurPoint(const Point& a_CurPoint, const Point& a
 	return result;
 }
 
-static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const ObjectCreationStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	const double& step = a_Step * a_DrawStep;
 	const irr::core::vector3df points[8] = 
@@ -83,9 +83,9 @@ int s_AddFaceCount = 0;
 
 typedef std::vector< std::vector<irr::scene::SMeshBuffer*> > ObjectBufferVector;
 
-static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
-	if (a_Item.m_Type == CircleItem::tpNone)
+	if (a_Strategy->IgnoreFace(a_CurPoint, a_DrawStep))
 		return;
 		
 	const irr::u32 point_numbers[6][4] = 
@@ -144,7 +144,7 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	}
 }
 
-static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
+static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	ObjectBufferVector object_buffers;
 	
@@ -195,7 +195,7 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 typedef std::pair<Point, Point> StartEndItem;
 typedef std::vector<std::pair<Point, Point>> StartEndVector;
 
-static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
+static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	SMeshVector result;
 	for (size_t i = 0; i < a_Items.size(); ++i)
@@ -209,7 +209,7 @@ static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Ite
 	return result;
 }
 
-SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectCreationStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
+SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
 {	
 	const size_t max_z = int(a_ObjectData.size());
 	if (!max_z)

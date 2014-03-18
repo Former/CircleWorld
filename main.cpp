@@ -17,8 +17,10 @@ GetWorkTime	g_WorkTime;
 
 void PhysicsThread(CircleCoordinator& a_Coordinator)
 {
-	try {
-		while (!g_NeedExit) {
+	try
+	{
+		while (!g_NeedExit)
+		{
 			std::chrono::milliseconds sleep_delay(1);
 			std::this_thread::sleep_for(sleep_delay);
 			std::lock_guard<std::mutex> lock(g_GuiMutex);
@@ -26,7 +28,9 @@ void PhysicsThread(CircleCoordinator& a_Coordinator)
 			a_Coordinator.DoStep();
 			s_PhysCount++;
 		}
-	} catch(...) {
+	}
+	catch(...)
+	{
 		return;
 	}
 }
@@ -45,11 +49,13 @@ class SystemEventReceiver : public irr::IEventReceiver
 public:
 
 	SystemEventReceiver(irr::scene::ISceneNode* skydome, CircleCoordinator& a_Coordinator) :
-		Skydome(skydome), m_Coordinator(a_Coordinator) {
+		Skydome(skydome), m_Coordinator(a_Coordinator)
+	{
 		Skydome->setVisible(true);
 	}
 
-	bool OnEvent(const irr::SEvent& event) {
+	bool OnEvent(const irr::SEvent& event)
+	{
 		std::vector<std::pair<size_t, size_t> > well_index;
 		well_index.push_back(std::pair<size_t, size_t>(5, 6));
 		well_index.push_back(std::pair<size_t, size_t>(57, 58));
@@ -58,10 +64,14 @@ public:
 		static int index = 145; // 5, 57, 116(118), 145(147)
 		static double dir = 1.0;
 
-		if (event.EventType == irr::EET_KEY_INPUT_EVENT) { //  && !event.KeyInput.PressedDown
-			switch (event.KeyInput.Key) {
-			case irr::KEY_KEY_R: {
-				for (size_t i = 0; i < well_index.size(); ++i) {
+		if (event.EventType == irr::EET_KEY_INPUT_EVENT)   //  && !event.KeyInput.PressedDown
+		{
+			switch (event.KeyInput.Key)
+			{
+			case irr::KEY_KEY_R:
+			{
+				for (size_t i = 0; i < well_index.size(); ++i)
+				{
 					const std::pair<size_t, size_t>& cur_pair = well_index[i];
 
 					std::vector<CircleCoordinator::ObjectPtr> objectConts = m_Coordinator.GetObjects();
@@ -93,7 +103,8 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 		objects = a_Coordinator.GetObjects();
 	}
 
-	for (size_t i = 0; i < objects.size(); ++i) {
+	for (size_t i = 0; i < objects.size(); ++i)
+	{
 		CircleCoordinator::ObjectPtr obj = objects[i];
 		CircleEngine::CircleObjectPtr circle_obj = obj->Obj;
 
@@ -105,12 +116,13 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 
 extern int s_AddFaceCount;
 
-static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr)
+static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr, const irr::core::vector3df& a_Position)
 {
 	irr::scene::ISceneNode* object_node = a_SMgr->addMeshSceneNode(a_Mesh);
-	if (object_node) {
+	if (object_node)
+	{
 		object_node->setDebugDataVisible(irr::scene::EDS_BBOX);
-		object_node->setPosition(irr::core::vector3df(0,0,0));
+		object_node->setPosition(a_Position);
 		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
 
@@ -121,13 +133,16 @@ static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, cons
 {
 	size_t size = a_Size;
 	a_Object.resize(size);
-	for (size_t z = 0; z < a_Object.size(); ++z) {
+	for (size_t z = 0; z < a_Object.size(); ++z)
+	{
 		CircleVectorY& y_items = a_Object[z];
 		y_items.resize(size);
-		for (size_t y = 0; y < y_items.size(); ++y) {
+		for (size_t y = 0; y < y_items.size(); ++y)
+		{
 			CircleVectorX& x_items = y_items[y];
 			x_items.resize(size);
-			for (size_t x = 0; x < x_items.size(); ++x) {
+			for (size_t x = 0; x < x_items.size(); ++x)
+			{
 				CircleItem& item = x_items[x];
 				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
 				irr::core::vector3df max_vector(x_items.size(), y_items.size(), a_Object.size());
@@ -139,11 +154,11 @@ static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, cons
 	}
 }
 
-class CObjectCreationStrategy : public ObjectCreationStrategy
+class CObjectDrawStrategy : public ObjectDrawStrategy
 {
 public:
-	CObjectCreationStrategy(CircleVectorZ& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
-	: m_ObjectData(a_ObjectData)
+	CObjectDrawStrategy(CircleVectorZ& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
+		: m_ObjectData(a_ObjectData)
 	{
 		m_Driver = a_Driver;
 		m_Size = a_Size;
@@ -151,13 +166,13 @@ public:
 		m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
 	}
 
-	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) override {
-		return irr::video::SColor(a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size);
-	}
+	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) override;
 
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) override;
 
 	virtual bool AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep) override;
+	
+	virtual bool IgnoreFace(const Point& a_CurPoint, const size_t& a_DrawStep) override;
 
 private:
 	irr::video::IVideoDriver* m_Driver;
@@ -167,13 +182,39 @@ private:
 	CircleVectorZ& m_ObjectData;
 };
 
+irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const Point& a_Point)
+{
+	return irr::video::SColor(a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size);
+}
 
-bool CObjectCreationStrategy::AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep)
+bool CObjectDrawStrategy::IgnoreFace(const Point& a_CurPoint, const size_t& a_DrawStep)
 {
 	const size_t max_z = int(m_ObjectData.size());
 	const size_t max_y = int(m_ObjectData[0].size());
 	const size_t max_x = int(m_ObjectData[0][0].size());
-	
+
+	for (size_t z = a_CurPoint.z;  z < max_z && z < a_CurPoint.z + a_DrawStep; ++z)
+	{
+		for (size_t y = a_CurPoint.y;  y < max_y && y < a_CurPoint.y + a_DrawStep; ++y)
+		{
+			for (size_t x = a_CurPoint.x;  x < max_x && x < a_CurPoint.x + a_DrawStep; ++x)
+			{
+				const CircleItem& near_item = m_ObjectData[z][y][x];
+				if (near_item.m_Type != CircleItem::tpNone)
+					return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+bool CObjectDrawStrategy::AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep)
+{
+	const size_t max_z = int(m_ObjectData.size());
+	const size_t max_y = int(m_ObjectData[0].size());
+	const size_t max_x = int(m_ObjectData[0][0].size());
+
 	for (size_t z = a_NearPoint.z;  z < max_z && z < a_NearPoint.z + a_DrawStep; ++z)
 	{
 		for (size_t y = a_NearPoint.y;  y < max_y && y < a_NearPoint.y + a_DrawStep; ++y)
@@ -186,11 +227,11 @@ bool CObjectCreationStrategy::AddFace(const Point& a_CurPoint, const Point& a_Ne
 			}
 		}
 	}
-			
+
 	return false;
 }
 
-irr::video::SMaterial CObjectCreationStrategy::GetMaterial(const CircleItem& a_Item)
+irr::video::SMaterial CObjectDrawStrategy::GetMaterial(const CircleItem& a_Item)
 {
 	switch (a_Item.m_Type)
 	{
@@ -210,7 +251,8 @@ int main()
 	params.WindowSize = irr::core::dimension2d<irr::u32>(1024, 768);
 	irr::IrrlichtDevice* device = irr::createDeviceEx(params);
 
-	if (device == 0) {
+	if (device == 0)
+	{
 		std::cout << "Could not create selected driver" << std::endl;
 		return 1;
 	}
@@ -248,11 +290,13 @@ int main()
 	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
 
 	OBJ_Data obj_data;
-	if (LoadObjFile(&obj_data, "../../FullCar.obj")) {
+	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
+	{
 		CircleEngine::Point center = CircleEngine::Point(0,-175,0);
 		CircleEngine::Point scale = CircleEngine::Point(30,30,30);
 
-		for (size_t i = 0; i < obj_data.m_Points.size(); i++) {
+		for (size_t i = 0; i < obj_data.m_Points.size(); i++)
+		{
 			CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 
 			CircleEngine::Point& cur_point = obj_data.m_Points[i];
@@ -270,7 +314,8 @@ int main()
 
 		std::vector<CircleCoordinator::ObjectPtr> objectConts = circle_coordinator.GetObjects();
 
-		for (size_t i = 0; i < obj_data.m_Edges.size(); i++) {
+		for (size_t i = 0; i < obj_data.m_Edges.size(); i++)
+		{
 			size_t index1 = obj_data.m_Edges[i].first;
 			size_t index2 = obj_data.m_Edges[i].second;
 
@@ -317,7 +362,8 @@ int main()
 
 	pairBarSelector->Add(obj1, obj2, prop);
 
-	for (size_t i = 0; i < 500; i++) {
+	for (size_t i = 0; i < 500; i++)
+	{
 		CircleCoordinator::ObjectPtr objContainer = CreateNewObject();
 
 		const CircleEngine::CoordinateType maxValue = 80.0;
@@ -336,10 +382,12 @@ int main()
 	}
 
 	std::vector<CircleCoordinator::ObjectPtr> objectConts = circle_coordinator.GetObjects();
-	for (size_t i = 0; i < objectConts.size(); i++) {
+	for (size_t i = 0; i < objectConts.size(); i++)
+	{
 		CircleEngine::CircleObjectPtr obj = objectConts[i]->Obj;
 
-		if (obj->Radius != fric_obj_radius) {
+		if (obj->Radius != fric_obj_radius)
+		{
 			allSeqSelector->Add(obj);
 			allCrossNearSelector->Add(obj);
 			allCrossSelector->Add(obj);
@@ -384,7 +432,7 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 1024;
+	size_t size = 256;
 	CircleVectorZ object;
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
@@ -393,12 +441,14 @@ int main()
 	FillItems(object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	FillItems(object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
-	struct LOD_Settings {
+	struct LOD_Settings
+	{
 		double m_Distance;
 		size_t m_DrawStep;
 	};
 
-	const LOD_Settings settings[] = {
+	const LOD_Settings settings[] =
+	{
 		{5000, 1},
 		{20000, 4},
 		{40000, 16},
@@ -407,10 +457,11 @@ int main()
 
 	size_t div_step = 64;
 
+	irr::core::vector3df center(0, 0, 10000);
 	std::vector<LOD_Object_Vector> lod_objects_vectors;
 	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
 	{
-		ObjectCreationStrategyPtr strategy(new CObjectCreationStrategy(object, driver, size));
+		ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));
 
 		const LOD_Settings& item = settings[i];
 		SMeshVector meshs = CreateMeshFromObjectData(object, strategy, 50.0, item.m_DrawStep, div_step);
@@ -420,7 +471,7 @@ int main()
 		for (size_t j = 0; j < meshs.size(); ++j)
 		{
 			irr::scene::SMesh* mesh = meshs[j];
-			irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, smgr);
+			irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, smgr, center);
 
 			LOD_Object_Item new_item(object_node, item.m_Distance);
 			lod_objects_vectors[j].push_back(new_item);
@@ -430,17 +481,27 @@ int main()
 	object.clear();
 
 	std::vector<LOD_ObjectPtr> lod_objects;
-	for (size_t i = 0; i < lod_objects_vectors.size(); ++i) {
+	for (size_t i = 0; i < lod_objects_vectors.size(); ++i)
+	{
 		LOD_ObjectPtr lod_item(new LOD_Object(lod_objects_vectors[i]));
 
 		lod_objects.push_back(lod_item);
 	}
+	
+	irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(1000, 100);
+    if (sphere_node)
+    {
+		sphere_node->setPosition(irr::core::vector3df(10000,0,0));
+		sphere_node->setMaterialTexture(0, driver->getTexture("../../media/wall.jpg"));
+		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }
 
 	OnDisplay(circle_coordinator);
 
 	int lastFPS = -1;
 	while(device->run())
-		if (device->isWindowActive()) {
+		if (device->isWindowActive())
+		{
 			driver->beginScene(true, true, 0 );
 
 			smgr->drawAll();
@@ -450,7 +511,8 @@ int main()
 
 			// display frames per second in window title
 			int fps = driver->getFPS();
-			if (lastFPS != fps) {
+			if (lastFPS != fps)
+			{
 				irr::core::stringw str = L"Terrain Renderer - Irrlicht Engine [";
 				str += driver->getName();
 				str += "] FPS:";
@@ -461,8 +523,13 @@ int main()
 			}
 			//OnDisplay(circle_coordinator);
 
+			sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
 			for (size_t i = 0; i < lod_objects.size(); ++i)
-				lod_objects[i]->SetVisibleOneItem(camera->getAbsolutePosition());
+			{
+				LOD_ObjectPtr item = lod_objects[i];
+				item->SetVisibleOneItem(camera->getAbsolutePosition());
+				item->SetRotation(item->GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
+			}
 		}
 
 	device->drop();
@@ -473,4 +540,3 @@ int main()
 
 	return 0;
 }
-
