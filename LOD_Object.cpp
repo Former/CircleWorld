@@ -24,7 +24,12 @@ LOD_Object::LOD_Object(const std::vector<LOD_Object_Item>& a_Items)
 
 static double CalcDistance2(irr::scene::ISceneNode* a_Object, const irr::core::vector3df& a_CameraPosition)
 {
-	irr::core::vector3df obj_pos = a_Object->getTransformedBoundingBox().getCenter();
+	irr::core::matrix4 mat;
+	mat.setRotationDegrees(a_Object->getRotation());
+
+	irr::core::vector3df bb_pos = a_Object->getBoundingBox().getCenter();
+	mat.rotateVect(bb_pos);
+	irr::core::vector3df obj_pos = bb_pos + a_Object->getPosition();
 	
 	return (obj_pos - a_CameraPosition).getLengthSQ();
 }

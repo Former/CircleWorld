@@ -526,7 +526,7 @@ int main()
 			sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
 			for (size_t i = 0; i < lod_objects.size(); ++i)
 			{
-				LOD_ObjectPtr item = lod_objects[i];
+				const LOD_ObjectPtr& item = lod_objects[i];
 				item->SetVisibleOneItem(camera->getAbsolutePosition());
 				item->SetRotation(item->GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
 			}
