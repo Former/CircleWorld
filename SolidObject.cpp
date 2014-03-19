@@ -8,10 +8,10 @@ struct LOD_Settings
 
 const LOD_Settings settings[] =
 {
-	{5000, 1},
-	{20000, 4},
-	{40000, 16},
-	{80000, 64},
+	{10000, 1},
+	{30000, 4},
+	{60000, 16},
+	{100000, 64},
 };
 
 static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr)
@@ -28,7 +28,7 @@ static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::
 
 ////////////////////////////////////////////////////////////
 
-SolidObject::SolidObject(const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const size_t& a_DivStep, irr::scene::ISceneManager* a_SMgr)
+SolidObject::SolidObject(const ObjectDataPtr& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const size_t& a_DivStep, irr::scene::ISceneManager* a_SMgr)
 {
 	m_ObjectData = a_ObjectData;
 	m_Strategy = a_Strategy;
@@ -38,7 +38,7 @@ SolidObject::SolidObject(const CircleVectorZ& a_ObjectData, const ObjectDrawStra
 	{
 
 		const LOD_Settings& item = settings[i];
-		SMeshVector meshs = CreateMeshFromObjectData(m_ObjectData, m_Strategy, 50.0, item.m_DrawStep, a_DivStep);
+		SMeshVector meshs = CreateMeshFromObjectData(*m_ObjectData, m_Strategy, 50.0, item.m_DrawStep, a_DivStep);
 
 		lod_objects_vectors.resize(meshs.size());
 
@@ -97,5 +97,30 @@ void SolidObject::SetPosition(const irr::core::vector3df& a_Position)
 	{
 		const LOD_ObjectPtr& item = m_LOD_OBject[i];
 		item->SetPosition(a_Position);
+	}
+}
+
+void SolidObject::DoStep()
+{
+	CircleVectorZ& object_data = *m_ObjectData;
+	const size_t max_z = int(object_data.size());
+	const size_t max_y = int(object_data[0].size());
+	const size_t max_x = int(object_data[0][0].size());
+	IntPoint a_NearPoint(0, 0, 0);
+	size_t a_DrawStep = 1;
+
+	for (size_t z = a_NearPoint.z;  z < max_z && z < a_NearPoint.z + a_DrawStep; ++z)
+	{
+		for (size_t y = a_NearPoint.y;  y < max_y && y < a_NearPoint.y + a_DrawStep; ++y)
+		{
+			for (size_t x = a_NearPoint.x;  x < max_x && x < a_NearPoint.x + a_DrawStep; ++x)
+			{
+				CircleItem& near_item = object_data[z][y][x];
+				if (near_item.m_Type == CircleItem::tpNone)
+					near_item.m_Type = CircleItem::tpSolid;
+				if (near_item.m_Type == CircleItem::tpSolid)
+					near_item.m_Type = CircleItem::tpNone;
+			}
+		}
 	}
 }

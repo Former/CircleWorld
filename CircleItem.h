@@ -21,3 +21,5 @@ struct CircleItem
 typedef std::vector<CircleItem> CircleVectorX;
 typedef std::vector<CircleVectorX> CircleVectorY;
 typedef std::vector<CircleVectorY> CircleVectorZ;
+
+typedef std::shared_ptr<CircleVectorZ> ObjectDataPtr;

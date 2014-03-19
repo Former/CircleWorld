@@ -144,7 +144,7 @@ static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, cons
 class CObjectDrawStrategy : public ObjectDrawStrategy
 {
 public:
-	CObjectDrawStrategy(CircleVectorZ& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
+	CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
 		: m_ObjectData(a_ObjectData)
 	{
 		m_Driver = a_Driver;
@@ -166,7 +166,7 @@ private:
 	size_t m_Size;
 	irr::video::SMaterial m_SolidMaterial;
 	irr::video::SMaterial m_WaterMaterial;
-	CircleVectorZ& m_ObjectData;
+	ObjectDataPtr m_ObjectData;
 };
 
 irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const IntPoint& a_Point)
@@ -176,9 +176,10 @@ irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const
 
 bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
 {
-	const size_t max_z = int(m_ObjectData.size());
-	const size_t max_y = int(m_ObjectData[0].size());
-	const size_t max_x = int(m_ObjectData[0][0].size());
+	CircleVectorZ& object_data = *m_ObjectData;
+	const size_t max_z = int(object_data.size());
+	const size_t max_y = int(object_data[0].size());
+	const size_t max_x = int(object_data[0][0].size());
 
 	for (size_t z = a_CurPoint.z;  z < max_z && z < a_CurPoint.z + a_DrawStep; ++z)
 	{
@@ -186,7 +187,7 @@ bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a
 		{
 			for (size_t x = a_CurPoint.x;  x < max_x && x < a_CurPoint.x + a_DrawStep; ++x)
 			{
-				const CircleItem& near_item = m_ObjectData[z][y][x];
+				const CircleItem& near_item = object_data[z][y][x];
 				if (near_item.m_Type != CircleItem::tpNone)
 					return false;
 			}
@@ -198,9 +199,10 @@ bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a
 
 bool CObjectDrawStrategy::AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep)
 {
-	const size_t max_z = int(m_ObjectData.size());
-	const size_t max_y = int(m_ObjectData[0].size());
-	const size_t max_x = int(m_ObjectData[0][0].size());
+	CircleVectorZ& object_data = *m_ObjectData;
+	const size_t max_z = int(object_data.size());
+	const size_t max_y = int(object_data[0].size());
+	const size_t max_x = int(object_data[0][0].size());
 
 	for (size_t z = a_NearPoint.z;  z < max_z && z < a_NearPoint.z + a_DrawStep; ++z)
 	{
@@ -208,7 +210,7 @@ bool CObjectDrawStrategy::AddFace(const IntPoint& a_CurPoint, const IntPoint& a_
 		{
 			for (size_t x = a_NearPoint.x;  x < max_x && x < a_NearPoint.x + a_DrawStep; ++x)
 			{
-				const CircleItem& near_item = m_ObjectData[z][y][x];
+				const CircleItem& near_item = object_data[z][y][x];
 				if (near_item.m_Type == CircleItem::tpNone)
 					return true;
 			}
@@ -419,14 +421,14 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 256;
-	CircleVectorZ object;
+	size_t size = 1024;
+	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
-	FillItems(object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
+	FillItems(*object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
 
-	FillItems(object, size, max_vector * 0.25, size * 0.15, CircleItem::tpNone);
-	FillItems(object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
-	FillItems(object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
+	FillItems(*object, size, max_vector * 0.25, size * 0.15, CircleItem::tpNone);
+	FillItems(*object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
+	FillItems(*object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
 	size_t div_step = 64;
 
@@ -436,8 +438,6 @@ int main()
 	SolidObject solid_object(object, strategy, div_step, smgr);
 	solid_object.SetPosition(center);
 
-	object.clear();
-	
 	irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(1000, 100);
     if (sphere_node)
     {
@@ -477,6 +477,7 @@ int main()
 			sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
 			
 			solid_object.Draw(camera->getAbsolutePosition());
+			solid_object.DoStep();
 			solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
 		}
 
