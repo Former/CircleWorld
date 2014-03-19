@@ -22,9 +22,13 @@ public:
 	void SetRotation(const irr::core::vector3df& a_Rotation);
 	irr::core::vector3df GetRotation();
 	
+	void SetPosition(const irr::core::vector3df& a_Position);
+	irr::core::vector3df GetPosition();	
+	
 private:
 	std::vector<LOD_Object_Item> m_Items;
 	irr::core::vector3df m_Rotation;
+	irr::core::vector3df m_Position;
 };
 
 typedef std::shared_ptr<LOD_Object> LOD_ObjectPtr;

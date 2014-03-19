@@ -1,12 +1,5 @@
 #include "CreateMeshFromObjectData.h"
 
-Point::Point(const int& a_X, const int& a_Y, const int& a_Z)
-{
-	x = a_X;
-	y = a_Y;
-	z = a_Z;
-}
-
 static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_VerticesCount, const irr::u32 a_PointNumbers[4])
 {
 	const irr::u32 used[6] = {1, 3, 0, 2, 1, 0};
@@ -16,7 +9,7 @@ static void AddMeshFace(irr::scene::SMeshBuffer* a_MeshBuffer, const size_t& a_V
 
 typedef std::shared_ptr<irr::video::SMaterial> SMaterialPtr;
 
-static irr::core::vector3df MakeCurPoint(const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
+static irr::core::vector3df MakeCurPoint(const IntPoint& a_CurPoint, const IntPoint& a_MaxPoint, const double& a_Step, const irr::core::vector3df& a_Diff)
 {
 	irr::core::vector3df result = a_Diff;
 	result.X += (a_CurPoint.x * a_Step) - a_MaxPoint.x * a_Step * 0.5;
@@ -26,7 +19,7 @@ static irr::core::vector3df MakeCurPoint(const Point& a_CurPoint, const Point& a
 	return result;
 }
 
-static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const IntPoint& a_CurPoint, const IntPoint& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	const double& step = a_Step * a_DrawStep;
 	const irr::core::vector3df points[8] = 
@@ -63,12 +56,12 @@ static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const Obj
 	}
 }
 
-static Point SummPoint(const Point& a_Point1, const Point& a_Point2)
+static IntPoint SummPoint(const IntPoint& a_Point1, const IntPoint& a_Point2)
 {
-	return Point(a_Point1.x + a_Point2.x, a_Point1.y + a_Point2.y, a_Point1.z + a_Point2.z);
+	return IntPoint(a_Point1.x + a_Point2.x, a_Point1.y + a_Point2.y, a_Point1.z + a_Point2.z);
 }
 
-static bool CheckInsideVector(const Point& a_Point, const Point& a_MaxPoint)
+static bool CheckInsideVector(const IntPoint& a_Point, const IntPoint& a_MaxPoint)
 {
 	if (a_Point.x < 0 || a_Point.y < 0 || a_Point.z < 0)
 		return false;
@@ -83,7 +76,7 @@ int s_AddFaceCount = 0;
 
 typedef std::vector< std::vector<irr::scene::SMeshBuffer*> > ObjectBufferVector;
 
-static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const Point& a_CurPoint, const Point& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const IntPoint& a_CurPoint, const IntPoint& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	if (a_Strategy->IgnoreFace(a_CurPoint, a_DrawStep))
 		return;
@@ -99,14 +92,14 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	};
 
 	int step = a_DrawStep;
-	const std::vector< Point > near_item_index =
+	const std::vector< IntPoint > near_item_index =
 	{
-		Point(0, 0, -step),
-		Point(step, 0, 0),
-		Point(0, 0, step),
-		Point(-step, 0, 0),
-		Point(0, step, 0),
-		Point(0, -step, 0),		
+		IntPoint(0, 0, -step),
+		IntPoint(step, 0, 0),
+		IntPoint(0, 0, step),
+		IntPoint(-step, 0, 0),
+		IntPoint(0, step, 0),
+		IntPoint(0, -step, 0),		
 	};
 	
 	if (a_ObjectBuffers.size() < CircleItem::tpCount)
@@ -127,8 +120,8 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	bool add_vertices = false;
 	for (size_t i = 0; i < near_item_index.size(); ++i)
 	{
-		const Point& cur_index = near_item_index[i];
- 		Point near_point = SummPoint(cur_index, a_CurPoint);
+		const IntPoint& cur_index = near_item_index[i];
+ 		IntPoint near_point = SummPoint(cur_index, a_CurPoint);
 		
 		if (CheckInsideVector(near_point, a_MaxPoint))
 		{		
@@ -144,7 +137,7 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	}
 }
 
-static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPoint, IN const Point& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
+static ObjectBufferVector CreateMeshFromObjectDataItem(IN const IntPoint& a_StartPoint, IN const IntPoint& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	ObjectBufferVector object_buffers;
 	
@@ -158,8 +151,8 @@ static ObjectBufferVector CreateMeshFromObjectDataItem(IN const Point& a_StartPo
 			{
 				const CircleItem& item = x_items[x];
 				
-				Point cur_point = Point(int(x), int(y), int(z));
-				Point max_point = Point(int(x_items.size()), int(y_items.size()), int(a_ObjectData.size()));
+				IntPoint cur_point = IntPoint(int(x), int(y), int(z));
+				IntPoint max_point = IntPoint(int(x_items.size()), int(y_items.size()), int(a_ObjectData.size()));
 				
 				CreateMeshItem(object_buffers, a_ObjectData, a_Strategy, item, cur_point, max_point, a_Step, a_DrawStep);
 			}
@@ -192,8 +185,8 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 	return mesh;
 }
 
-typedef std::pair<Point, Point> StartEndItem;
-typedef std::vector<std::pair<Point, Point>> StartEndVector;
+typedef std::pair<IntPoint, IntPoint> StartEndItem;
+typedef std::vector<std::pair<IntPoint, IntPoint>> StartEndVector;
 
 static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
@@ -229,8 +222,8 @@ SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const Ob
 		{
 			for (size_t x = 0; x < max_x; x += a_DivStep)
 			{
-				Point start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
-				Point end((std::min)(x + a_DivStep, max_x), (std::min)(y + a_DivStep, max_y), (std::min)(z + a_DivStep, max_z));
+				IntPoint start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
+				IntPoint end((std::min)(x + a_DivStep, max_x), (std::min)(y + a_DivStep, max_y), (std::min)(z + a_DivStep, max_z));
 				
 				items[cur_cpu].push_back(StartEndItem(start, end));
 				cur_cpu++;

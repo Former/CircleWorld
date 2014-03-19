@@ -1,53 +1,25 @@
 #pragma once
 
 #include "Common.h"
-
-struct CircleItem
-{
-	CircleItem()
-	{
-		m_Type = tpNone;
-	}
-	
-	enum Type
-	{
-		tpNone = 0,
-		tpSolid,
-		tpWater,
-		tpCount,
-	};
-	
-	Type m_Type;
-};
-
-struct Point
-{
-	Point(const int& a_X, const int& a_Y, const int& a_Z);
-	
-	int x;
-	int y;
-	int z;
-};
+#include "SolidObject.h"
+#include "IntPoint.h"
+#include "CircleItem.h"
 
 class ObjectDrawStrategy
 {
 public:
 	virtual ~ObjectDrawStrategy() {}
 	
-	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) = 0;
+	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const IntPoint& a_Point) = 0;
 	
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) = 0;
 	
-	virtual bool AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep) = 0;
+	virtual bool AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep) = 0;
 	
-	virtual bool IgnoreFace(const Point& a_CurPoint, const size_t& a_DrawStep) = 0;
+	virtual bool IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep) = 0;
 };
 
 typedef std::shared_ptr<ObjectDrawStrategy> ObjectDrawStrategyPtr;
-
-typedef std::vector<CircleItem> CircleVectorX;
-typedef std::vector<CircleVectorX> CircleVectorY;
-typedef std::vector<CircleVectorY> CircleVectorZ;
 
 typedef std::vector<irr::scene::SMesh*> SMeshVector;
 

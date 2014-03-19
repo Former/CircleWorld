@@ -116,19 +116,6 @@ void OnDisplay(CircleCoordinator& a_Coordinator)
 
 extern int s_AddFaceCount;
 
-static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr, const irr::core::vector3df& a_Position)
-{
-	irr::scene::ISceneNode* object_node = a_SMgr->addMeshSceneNode(a_Mesh);
-	if (object_node)
-	{
-		object_node->setDebugDataVisible(irr::scene::EDS_BBOX);
-		object_node->setPosition(a_Position);
-		object_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
-
-	return object_node;
-}
-
 static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, const irr::core::vector3df& a_Center, const double& a_Radius, const CircleItem::Type& a_Type)
 {
 	size_t size = a_Size;
@@ -166,13 +153,13 @@ public:
 		m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
 	}
 
-	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const Point& a_Point) override;
+	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const IntPoint& a_Point) override;
 
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) override;
 
-	virtual bool AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep) override;
+	virtual bool AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep) override;
 	
-	virtual bool IgnoreFace(const Point& a_CurPoint, const size_t& a_DrawStep) override;
+	virtual bool IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep) override;
 
 private:
 	irr::video::IVideoDriver* m_Driver;
@@ -182,12 +169,12 @@ private:
 	CircleVectorZ& m_ObjectData;
 };
 
-irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const Point& a_Point)
+irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const IntPoint& a_Point)
 {
 	return irr::video::SColor(a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size);
 }
 
-bool CObjectDrawStrategy::IgnoreFace(const Point& a_CurPoint, const size_t& a_DrawStep)
+bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
 {
 	const size_t max_z = int(m_ObjectData.size());
 	const size_t max_y = int(m_ObjectData[0].size());
@@ -209,7 +196,7 @@ bool CObjectDrawStrategy::IgnoreFace(const Point& a_CurPoint, const size_t& a_Dr
 	return true;
 }
 
-bool CObjectDrawStrategy::AddFace(const Point& a_CurPoint, const Point& a_NearPoint, const size_t& a_DrawStep)
+bool CObjectDrawStrategy::AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep)
 {
 	const size_t max_z = int(m_ObjectData.size());
 	const size_t max_y = int(m_ObjectData[0].size());
@@ -441,52 +428,15 @@ int main()
 	FillItems(object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	FillItems(object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
-	struct LOD_Settings
-	{
-		double m_Distance;
-		size_t m_DrawStep;
-	};
-
-	const LOD_Settings settings[] =
-	{
-		{5000, 1},
-		{20000, 4},
-		{40000, 16},
-		{80000, 64},
-	};
-
 	size_t div_step = 64;
 
 	irr::core::vector3df center(0, 0, 10000);
-	std::vector<LOD_Object_Vector> lod_objects_vectors;
-	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
-	{
-		ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));
+	ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));
 
-		const LOD_Settings& item = settings[i];
-		SMeshVector meshs = CreateMeshFromObjectData(object, strategy, 50.0, item.m_DrawStep, div_step);
-
-		lod_objects_vectors.resize(meshs.size());
-
-		for (size_t j = 0; j < meshs.size(); ++j)
-		{
-			irr::scene::SMesh* mesh = meshs[j];
-			irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, smgr, center);
-
-			LOD_Object_Item new_item(object_node, item.m_Distance);
-			lod_objects_vectors[j].push_back(new_item);
-		}
-	}
+	SolidObject solid_object(object, strategy, div_step, smgr);
+	solid_object.SetPosition(center);
 
 	object.clear();
-
-	std::vector<LOD_ObjectPtr> lod_objects;
-	for (size_t i = 0; i < lod_objects_vectors.size(); ++i)
-	{
-		LOD_ObjectPtr lod_item(new LOD_Object(lod_objects_vectors[i]));
-
-		lod_objects.push_back(lod_item);
-	}
 	
 	irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(1000, 100);
     if (sphere_node)
@@ -497,6 +447,7 @@ int main()
     }
 
 	OnDisplay(circle_coordinator);
+	solid_object.Draw(camera->getAbsolutePosition());
 
 	int lastFPS = -1;
 	while(device->run())
@@ -524,12 +475,9 @@ int main()
 			//OnDisplay(circle_coordinator);
 
 			sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
-			for (size_t i = 0; i < lod_objects.size(); ++i)
-			{
-				const LOD_ObjectPtr& item = lod_objects[i];
-				item->SetVisibleOneItem(camera->getAbsolutePosition());
-				item->SetRotation(item->GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
-			}
+			
+			solid_object.Draw(camera->getAbsolutePosition());
+			solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
 		}
 
 	device->drop();

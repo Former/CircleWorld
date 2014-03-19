@@ -41,6 +41,11 @@
     <File Name="LOD_Object.h"/>
     <File Name="LOD_Object.cpp"/>
     <File Name="Common.h"/>
+    <File Name="SolidObject.h"/>
+    <File Name="SolidObject.cpp"/>
+    <File Name="IntPoint.h"/>
+    <File Name="IntPoint.cpp"/>
+    <File Name="CircleItem.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Engine">
     <File Name="Engine/Point.h"/>

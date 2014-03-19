@@ -73,3 +73,19 @@ irr::core::vector3df LOD_Object::GetRotation()
 {
 	return m_Rotation;
 }
+
+irr::core::vector3df LOD_Object::GetPosition()
+{
+	return m_Position;
+}
+
+void LOD_Object::SetPosition(const irr::core::vector3df& a_Position)
+{
+	m_Position = a_Position;
+	for (size_t i = 0; i < m_Items.size(); ++i)
+	{
+		const LOD_Object_Item& item = m_Items[i];
+
+		item.m_Object->setPosition(a_Position);
+	}
+}
