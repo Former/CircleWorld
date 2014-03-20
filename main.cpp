@@ -421,7 +421,7 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 1024;
+	size_t size = 512;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
@@ -474,11 +474,12 @@ int main()
 			}
 			//OnDisplay(circle_coordinator);
 
-			sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
+			if ((*object)[0][0][0].m_Type)
+				sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
 			
 			solid_object.Draw(camera->getAbsolutePosition());
-			solid_object.DoStep();
-			solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
+			//	solid_object.DoStep();
+			//solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
 		}
 
 	device->drop();
