@@ -12,6 +12,7 @@ CircleCoordinator::Object::Object()
 :	Color(1, 1, 1, 1.0)
 {
 	Detal 	= 10;
+	IrrObject = 0;
 }	
 
 CircleCoordinator::CircleCoordinator()
@@ -30,7 +31,6 @@ void CircleCoordinator::AddObject(const ObjectPtr& a_Object, irr::video::IVideoD
     }
 
 	a_Object->IrrObject = sphere_node;*/
-	a_Object->IrrObject = 0;
 	m_Objects[a_Object->Obj->GetID()] = a_Object;
 }
 

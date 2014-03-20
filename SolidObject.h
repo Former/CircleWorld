@@ -28,4 +28,7 @@ private:
 	ObjectDataPtr m_ObjectData;
 	irr::core::vector3df m_Rotation;
 	irr::core::vector3df m_Position;
+	std::vector<StartEndVector> m_StartEndItems;
+	IntPoint m_End;
+	IntPoint m_Start;
 };

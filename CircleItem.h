@@ -7,7 +7,7 @@ struct CircleItem
 		m_Type = tpNone;
 	}
 	
-	enum Type
+	enum Type : unsigned char
 	{
 		tpNone = 0,
 		tpSolid,

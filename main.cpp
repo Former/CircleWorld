@@ -5,6 +5,7 @@
 #include "GetWorkTime.h"
 #include "Import_Obj.h"
 #include "LOD_Object.h"
+#include "SolidObject.h"
 
 #ifdef _MSC_VER
 #pragma comment(lib, "Irrlicht.lib")
@@ -61,7 +62,6 @@ public:
 		well_index.push_back(std::pair<size_t, size_t>(57, 58));
 		well_index.push_back(std::pair<size_t, size_t>(116, 118));
 		well_index.push_back(std::pair<size_t, size_t>(145, 147));
-		static int index = 145; // 5, 57, 116(118), 145(147)
 		static double dir = 1.0;
 
 		if (event.EventType == irr::EET_KEY_INPUT_EVENT)   //  && !event.KeyInput.PressedDown
@@ -144,22 +144,21 @@ static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, cons
 class CObjectDrawStrategy : public ObjectDrawStrategy
 {
 public:
-	CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
-		: m_ObjectData(a_ObjectData)
-	{
-		m_Driver = a_Driver;
-		m_Size = a_Size;
-		m_SolidMaterial.setTexture(0, m_Driver->getTexture("../../media/wall.jpg"));
-		m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
-	}
+	CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size);
 
 	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const IntPoint& a_Point) override;
+	
+	virtual const CircleItem& GetItem(const IntPoint& a_CurPoint) override;
 
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) override;
 
 	virtual bool AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep) override;
-	
+
 	virtual bool IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep) override;
+
+	virtual size_t GetThreadCount() override;
+
+	virtual double GetStep() override;
 
 private:
 	irr::video::IVideoDriver* m_Driver;
@@ -168,6 +167,21 @@ private:
 	irr::video::SMaterial m_WaterMaterial;
 	ObjectDataPtr m_ObjectData;
 };
+
+CObjectDrawStrategy::CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
+	: m_ObjectData(a_ObjectData)
+{
+	m_Driver = a_Driver;
+	m_Size = a_Size;
+	m_SolidMaterial.setTexture(0, m_Driver->getTexture("../../media/wall.jpg"));
+	m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
+}
+
+const CircleItem&  CObjectDrawStrategy::GetItem(const IntPoint& a_CurPoint)
+{
+	CircleVectorZ& object_data = *m_ObjectData;
+	return object_data[a_CurPoint.z][a_CurPoint.y][a_CurPoint.x];
+}
 
 irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const IntPoint& a_Point)
 {
@@ -229,6 +243,16 @@ irr::video::SMaterial CObjectDrawStrategy::GetMaterial(const CircleItem& a_Item)
 	}
 
 	return m_SolidMaterial;
+}
+
+size_t CObjectDrawStrategy::GetThreadCount()
+{
+	return sysconf(_SC_NPROCESSORS_ONLN);
+}
+
+double CObjectDrawStrategy::GetStep()
+{
+	return 50.0;
 }
 
 int main()
@@ -421,10 +445,10 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 512;
+	size_t size = 256 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
-	FillItems(*object, size, max_vector * 0.5, size * 0.5, CircleItem::tpSolid);
+	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
 
 	FillItems(*object, size, max_vector * 0.25, size * 0.15, CircleItem::tpNone);
 	FillItems(*object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
@@ -439,12 +463,12 @@ int main()
 	solid_object.SetPosition(center);
 
 	irr::scene::ISceneNode* sphere_node = smgr->addSphereSceneNode(1000, 100);
-    if (sphere_node)
-    {
+	if (sphere_node)
+	{
 		sphere_node->setPosition(irr::core::vector3df(10000,0,0));
 		sphere_node->setMaterialTexture(0, driver->getTexture("../../media/wall.jpg"));
 		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    }
+	}
 
 	OnDisplay(circle_coordinator);
 	solid_object.Draw(camera->getAbsolutePosition());
@@ -476,7 +500,7 @@ int main()
 
 			if ((*object)[0][0][0].m_Type)
 				sphere_node->setRotation(sphere_node->getRotation() + irr::core::vector3df(0.2, 0.3, 0.1));
-			
+
 			solid_object.Draw(camera->getAbsolutePosition());
 			//	solid_object.DoStep();
 			//solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));

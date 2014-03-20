@@ -11,7 +11,7 @@ const LOD_Settings settings[] =
 	{10000, 1},
 	{30000, 4},
 	{60000, 16},
-	{100000, 64},
+//	{100000, 32},
 };
 
 static irr::scene::ISceneNode* MakeNodeFromMesh(irr::scene::SMesh* a_Mesh, irr::scene::ISceneManager* a_SMgr)
@@ -33,32 +33,69 @@ SolidObject::SolidObject(const ObjectDataPtr& a_ObjectData, const ObjectDrawStra
 	m_ObjectData = a_ObjectData;
 	m_Strategy = a_Strategy;
 	
-	std::vector<LOD_Object_Vector> lod_objects_vectors;
+	CircleVectorZ& object_data = *m_ObjectData;
+	const size_t max_z = int(object_data.size());
+	const size_t max_y = int(object_data[0].size());
+	const size_t max_x = int(object_data[0][0].size());
+	m_End = IntPoint(max_x - 1, max_y - 1, max_z - 1);
+	m_Start = IntPoint(1, 1, 1);
+
 	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
 	{
-
-		const LOD_Settings& item = settings[i];
-		SMeshVector meshs = CreateMeshFromObjectData(*m_ObjectData, m_Strategy, 50.0, item.m_DrawStep, a_DivStep);
-
-		lod_objects_vectors.resize(meshs.size());
-
-		for (size_t j = 0; j < meshs.size(); ++j)
+		const LOD_Settings& set_item = settings[i];
+		m_StartEndItems.push_back(MakeStartEndItems(m_Start, m_End, set_item.m_DrawStep, a_DivStep));
+	}
+	
+	size_t num_of_cpu = a_Strategy->GetThreadCount();
+	std::vector<std::vector<StartEndVector>> items;
+	for (size_t i = 0; i < m_StartEndItems.size(); ++i)
+	{
+		std::vector<StartEndVector> se_vector = MakeStartEndVectorByGroup(m_StartEndItems[i], num_of_cpu);
+		items.resize(se_vector.size());
+		for (size_t j = 0; j < se_vector.size(); ++j)
 		{
-			irr::scene::SMesh* mesh = meshs[j];
-			irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, a_SMgr);
-
-			LOD_Object_Item new_item(object_node, item.m_Distance);
-			lod_objects_vectors[j].push_back(new_item);
+			const StartEndVector& cur_se = se_vector[j];
+			items[j].push_back(cur_se);
 		}
 	}
 
-	for (size_t i = 0; i < lod_objects_vectors.size(); ++i)
+	std::vector<FutureMeshDrawStepsVector> worker_results;
+	for (size_t j = 0; j < items.size(); ++j)
 	{
-		LOD_ObjectPtr lod_item(new LOD_Object(lod_objects_vectors[i]));
-
-		m_LOD_OBject.push_back(lod_item);
+		const std::vector<StartEndVector>& item = items[j];
+		StartEndStepVector steps;
+		for (size_t i = 0; i < item.size(); ++i)
+		{
+			const LOD_Settings& set_item = settings[i];
+			const StartEndVector& se_vector = item[i];
+			steps.push_back(StartEndStepItem(se_vector, set_item.m_DrawStep));
+		}
+		
+		double step = a_Strategy->GetStep();
+		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, steps, a_Strategy, step, m_End));
 	}
-
+	
+	for (size_t j = 0; j < worker_results.size(); ++j)
+	{
+		const SMeshDrawStepsVector& cur_result = worker_results[j].get();
+		for (size_t i = 0; i < cur_result.size(); ++i)
+		{
+			const SMeshVector& cur_mesh_vector = cur_result[i];
+			LOD_Object_Vector cur_lod_object_vector;
+			for (size_t k = 0; k < cur_mesh_vector.size(); ++k)
+			{
+				const LOD_Settings& set_item = settings[k];
+				irr::scene::SMesh* mesh = cur_mesh_vector[k];
+				irr::scene::ISceneNode* object_node = MakeNodeFromMesh(mesh, a_SMgr);
+				
+				LOD_Object_Item new_item(object_node, set_item.m_Distance);
+				cur_lod_object_vector.push_back(new_item);
+			}
+			
+			LOD_ObjectPtr lod_item(new LOD_Object(cur_lod_object_vector));
+			m_LOD_OBject.push_back(lod_item);
+		}		
+	}
 }
 
 void SolidObject::Draw(const irr::core::vector3df& a_CameraPosition) const
@@ -103,16 +140,12 @@ void SolidObject::SetPosition(const irr::core::vector3df& a_Position)
 void SolidObject::DoStep()
 {
 	CircleVectorZ& object_data = *m_ObjectData;
-	const size_t max_z = int(object_data.size());
-	const size_t max_y = int(object_data[0].size());
-	const size_t max_x = int(object_data[0][0].size());
-	IntPoint a_NearPoint(0, 0, 0);
 
-	for (size_t z = a_NearPoint.z;  z < max_z; ++z)
+	for (size_t z = m_Start.z;  z < m_End.z; ++z)
 	{
-		for (size_t y = a_NearPoint.y;  y < max_y; ++y)
+		for (size_t y = m_Start.y;  y < m_End.y; ++y)
 		{
-			for (size_t x = a_NearPoint.x;  x < max_x; ++x)
+			for (size_t x = m_Start.x;  x < m_End.x; ++x)
 			{
 				CircleItem& item = object_data[z][y][x];
 				if (item.m_Type == CircleItem::tpNone)

@@ -61,22 +61,11 @@ static IntPoint SummPoint(const IntPoint& a_Point1, const IntPoint& a_Point2)
 	return IntPoint(a_Point1.x + a_Point2.x, a_Point1.y + a_Point2.y, a_Point1.z + a_Point2.z);
 }
 
-static bool CheckInsideVector(const IntPoint& a_Point, const IntPoint& a_MaxPoint)
-{
-	if (a_Point.x < 0 || a_Point.y < 0 || a_Point.z < 0)
-		return false;
-
-	if (a_Point.x >= a_MaxPoint.x || a_Point.y >= a_MaxPoint.y || a_Point.z >= a_MaxPoint.z)
-		return false;
-
-	return true;
-}
-
 int s_AddFaceCount = 0;
 
 typedef std::vector< std::vector<irr::scene::SMeshBuffer*> > ObjectBufferVector;
 
-static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const CircleItem& a_Item, const IntPoint& a_CurPoint, const IntPoint& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
+static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const ObjectDrawStrategyPtr& a_Strategy, const IntPoint& a_CurPoint, const IntPoint& a_MaxPoint, const double& a_Step, const size_t& a_DrawStep)
 {
 	if (a_Strategy->IgnoreFace(a_CurPoint, a_DrawStep))
 		return;
@@ -105,6 +94,7 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 	if (a_ObjectBuffers.size() < CircleItem::tpCount)
 		a_ObjectBuffers.resize(CircleItem::tpCount);
 
+	const CircleItem& a_Item = a_Strategy->GetItem(a_CurPoint);
 	const CircleItem::Type cur_type = a_Item.m_Type;
 	std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffers[cur_type];
 	if (buffers.empty() || buffers.back()->Indices.size() > 30000)
@@ -123,38 +113,33 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Cir
 		const IntPoint& cur_index = near_item_index[i];
  		IntPoint near_point = SummPoint(cur_index, a_CurPoint);
 		
-		if (CheckInsideVector(near_point, a_MaxPoint))
-		{		
-			if (!a_Strategy->AddFace(cur_index, near_point, a_DrawStep))
-				continue;
-		}
+		if (!a_Strategy->AddFace(cur_index, near_point, a_DrawStep))
+			continue;
 		
 		if (!add_vertices)
-			AddVerticesToMeshBuffer(buffer, a_Strategy, a_Item, a_CurPoint, a_MaxPoint, a_Step, a_DrawStep);		
+		{
+			AddVerticesToMeshBuffer(buffer, a_Strategy, a_Item, a_CurPoint, a_MaxPoint, a_Step, a_DrawStep);
+			add_vertices = true;
+		}
 		
 		++s_AddFaceCount;
 		AddMeshFace(buffer, vertices_count, point_numbers[i]);
 	}
 }
 
-static ObjectBufferVector CreateMeshFromObjectDataItem(IN const IntPoint& a_StartPoint, IN const IntPoint& a_EndPoint, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
+static ObjectBufferVector CreateMeshFromObjectDataItem(IN const IntPoint& a_StartPoint, IN const IntPoint& a_EndPoint, IN const IntPoint& a_MaxPoint, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
 {
 	ObjectBufferVector object_buffers;
 	
 	for (size_t z = a_StartPoint.z; z < a_EndPoint.z; z += a_DrawStep)
 	{
-		const CircleVectorY& y_items = a_ObjectData[z];
 		for (size_t y = a_StartPoint.y; y < a_EndPoint.y; y += a_DrawStep)
 		{
-			const CircleVectorX& x_items = y_items[y];
 			for (size_t x = a_StartPoint.x; x < a_EndPoint.x; x += a_DrawStep)
 			{
-				const CircleItem& item = x_items[x];
-				
 				IntPoint cur_point = IntPoint(int(x), int(y), int(z));
-				IntPoint max_point = IntPoint(int(x_items.size()), int(y_items.size()), int(a_ObjectData.size()));
 				
-				CreateMeshItem(object_buffers, a_ObjectData, a_Strategy, item, cur_point, max_point, a_Step, a_DrawStep);
+				CreateMeshItem(object_buffers, a_Strategy, cur_point, a_MaxPoint, a_Step, a_DrawStep);
 			}
 		}
 	}
@@ -185,18 +170,61 @@ static irr::scene::SMesh* CreateMeshFormObjectBuffers(IN const ObjectBufferVecto
 	return mesh;
 }
 
-typedef std::pair<IntPoint, IntPoint> StartEndItem;
-typedef std::vector<std::pair<IntPoint, IntPoint>> StartEndVector;
-
-static SMeshVector CreateMeshFromObjectDataWorker(IN const StartEndVector& a_Items, const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep)
+SMeshDrawStepsVector CreateMeshFromObjectDataWorker(IN StartEndStepVector a_Items, ObjectDrawStrategyPtr a_Strategy, double a_Step, IN IntPoint a_MaxPoint)
 {
-	SMeshVector result;
+	if (a_Items.empty())
+		return SMeshDrawStepsVector();
+	
+	SMeshDrawStepsVector result;
 	for (size_t i = 0; i < a_Items.size(); ++i)
 	{
-		const StartEndItem& item = a_Items[i];
-		ObjectBufferVector cur_buf = CreateMeshFromObjectDataItem(item.first, item.second, a_ObjectData, a_Strategy, a_Step, a_DrawStep);
+		const StartEndStepItem& item = a_Items[i];
+		const StartEndVector& se_vector = item.first;
+		size_t draw_step = item.second;
+		result.resize(se_vector.size());
+		for (size_t j = 0; j < se_vector.size(); ++j)
+		{
+			const StartEndItem& se_item = se_vector[j];
+			ObjectBufferVector cur_buf = CreateMeshFromObjectDataItem(se_item.first, se_item.second, a_MaxPoint, a_Strategy, a_Step, draw_step);
 		
-		result.push_back(CreateMeshFormObjectBuffers(cur_buf));
+			result[j].push_back(CreateMeshFormObjectBuffers(cur_buf));		
+		}
+	}
+	
+	return result;
+}
+
+StartEndVector MakeStartEndItems(IN const IntPoint& a_StartPoint, IN const IntPoint& a_EndPoint, const size_t& a_DrawStep, const size_t& a_DivStep)
+{
+	std::vector<StartEndItem> result;
+	
+	for (size_t z = a_StartPoint.z; z < a_EndPoint.z; z += a_DivStep)
+	{
+		for (size_t y = a_StartPoint.y; y < a_EndPoint.y; y += a_DivStep)
+		{
+			for (size_t x = a_StartPoint.x; x < a_EndPoint.x; x += a_DivStep)
+			{
+				IntPoint start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
+				IntPoint end((std::min)(x + a_DivStep, (size_t)(a_EndPoint.x)), (std::min)(y + a_DivStep, (size_t)(a_EndPoint.y)), (std::min)(z + a_DivStep, (size_t)(a_EndPoint.z)));
+				
+				result.push_back(StartEndItem(start, end));
+			}
+		}
+	}
+	
+	return result;
+}
+
+std::vector<StartEndVector> MakeStartEndVectorByGroup(IN const StartEndVector& a_StartEndVector, IN const size_t& a_GroupCount)
+{
+	std::vector<StartEndVector> result(a_GroupCount);
+	size_t cur_group_number = 0;
+	for (size_t i = 0; i < a_StartEndVector.size(); ++i)
+	{
+		result[cur_group_number].push_back(a_StartEndVector[i]);
+		cur_group_number++;
+		if (cur_group_number >= a_GroupCount)
+			cur_group_number = 0;
 	}
 	
 	return result;
@@ -211,38 +239,29 @@ SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const Ob
 	if (!max_y)
 		return SMeshVector();
 	const size_t max_x = int(a_ObjectData[0][0].size());
+	if (!max_x)
+		return SMeshVector();
+	IntPoint end(max_x - 1, max_y - 1, max_z - 1);
+	IntPoint start(1, 1, 1);
 	
-	size_t num_of_cpu = sysconf(_SC_NPROCESSORS_ONLN);
-	std::vector<StartEndVector> items(num_of_cpu);
-	size_t cur_cpu = 0;
-	
-	for (size_t z = 0; z < max_z; z += a_DivStep)
-	{
-		for (size_t y = 0; y < max_y; y += a_DivStep)
-		{
-			for (size_t x = 0; x < max_x; x += a_DivStep)
-			{
-				IntPoint start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
-				IntPoint end((std::min)(x + a_DivStep, max_x), (std::min)(y + a_DivStep, max_y), (std::min)(z + a_DivStep, max_z));
-				
-				items[cur_cpu].push_back(StartEndItem(start, end));
-				cur_cpu++;
-				if (cur_cpu >= num_of_cpu)
-					cur_cpu = 0;
-			}
-		}
-	}
-	
-	std::vector<std::future<SMeshVector>> worker_results;
+	size_t num_of_cpu = a_Strategy->GetThreadCount();
+	std::vector<StartEndItem> div_item = MakeStartEndItems(start, end, a_DrawStep, a_DivStep);
+	std::vector<StartEndVector> items = MakeStartEndVectorByGroup(div_item, num_of_cpu);
+		
+	std::vector<FutureMeshDrawStepsVector> worker_results;
 	for (size_t i = 0; i < items.size(); ++i)
-		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, std::ref(items[i]), std::ref(a_ObjectData), std::ref(a_Strategy), std::ref(a_Step), std::ref(a_DrawStep)));
+	{
+		StartEndStepItem item(items[i], a_DrawStep);
+		StartEndStepVector steps = {item};
+		worker_results.push_back(std::async(std::launch::async, CreateMeshFromObjectDataWorker, std::ref(steps), std::ref(a_Strategy), std::ref(a_Step), std::ref(end)));
+	}
 	
 	SMeshVector result;
 	for (size_t i = 0; i < worker_results.size(); ++i)
 	{
-		const SMeshVector& cur_tesult = worker_results[i].get();
+		const SMeshDrawStepsVector& cur_tesult = worker_results[i].get();
 		
-		result.insert(result.end(), cur_tesult.begin(), cur_tesult.end());
+		result.insert(result.end(), cur_tesult[0].begin(), cur_tesult[0].end());
 	}
 	
 	return result;

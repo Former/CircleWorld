@@ -5,6 +5,7 @@
 
 struct IntPoint
 {
+	IntPoint();
 	IntPoint(const int& a_X, const int& a_Y, const int& a_Z);
 	
 	int x;
