@@ -7,6 +7,8 @@
 #include <thread>
 #include <mutex>
 #include <algorithm>
+#include <condition_variable>
+#include <chrono>
 
 #define IN
 #define OUT

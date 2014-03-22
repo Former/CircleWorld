@@ -158,5 +158,9 @@
     <File Name="ThreadPool/Common.h"/>
     <File Name="ThreadPool/AsyncOperation.h"/>
     <File Name="ThreadPool/AsyncOperation.cpp"/>
+    <File Name="ThreadPool/AsyncSequenceOperation.h"/>
+    <File Name="ThreadPool/AsyncSequenceOperation.cpp"/>
+    <File Name="ThreadPool/AsyncParallelOperation.h"/>
+    <File Name="ThreadPool/AsyncParallelOperation.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>

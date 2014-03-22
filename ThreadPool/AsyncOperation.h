@@ -2,29 +2,37 @@
 
 namespace ThreadPool
 {
-	class IAsyncFinisshHandler
+	class IAsyncFinishHandler
 	{
-		virtual ~IAsyncFinisshHandler();
+	public:
+		virtual ~IAsyncFinishHandler();
 		
-		
-		
+		virtual OnFinish() = 0;		
 	};
+	typedef std::shared_ptr<IAsyncFinishHandler> IAsyncFinishHandlerPtr;
 
 
 	class IAsyncOperation
 	{
+		friend class AsyncParallelOperation;
+		friend class AsyncSequenceOperation;
+	public:
 		virtual ~IAsyncOperation();
 
-		void Run();
+		virtual void Run() = 0;
 		
-		void OnFinish();
+		virtual void OnFinish();
 
-		void SetFinishHandler();
-		
+		virtual double GetPriority() const = 0;
+
 	protected:
-		virtual void __Run() = 0;
-	
-		virtual void __OnFinish() = 0;
-		
+		void SetFinishHandler(const IAsyncFinishHandlerPtr& a_Handler);
+
+		IAsyncFinishHandlerPtr m_Handler;
 	};
+	typedef std::shared_ptr<IAsyncOperation> IAsyncOperationPtr;
+	typedef std::vector<IAsyncOperationPtr> AsyncOpVector;
+	typedef std::queue<IAsyncOperationPtr> AsyncOpQueue;
+	
+	void SortByPriority(IN OUT AsyncOpQueue& a_OpVector);
 }
