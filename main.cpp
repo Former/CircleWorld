@@ -494,7 +494,7 @@ int main()
 	FillItems(*object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	FillItems(*object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
-	size_t div_step = 64;
+	size_t div_step = 256;
 
 	irr::core::vector3df center(0, 0, 10000);
 	ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));

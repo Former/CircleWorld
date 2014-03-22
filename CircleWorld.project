@@ -150,4 +150,13 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="ThreadPool">
+    <File Name="ThreadPool/ThreadPool.h"/>
+    <File Name="ThreadPool/ThreadPool.cpp"/>
+    <File Name="ThreadPool/WorkThread.h"/>
+    <File Name="ThreadPool/WorkThread.cpp"/>
+    <File Name="ThreadPool/Common.h"/>
+    <File Name="ThreadPool/AsyncOperation.h"/>
+    <File Name="ThreadPool/AsyncOperation.cpp"/>
+  </VirtualDirectory>
 </CodeLite_Project>

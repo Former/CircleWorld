@@ -2,17 +2,9 @@
 
 #include <irrlicht.h>
 
-#include <vector>
-#include <tr1/memory>
-#include <string>
-#include <sstream>
-#include <thread>
-#include <mutex>
-#include <future>
-#include <algorithm>
-#include <iostream>
+#iclude "ThreadPool/Common.h"
 
-#define IN
-#define OUT
+#include <future>
+#include <iostream>
 
 #define ARRAY_SIZE(a_Array) (sizeof(a_Array)/sizeof(a_Array[0]))
