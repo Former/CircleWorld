@@ -146,9 +146,9 @@ class CObjectDrawStrategy : public ObjectDrawStrategy
 public:
 	CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size);
 
-	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const IntPoint& a_Point) override;
+	virtual irr::video::SColor GetColor(const IntPoint& a_CurPoint, const size_t& a_DrawStep) override;
 	
-	virtual const CircleItem& GetItem(const IntPoint& a_CurPoint) override;
+	virtual const CircleItem& GetItem(const IntPoint& a_CurPoint, const size_t& a_DrawStep) override;
 
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) override;
 
@@ -159,6 +159,10 @@ public:
 	virtual size_t GetThreadCount() override;
 
 	virtual double GetStep() override;
+	
+	virtual IntPoint GetStartPoint() override;
+
+	virtual IntPoint GetEndPoint() override;
 
 private:
 	irr::video::IVideoDriver* m_Driver;
@@ -177,29 +181,42 @@ CObjectDrawStrategy::CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr:
 	m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
 }
 
-const CircleItem&  CObjectDrawStrategy::GetItem(const IntPoint& a_CurPoint)
+const CircleItem& CObjectDrawStrategy::GetItem(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
 {
 	CircleVectorZ& object_data = *m_ObjectData;
+	const IntPoint end_point = GetEndPoint();
+
+	for (size_t z = a_CurPoint.z;  z < end_point.z && z < a_CurPoint.z + a_DrawStep; ++z)
+	{
+		for (size_t y = a_CurPoint.y;  y < end_point.y && y < a_CurPoint.y + a_DrawStep; ++y)
+		{
+			for (size_t x = a_CurPoint.x;  x < end_point.x && x < a_CurPoint.x + a_DrawStep; ++x)
+			{
+				const CircleItem& cur_item = object_data[z][y][x];
+				if (cur_item.m_Type != CircleItem::tpNone)
+					return cur_item;
+			}
+		}
+	}
+	
 	return object_data[a_CurPoint.z][a_CurPoint.y][a_CurPoint.x];
 }
 
-irr::video::SColor CObjectDrawStrategy::GetColor(const CircleItem& a_Item, const IntPoint& a_Point)
+irr::video::SColor CObjectDrawStrategy::GetColor(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
 {
-	return irr::video::SColor(a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size, a_Point.x * 255 / m_Size);
+	return irr::video::SColor(a_CurPoint.x * 255 / m_Size, a_CurPoint.x * 255 / m_Size, a_CurPoint.x * 255 / m_Size, a_CurPoint.x * 255 / m_Size);
 }
 
 bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
 {
 	CircleVectorZ& object_data = *m_ObjectData;
-	const size_t max_z = int(object_data.size());
-	const size_t max_y = int(object_data[0].size());
-	const size_t max_x = int(object_data[0][0].size());
+	const IntPoint end_point = GetEndPoint();
 
-	for (size_t z = a_CurPoint.z;  z < max_z && z < a_CurPoint.z + a_DrawStep; ++z)
+	for (size_t z = a_CurPoint.z;  z < end_point.z && z < a_CurPoint.z + a_DrawStep; ++z)
 	{
-		for (size_t y = a_CurPoint.y;  y < max_y && y < a_CurPoint.y + a_DrawStep; ++y)
+		for (size_t y = a_CurPoint.y;  y < end_point.y && y < a_CurPoint.y + a_DrawStep; ++y)
 		{
-			for (size_t x = a_CurPoint.x;  x < max_x && x < a_CurPoint.x + a_DrawStep; ++x)
+			for (size_t x = a_CurPoint.x;  x < end_point.x && x < a_CurPoint.x + a_DrawStep; ++x)
 			{
 				const CircleItem& near_item = object_data[z][y][x];
 				if (near_item.m_Type != CircleItem::tpNone)
@@ -213,16 +230,23 @@ bool CObjectDrawStrategy::IgnoreFace(const IntPoint& a_CurPoint, const size_t& a
 
 bool CObjectDrawStrategy::AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep)
 {
-	CircleVectorZ& object_data = *m_ObjectData;
-	const size_t max_z = int(object_data.size());
-	const size_t max_y = int(object_data[0].size());
-	const size_t max_x = int(object_data[0][0].size());
-
-	for (size_t z = a_NearPoint.z;  z < max_z && z < a_NearPoint.z + a_DrawStep; ++z)
+	const IntPoint end_point = GetEndPoint();
+	if (a_DrawStep > 1)
 	{
-		for (size_t y = a_NearPoint.y;  y < max_y && y < a_NearPoint.y + a_DrawStep; ++y)
+		if (a_NearPoint.x < 0 || a_NearPoint.y < 0 || a_NearPoint.z < 0)
+			return true;
+
+		if (a_NearPoint.x >= end_point.x || a_NearPoint.y >= end_point.y || a_NearPoint.z >= end_point.z)
+			return true;
+	}
+	
+	CircleVectorZ& object_data = *m_ObjectData;
+	
+	for (size_t z = a_NearPoint.z;  z < end_point.z && z < a_NearPoint.z + a_DrawStep; ++z)
+	{
+		for (size_t y = a_NearPoint.y;  y < end_point.y && y < a_NearPoint.y + a_DrawStep; ++y)
 		{
-			for (size_t x = a_NearPoint.x;  x < max_x && x < a_NearPoint.x + a_DrawStep; ++x)
+			for (size_t x = a_NearPoint.x;  x < end_point.x && x < a_NearPoint.x + a_DrawStep; ++x)
 			{
 				const CircleItem& near_item = object_data[z][y][x];
 				if (near_item.m_Type == CircleItem::tpNone)
@@ -240,9 +264,11 @@ irr::video::SMaterial CObjectDrawStrategy::GetMaterial(const CircleItem& a_Item)
 	{
 	case CircleItem::tpWater:
 		return m_WaterMaterial;
+	case CircleItem::tpSolid:
+		return m_SolidMaterial;
 	}
 
-	return m_SolidMaterial;
+	return irr::video::SMaterial();
 }
 
 size_t CObjectDrawStrategy::GetThreadCount()
@@ -253,6 +279,20 @@ size_t CObjectDrawStrategy::GetThreadCount()
 double CObjectDrawStrategy::GetStep()
 {
 	return 50.0;
+}
+
+IntPoint CObjectDrawStrategy::GetStartPoint()
+{
+	return IntPoint(1, 1, 1);
+}
+
+IntPoint CObjectDrawStrategy::GetEndPoint()
+{
+	CircleVectorZ& object_data = *m_ObjectData;
+	const int max_z = int(object_data.size());
+	const int max_y = int(object_data[0].size());
+	const int max_x = int(object_data[0][0].size());
+	return IntPoint(max_x - 1, max_y - 1, max_z - 1); 
 }
 
 int main()
@@ -445,7 +485,7 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 1024 + 2;
+	size_t size = 256 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
@@ -503,7 +543,7 @@ int main()
 
 			solid_object.Draw(camera->getAbsolutePosition());
 			//solid_object.DoStep();
-			solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
+			//solid_object.SetRotation(solid_object.GetRotation() + irr::core::vector3df(0.0, 0.0, 0.05));
 		}
 
 	device->drop();

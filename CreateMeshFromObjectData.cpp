@@ -50,7 +50,7 @@ static void AddVerticesToMeshBuffer(irr::scene::SMeshBuffer* a_Buffer, const Obj
 	for (size_t i = 0; i < sizeof(points)/sizeof(points[0]); ++i)
 	{
 		irr::core::vector3df point = MakeCurPoint(a_CurPoint, a_MaxPoint, a_Step, points[i]);
-		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), a_Strategy->GetColor(a_Item, a_CurPoint), texture_index[i]);
+		irr::video::S3DVertex new_item(point, irr::core::vector3df(0 ,0, 0), a_Strategy->GetColor(a_CurPoint, a_DrawStep), texture_index[i]);
 		
 		a_Buffer->Vertices.push_back(new_item);
 	}
@@ -94,7 +94,7 @@ static void CreateMeshItem(IN OUT ObjectBufferVector& a_ObjectBuffers, const Obj
 	if (a_ObjectBuffers.size() < CircleItem::tpCount)
 		a_ObjectBuffers.resize(CircleItem::tpCount);
 
-	const CircleItem& a_Item = a_Strategy->GetItem(a_CurPoint);
+	const CircleItem& a_Item = a_Strategy->GetItem(a_CurPoint, a_DrawStep);
 	const CircleItem::Type cur_type = a_Item.m_Type;
 	std::vector<irr::scene::SMeshBuffer*>& buffers = a_ObjectBuffers[cur_type];
 	if (buffers.empty() || buffers.back()->Indices.size() > 30000)
@@ -204,7 +204,7 @@ StartEndVector MakeStartEndItems(IN const IntPoint& a_StartPoint, IN const IntPo
 		{
 			for (size_t x = a_StartPoint.x; x < a_EndPoint.x; x += a_DivStep)
 			{
-				IntPoint start(x + x % a_DrawStep, y + y % a_DrawStep, z + z % a_DrawStep);
+				IntPoint start(x + (x - a_StartPoint.x) % a_DrawStep, y + (y - a_StartPoint.y) % a_DrawStep, z + (z - a_StartPoint.z) % a_DrawStep);
 				IntPoint end((std::min)(x + a_DivStep, (size_t)(a_EndPoint.x)), (std::min)(y + a_DivStep, (size_t)(a_EndPoint.y)), (std::min)(z + a_DivStep, (size_t)(a_EndPoint.z)));
 				
 				result.push_back(StartEndItem(start, end));
@@ -232,17 +232,8 @@ std::vector<StartEndVector> MakeStartEndVectorByGroup(IN const StartEndVector& a
 
 SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep, const size_t& a_DivStep)
 {	
-	const size_t max_z = int(a_ObjectData.size());
-	if (!max_z)
-		return SMeshVector();
-	const size_t max_y = int(a_ObjectData[0].size());
-	if (!max_y)
-		return SMeshVector();
-	const size_t max_x = int(a_ObjectData[0][0].size());
-	if (!max_x)
-		return SMeshVector();
-	IntPoint end(max_x - 1, max_y - 1, max_z - 1);
-	IntPoint start(1, 1, 1);
+	const IntPoint end = a_Strategy->GetEndPoint();
+	const IntPoint start = a_Strategy->GetStartPoint();
 	
 	size_t num_of_cpu = a_Strategy->GetThreadCount();
 	std::vector<StartEndItem> div_item = MakeStartEndItems(start, end, a_DrawStep, a_DivStep);

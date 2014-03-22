@@ -8,9 +8,9 @@ struct LOD_Settings
 
 const LOD_Settings settings[] =
 {
-	{10000, 1},
-	{30000, 4},
-	{60000, 16},
+	{8000, 1},
+	{16000, 4},
+	{32000, 16},
 //	{100000, 32},
 };
 
@@ -33,12 +33,8 @@ SolidObject::SolidObject(const ObjectDataPtr& a_ObjectData, const ObjectDrawStra
 	m_ObjectData = a_ObjectData;
 	m_Strategy = a_Strategy;
 	
-	CircleVectorZ& object_data = *m_ObjectData;
-	const size_t max_z = int(object_data.size());
-	const size_t max_y = int(object_data[0].size());
-	const size_t max_x = int(object_data[0][0].size());
-	m_End = IntPoint(max_x - 1, max_y - 1, max_z - 1);
-	m_Start = IntPoint(1, 1, 1);
+	m_End = a_Strategy->GetEndPoint();
+	m_Start = a_Strategy->GetStartPoint();
 
 	for (size_t i = 0; i < ARRAY_SIZE(settings); ++i)
 	{

@@ -9,11 +9,11 @@ class ObjectDrawStrategy
 public:
 	virtual ~ObjectDrawStrategy() {}
 	
-	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const IntPoint& a_Point) = 0;
+	virtual irr::video::SColor GetColor(const IntPoint& a_CurPoint, const size_t& a_DrawStep) = 0;
 	
 	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item) = 0;
 
-	virtual const CircleItem& GetItem(const IntPoint& a_CurPoint) = 0;
+	virtual const CircleItem& GetItem(const IntPoint& a_CurPoint, const size_t& a_DrawStep) = 0;
 	
 	virtual bool AddFace(const IntPoint& a_CurPoint, const IntPoint& a_NearPoint, const size_t& a_DrawStep) = 0;
 	
@@ -22,6 +22,10 @@ public:
 	virtual size_t GetThreadCount() = 0;
 
 	virtual double GetStep() = 0;
+	
+	virtual IntPoint GetStartPoint() = 0;
+
+	virtual IntPoint GetEndPoint() = 0;
 };
 
 typedef std::shared_ptr<ObjectDrawStrategy> ObjectDrawStrategyPtr;
