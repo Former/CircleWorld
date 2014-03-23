@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "IAsyncOperation.h"
+
 namespace ThreadPool
 {
 	class AsyncParallelOperation : public IAsyncOperation
@@ -7,10 +9,8 @@ namespace ThreadPool
 	public:
 		AsyncParallelOperation(const AsyncOpVector& a_OpVector);
 
-		virtual void Run() override;
+		virtual void Run(const IAsyncFinishHandlerPtr& a_Handler) override;
 		
-		virtual void OnFinish() override;
-
 		double GetPriority() const override;
 		
 	private:

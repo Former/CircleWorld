@@ -13,12 +13,11 @@ ThreadPool::WorkThread::~WorkThread()
 	m_Thread.join();
 }
 
-void ThreadPool::WorkThread::AddOperations(const AsyncOpVector& a_Operations)
+void ThreadPool::WorkThread::AddOperation(const AsyncOpForPoolPtr& a_Operation)
 {
 	std::unique_lock<std::mutex> lock(m_QueueMutex);
 	
-	for (size_t i = 0; i < a_Operations.size(); ++i)
-		m_OpQueue.push(a_Operations[i]);
+	m_OpQueue.push(a_Operation);
 	
 	SortByPriority(m_OpQueue);
 	
@@ -32,7 +31,7 @@ void ThreadPool::WorkThread::Work()
 		IAsyncOperationPtr cur_op;
 		{
 			std::unique_lock<std::mutex> lock(m_QueueMutex);
-			if (m_OpQueue.size())
+			if (!m_OpQueue.empty())
 			{
 				cur_op = m_OpQueue.front();
 				m_OpQueue.pop();
@@ -44,8 +43,6 @@ void ThreadPool::WorkThread::Work()
 		if (!cur_op)
 			continue;
 			
-		cur_op->Run();
-		
-		cur_op->OnFinish();		
+		cur_op->SyncRun();
 	}
 }

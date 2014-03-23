@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "Common.h"
+#include "AsyncOpForThreadPool.h"
 
 namespace ThreadPool
 {
@@ -10,14 +11,14 @@ namespace ThreadPool
 		WorkThread();
 		~WorkThread();
 		
-		void AddOperations(const AsyncOpVector& a_Operations);
+		void AddOperation(const AsyncOpForPoolPtr& a_Operation);
 		
 	private:
 		void Work();
 		
 		std::thread m_Thread;
-		AsyncOpQueue m_OpQueue;
-		std::mutex m_QueueMutex;
+		AsyncOpForPoolQueue m_OpQueue;
+		std::recursive_mutex m_QueueMutex;
 		std::condition_variable m_QueueEvent;
 		bool m_Exit;
 	};

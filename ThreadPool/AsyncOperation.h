@@ -2,7 +2,7 @@
 
 namespace ThreadPool
 {
-	class IAsyncFinishHandler
+	class IAsyncFinishHandler : public std::enable_shared_from_this<IAsyncFinishHandler>
 	{
 	public:
 		virtual ~IAsyncFinishHandler();
@@ -11,28 +11,38 @@ namespace ThreadPool
 	};
 	typedef std::shared_ptr<IAsyncFinishHandler> IAsyncFinishHandlerPtr;
 
+	//////////////////////////////////////////////////////////////////////////////
 
-	class IAsyncOperation
+	class IAsyncOperation : public std::enable_shared_from_this<IAsyncOperation>
 	{
-		friend class AsyncParallelOperation;
-		friend class AsyncSequenceOperation;
 	public:
 		virtual ~IAsyncOperation();
 
-		virtual void Run() = 0;
+		virtual void Run(const IAsyncFinishHandlerPtr& a_Handler) = 0;
 		
-		virtual void OnFinish();
-
 		virtual double GetPriority() const = 0;
-
-	protected:
-		void SetFinishHandler(const IAsyncFinishHandlerPtr& a_Handler);
-
-		IAsyncFinishHandlerPtr m_Handler;
 	};
 	typedef std::shared_ptr<IAsyncOperation> IAsyncOperationPtr;
 	typedef std::vector<IAsyncOperationPtr> AsyncOpVector;
 	typedef std::queue<IAsyncOperationPtr> AsyncOpQueue;
 	
-	void SortByPriority(IN OUT AsyncOpQueue& a_OpVector);
+	//////////////////////////////////////////////////////////////////////////////
+	
+	class OpPriorityPredicate
+	{
+	public:
+		bool operator()(const IAsyncOperationPtr& a_Op1, const IAsyncOperationPtr& a_Op2)
+		{
+			return (a_Op1->GetPriority() < a_Op2->GetPriority());
+		}	
+	};
+
+	template <typename OpVector>
+	void SortByPriority(IN OUT OpVector& a_OpQueue)
+	{
+		std::sort(a_OpQueue.begin(), a_OpQueue.end(), OpPriorityPredicate());
+	}
+	
+	double MinPriority(IN const OpVector& a_OpVector);
+
 }
