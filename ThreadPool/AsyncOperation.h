@@ -26,7 +26,6 @@ namespace ThreadPool
 	};
 	typedef std::shared_ptr<IAsyncOperation> IAsyncOperationPtr;
 	typedef std::vector<IAsyncOperationPtr> AsyncOpVector;
-	typedef std::queue<IAsyncOperationPtr> AsyncOpQueue;
 	
 	//////////////////////////////////////////////////////////////////////////////
 	
