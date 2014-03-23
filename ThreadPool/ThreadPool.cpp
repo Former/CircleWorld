@@ -1,3 +1,4 @@
+#include "ThreadPool.h"
 
 ThreadPool::ThreadPool::ThreadPool(const size_t& a_ThreadCount)
 : m_RandomEngine(m_RandomDevice()), m_RandomDis(0, a_ThreadCount - 1)
