@@ -1,29 +1,31 @@
+#include "Common.h"
+#include "AsyncOperation.h"
 #include "AsyncParallelOperation.h"
 
 namespace
 {
-	class AsyncParallel_FinishHandler : public IAsyncFinishHandler
+	class AsyncParallel_FinishHandler : public ThreadPool::IAsyncFinishHandler
 	{
 	public:
-		AsyncParallel_FinishHandler(const size_t& a_OpVectorSize, const IAsyncFinishHandlerPtr& a_ParentHandler);
+		AsyncParallel_FinishHandler(const size_t& a_OpVectorSize, const ThreadPool::IAsyncFinishHandlerPtr& a_ParentHandler);
 		
-		virtual OnFinish() override;
+		virtual void OnFinish() override;
 	
 	private:
-		IAsyncFinishHandlerPtr m_ParentHandler;
+		ThreadPool::IAsyncFinishHandlerPtr m_ParentHandler;
 		size_t m_OpVectorSize;
 		std::mutex m_FinishCountMutex;
 		size_t m_FinishCount; 
 	};
 	
-	AsyncParallel_FinishHandler::AsyncParallel_FinishHandler(const size_t& a_OpVectorSize, const IAsyncFinishHandlerPtr& a_ParentHandler)
+	AsyncParallel_FinishHandler::AsyncParallel_FinishHandler(const size_t& a_OpVectorSize, const ThreadPool::IAsyncFinishHandlerPtr& a_ParentHandler)
 	{
 		m_ParentHandler = a_ParentHandler;
 		m_OpVectorSize = a_OpVectorSize;
 		m_FinishCount = 0;
 	}
 
-	AsyncParallel_FinishHandler::OnFinish()
+	void AsyncParallel_FinishHandler::OnFinish()
 	{
 		{
 			std::unique_lock<std::mutex> lock(m_FinishCountMutex);

@@ -27,5 +27,4 @@ namespace ThreadPool
 	};
 	typedef std::shared_ptr<AsyncOpForPool> AsyncOpForPoolPtr;
 	typedef std::vector<AsyncOpForPoolPtr> AsyncOpForPoolVector;
-	typedef std::queue<AsyncOpForPoolPtr> AsyncOpForPoolQueue;	
 }

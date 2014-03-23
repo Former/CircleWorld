@@ -16,7 +16,7 @@ namespace ThreadPool
 		void AddOperation(const AsyncOpForPoolPtr& a_Operation);
 		
 	private:
-		std::vector<WorkThread> m_WorkThreads;
+		std::vector<WorkThreadPtr> m_WorkThreads;
 		std::random_device m_RandomDevice;
 		std::default_random_engine m_RandomEngine;
 		std::uniform_int_distribution<int> m_RandomDis;

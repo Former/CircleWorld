@@ -58,12 +58,28 @@
     <File Name="Engine/EngineRules.h"/>
     <File Name="Engine/EngineRules.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="ThreadPool">
+    <File Name="ThreadPool/ThreadPool.h"/>
+    <File Name="ThreadPool/ThreadPool.cpp"/>
+    <File Name="ThreadPool/WorkThread.h"/>
+    <File Name="ThreadPool/WorkThread.cpp"/>
+    <File Name="ThreadPool/Common.h"/>
+    <File Name="ThreadPool/AsyncOperation.h"/>
+    <File Name="ThreadPool/AsyncOperation.cpp"/>
+    <File Name="ThreadPool/AsyncSequenceOperation.h"/>
+    <File Name="ThreadPool/AsyncSequenceOperation.cpp"/>
+    <File Name="ThreadPool/AsyncParallelOperation.h"/>
+    <File Name="ThreadPool/AsyncParallelOperation.cpp"/>
+    <File Name="ThreadPool/AsyncOpForThreadPool.h"/>
+    <File Name="ThreadPool/AsyncOpForThreadPool.cpp"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-std=c++0x" C_Options="" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="./Engine"/>
         <IncludePath Value="./irrlicht/include"/>
+        <IncludePath Value="./ThreadPool"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
@@ -150,19 +166,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="ThreadPool">
-    <File Name="ThreadPool/ThreadPool.h"/>
-    <File Name="ThreadPool/ThreadPool.cpp"/>
-    <File Name="ThreadPool/WorkThread.h"/>
-    <File Name="ThreadPool/WorkThread.cpp"/>
-    <File Name="ThreadPool/Common.h"/>
-    <File Name="ThreadPool/AsyncOperation.h"/>
-    <File Name="ThreadPool/AsyncOperation.cpp"/>
-    <File Name="ThreadPool/AsyncSequenceOperation.h"/>
-    <File Name="ThreadPool/AsyncSequenceOperation.cpp"/>
-    <File Name="ThreadPool/AsyncParallelOperation.h"/>
-    <File Name="ThreadPool/AsyncParallelOperation.cpp"/>
-    <File Name="ThreadPool/AsyncOpForThreadPool.h"/>
-    <File Name="ThreadPool/AsyncOpForThreadPool.cpp"/>
-  </VirtualDirectory>
 </CodeLite_Project>

@@ -1,28 +1,30 @@
+#include "Common.h"
+#include "AsyncOperation.h"
 #include "AsyncSequenceOperation.h"
 
 namespace
 {
-	class AsyncSequence_FinishHandler : public IAsyncFinishHandler
+	class AsyncSequence_FinishHandler : public ThreadPool::IAsyncFinishHandler
 	{
 	public:
-		AsyncSequence_FinishHandler(const AsyncOpVector& a_OpVector, const IAsyncFinishHandlerPtr& a_ParentHandler);
+		AsyncSequence_FinishHandler(const ThreadPool::AsyncOpVector& a_OpVector, const ThreadPool::IAsyncFinishHandlerPtr& a_ParentHandler);
 		
-		virtual OnFinish() override;
+		virtual void OnFinish() override;
 	
 	private:
-		const AsyncOpVector& m_OpVector;
-		IAsyncFinishHandlerPtr m_ParentHandler;
+		const ThreadPool::AsyncOpVector& m_OpVector;
+		ThreadPool::IAsyncFinishHandlerPtr m_ParentHandler;
 		size_t m_CurIndex; 
 	};
 	
-	AsyncSequence_FinishHandler::AsyncSequence_FinishHandler(const AsyncOpVector& a_OpVector, const IAsyncFinishHandlerPtr& a_ParentHandler)
+	AsyncSequence_FinishHandler::AsyncSequence_FinishHandler(const ThreadPool::AsyncOpVector& a_OpVector, const ThreadPool::IAsyncFinishHandlerPtr& a_ParentHandler)
 	: m_OpVector(a_OpVector)
 	{
 		m_ParentHandler = a_ParentHandler;
 		m_CurIndex = 0;		
 	}
 
-	AsyncSequence_FinishHandler::OnFinish()
+	void AsyncSequence_FinishHandler::OnFinish()
 	{
 		m_CurIndex++;
 		if (m_CurIndex >= m_OpVector.size())

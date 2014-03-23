@@ -9,8 +9,8 @@ ThreadPool::IAsyncOperation::~IAsyncOperation()
 {
 }
 
-double ThreadPool::MinPriority(IN const OpVector& a_OpVector)
+double ThreadPool::MinPriority(IN const AsyncOpVector& a_OpVector)
 {
-	IAsyncOperationPtr min_op = std::min_element(a_OpVector.begin(), a_OpVector.end(), OpPriorityPredicate());
+	IAsyncOperationPtr min_op = *std::min_element(a_OpVector.begin(), a_OpVector.end(), OpPriorityPredicate());
 	return min_op->GetPriority();
 }

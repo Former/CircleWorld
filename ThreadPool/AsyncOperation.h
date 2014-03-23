@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "Common.h"
+
 namespace ThreadPool
 {
 	class IAsyncFinishHandler : public std::enable_shared_from_this<IAsyncFinishHandler>
@@ -7,7 +9,7 @@ namespace ThreadPool
 	public:
 		virtual ~IAsyncFinishHandler();
 		
-		virtual OnFinish() = 0;		
+		virtual void OnFinish() = 0;		
 	};
 	typedef std::shared_ptr<IAsyncFinishHandler> IAsyncFinishHandlerPtr;
 
@@ -43,6 +45,6 @@ namespace ThreadPool
 		std::sort(a_OpQueue.begin(), a_OpQueue.end(), OpPriorityPredicate());
 	}
 	
-	double MinPriority(IN const OpVector& a_OpVector);
+	double MinPriority(IN const AsyncOpVector& a_OpVector);
 
 }
