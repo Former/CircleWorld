@@ -1,4 +1,4 @@
-#include "SolidObject.h"
+#include "IntPoint.h"
 
 IntPoint::IntPoint()
 {

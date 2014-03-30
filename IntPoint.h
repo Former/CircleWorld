@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Common.h"
-#include "LOD_Object.h"
-
 struct IntPoint
 {
 public:

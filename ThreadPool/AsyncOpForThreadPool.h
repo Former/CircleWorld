@@ -15,6 +15,8 @@ namespace ThreadPool
 		virtual void Run(const IAsyncFinishHandlerPtr& a_Handler) override;
 
 		void SyncRun();
+
+		virtual size_t GetThreadIndex(const size_t& a_MaxThreadCount) const;
 		
 		virtual double GetPriority() const = 0;
 	

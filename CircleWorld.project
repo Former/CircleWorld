@@ -72,6 +72,8 @@
     <File Name="ThreadPool/AsyncParallelOperation.cpp"/>
     <File Name="ThreadPool/AsyncOpForThreadPool.h"/>
     <File Name="ThreadPool/AsyncOpForThreadPool.cpp"/>
+    <File Name="ThreadPool/WaitHandler.cpp"/>
+    <File Name="ThreadPool/WaitHandler.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="F3DTree">
     <File Name="F3DTree/F3DTree.h"/>

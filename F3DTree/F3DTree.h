@@ -4,6 +4,12 @@
 #include <tr1/memory>
 #include "IntPoint.h"
 
+#ifdef _DEBUG
+#define ASSERT(x) do{ if(!(x)) { asm volatile ("int3;"); } }while(0)
+#else
+#define ASSERT(x) do{ }while(0)
+#endif
+
 size_t PoiterToIndex(const IntPoint& a_CurPoint);
 const IntPoint& IndexToPoiter(const size_t& a_CurIndex);
 IntPoint ConvertPoiterToNewIndex(const IntPoint& a_CurPoint, const size_t& a_CurIndex, const size_t& a_NewIndex);
@@ -26,6 +32,16 @@ public:
 		F3DTreeNodePtr m_Node;
 	};
 	
+	static F3DTreeNodePtr CreateNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
+	{
+		return std::make_shared<F3DTreeNode<ItemType>>(a_Parent, a_CurItem, a_CurPosition, a_ChildNodesCount);
+	}
+
+	static F3DTreeNodePtr CreateTree(const ItemType& a_CurItem, const size_t& a_ChildNodesCount)
+	{
+		return CreateNode(F3DTreeNodePtr(), a_CurItem, IntPoint(0, 0, 0), a_ChildNodesCount);
+	}
+
 	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
 	: m_Items(8, a_CurItem)
 	{
@@ -33,7 +49,7 @@ public:
 		m_CurPosition = a_CurPosition;
 		m_ChildNodesCount = a_ChildNodesCount;
 	}
-	
+
 	const NodeVector& GetChildNodes() const
 	{
 		return m_ChildNodes;
@@ -43,6 +59,11 @@ public:
 	{
 		return m_Items;
 	}
+	
+	const IntPoint& GetCurPosition() const
+	{
+		return m_CurPosition;
+	} 
 
 	const size_t& GetChildNodesCount() const
 	{
@@ -54,28 +75,26 @@ public:
 		return m_Parent;
 	}
 
-	const ItemWithNode& GetItemWithNode(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0) const
+	ItemWithNode GetItemWithNode(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0)
 	{
 		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
 		
-		if (m_ChildNodes.empty() || !m_ChildNodes[child_index])
+		if ((m_ChildNodesCount == a_TargetChildNodeCount) || m_ChildNodes.empty() || !m_ChildNodes[child_index])
 			return ItemWithNode(m_Items[child_index], this->shared_from_this());
 
 		return m_ChildNodes[child_index]->GetItemWithNode(a_TargetNodePosition, a_TargetChildNodeCount);		
 	}
 	
-	void SetItem(const ItemType& a_TargetItem, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0) const
+	void SetItem(const ItemType& a_TargetItem, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0)
 	{
 		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
 		
-		if (!CreateChild(child_index))
-		{
-			m_Items[child_index] = a_TargetItem;
-			if (m_Parent)
-				m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
-		}
+		if (CreateChild(child_index))
+			return m_ChildNodes[child_index]->SetItem(a_TargetItem, a_TargetNodePosition, a_TargetChildNodeCount);		
 
-		m_ChildNodes[child_index]->SetItem(a_TargetItem, a_TargetNodePosition, a_TargetChildNodeCount);		
+		m_Items[child_index] = a_TargetItem;
+		if (m_Parent)
+			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
 	}
 
 	size_t GetLeght() const
@@ -95,7 +114,7 @@ public:
 	{
 		for (size_t i = 0 ; i < m_ChildNodes.size(); ++i)
 		{
-			const F3DTreeNodePtr& cur_node = m_ChildNodes[i];
+			F3DTreeNodePtr& cur_node = m_ChildNodes[i];
 			
 			if (cur_node && cur_node->Pack())
 				cur_node.reset();
@@ -114,7 +133,7 @@ private:
 		for (size_t i = 0 ; i < m_Items.size(); ++i)
 		{
 			const ItemType& zero_type = m_Items[0];
-			if (m_Items[i] != zero_type)
+			if (!(m_Items[i] == zero_type))
 				return false;				
 		}			
 		
@@ -134,6 +153,8 @@ private:
 	
 	bool CreateChild(const size_t& a_ChildIndex)
 	{
+		ASSERT(a_ChildIndex < 8);
+		
 		if (!m_ChildNodes.empty() && m_ChildNodes[a_ChildIndex])
 			return true;
 			
@@ -145,7 +166,7 @@ private:
 		if (m_ChildNodes.empty())
 			m_ChildNodes.resize(8);
 		
-		m_ChildNodes[a_ChildIndex] = std::make_shared<F3DTreeNode<ItemType>>(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
+		m_ChildNodes[a_ChildIndex] = CreateNode(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
 		
 		return true;
 	}

@@ -13,13 +13,12 @@ namespace ThreadPool
 	public:
 		ThreadPool(const size_t& a_ThreadCount);
 		
-		void AddOperation(const AsyncOpForPoolPtr& a_Operation);
+		void AddOperation(const AsyncOpForPoolPtr& a_Operation, const size_t& a_ThreadIndex);
+
+		size_t GetThreadCount() const;
 		
 	private:
-		std::vector<WorkThreadPtr> m_WorkThreads;
-		std::random_device m_RandomDevice;
-		std::default_random_engine m_RandomEngine;
-		std::uniform_int_distribution<int> m_RandomDis;
+		std::vector<WorkThreadPtr> m_WorkThreads;		
 	};
 	typedef std::shared_ptr<ThreadPool> ThreadPoolPtr;
 }

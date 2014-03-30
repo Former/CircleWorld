@@ -1,10 +1,4 @@
 #include "F3DTree/F3DTree.h"
-
-#ifdef _DEBUG
-#define ASSERT(x) do{ if(!(x)) { asm int 3; } }while(0)
-#else
-#define ASSERT(x) do{ }while(0)
-#endif
 	
 static const IntPoint g_IndexToPointer[8] = 
 {
@@ -35,5 +29,6 @@ const IntPoint& IndexToPoiter(const size_t& a_CurIndex)
 IntPoint ConvertPoiterToNewIndex(const IntPoint& a_CurPoint, const size_t& a_CurIndex, const size_t& a_NewIndex)
 {
 	const size_t sdvig = a_NewIndex - a_CurIndex;
+	ASSERT(sdvig < 32);
 	return IntPoint(a_CurPoint.x >> sdvig, a_CurPoint.y >> sdvig, a_CurPoint.z >> sdvig);	
 }
