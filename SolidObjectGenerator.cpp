@@ -38,8 +38,6 @@ namespace
 		IntPoint vec_center = bbox.GetCenter() - a_Center;
 		
 		double bb_size = bbox.GetRadius();
-		double radius = a_Radius;
-		
 		double distance_to_center = vec_center.GetLength();
 		
 		if (distance_to_center > (a_Radius + bb_size))
