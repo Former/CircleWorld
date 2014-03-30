@@ -55,7 +55,7 @@ public:
 		return m_ChildNodes;
 	}
 
-	const ItemVector& GetItems() const
+	ItemVector& GetItems()
 	{
 		return m_Items;
 	}
@@ -89,7 +89,7 @@ public:
 	{
 		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
 		
-		if (CreateChild(child_index))
+		if ((m_ChildNodesCount != a_TargetChildNodeCount) && CreateChild(child_index))
 			return m_ChildNodes[child_index]->SetItem(a_TargetItem, a_TargetNodePosition, a_TargetChildNodeCount);		
 
 		m_Items[child_index] = a_TargetItem;
@@ -97,7 +97,7 @@ public:
 			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
 	}
 
-	size_t GetLeght() const
+	size_t GetLength() const
 	{
 		return (0x1 << m_ChildNodesCount);
 	}
@@ -127,6 +127,17 @@ public:
 			return CheckForDelete();
 	}
 	
+	bool CreateAllChild()
+	{
+		for (size_t i = 0; i < m_Items.size(); ++i)
+		{
+			if (!CreateChild(i))
+				return false;
+		}
+		
+		return true;
+	}
+	
 private:
 	bool CheckForDelete() const
 	{
@@ -151,6 +162,25 @@ private:
 		return true;
 	}
 	
+	size_t GetChildIndex(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0) const
+	{
+		IntPoint conv_child_node_position = ConvertPoiterToNewIndex(a_TargetNodePosition, a_TargetChildNodeCount, m_ChildNodesCount);
+		
+		IntPoint child_node_point = conv_child_node_position - (m_CurPosition * 2);
+
+		return PoiterToIndex(child_node_point);
+	}
+	
+	void OnChangeChildNode(const ItemVector& a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount)
+	{
+		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
+		
+		m_Items[child_index] = ItemType(a_ChildNodeItems);
+		
+		if (m_Parent)
+			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
+	}
+	
 	bool CreateChild(const size_t& a_ChildIndex)
 	{
 		ASSERT(a_ChildIndex < 8);
@@ -169,25 +199,6 @@ private:
 		m_ChildNodes[a_ChildIndex] = CreateNode(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
 		
 		return true;
-	}
-
-	size_t GetChildIndex(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0) const
-	{
-		IntPoint conv_child_node_position = ConvertPoiterToNewIndex(a_TargetNodePosition, a_TargetChildNodeCount, m_ChildNodesCount);
-		
-		IntPoint child_node_point = conv_child_node_position - (m_CurPosition * 2);
-
-		return PoiterToIndex(child_node_point);
-	}
-	
-	void OnChangeChildNode(const ItemVector& a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount)
-	{
-		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
-		
-		m_Items[child_index] = ItemType(a_ChildNodeItems);
-		
-		if (m_Parent)
-			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
 	}
 
 	F3DTreeNodePtr m_Parent;

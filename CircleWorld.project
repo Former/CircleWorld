@@ -46,6 +46,8 @@
     <File Name="IntPoint.h"/>
     <File Name="IntPoint.cpp"/>
     <File Name="CircleItem.h"/>
+    <File Name="SolidObjectGenerator.h"/>
+    <File Name="SolidObjectGenerator.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Engine">
     <File Name="Engine/Point.h"/>

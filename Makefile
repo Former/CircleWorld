@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ unit_tests - Debug ]----------"
-	@cd "unit_tests" && $(MAKE) -f  "unit_tests.mk"
+	@echo "----------Building project:[ CircleWorld - Debug ]----------"
+	@$(MAKE) -f  "CircleWorld.mk"
 clean:
-	@echo "----------Cleaning project:[ unit_tests - Debug ]----------"
-	@cd "unit_tests" && $(MAKE) -f  "unit_tests.mk" clean
+	@echo "----------Cleaning project:[ CircleWorld - Debug ]----------"
+	@$(MAKE) -f  "CircleWorld.mk" clean

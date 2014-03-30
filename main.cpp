@@ -7,6 +7,12 @@
 #include "LOD_Object.h"
 #include "SolidObject.h"
 
+#include "CircleItem.h"
+#include "ThreadPool/ThreadPool.h"
+#include "ThreadPool/AsyncSequenceOperation.h"
+#include "ThreadPool/WaitHandler.h"
+#include "SolidObjectGenerator.h"
+
 #ifdef _MSC_VER
 #pragma comment(lib, "Irrlicht.lib")
 #endif
@@ -132,7 +138,6 @@ static void FillItems(IN OUT CircleVectorZ& a_Object, const size_t& a_Size, cons
 			{
 				CircleItem& item = x_items[x];
 				irr::core::vector3df cur_vector(x + 0.5, y + 0.5, z + 0.5);
-				irr::core::vector3df max_vector(x_items.size(), y_items.size(), a_Object.size());
 				irr::core::vector3df vector = cur_vector - a_Center;
 				if (vector.getLengthSQ() < a_Radius * a_Radius)
 					item.m_Type = a_Type;
@@ -485,7 +490,7 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 512 + 2;
+	size_t size = 256 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
@@ -495,7 +500,23 @@ int main()
 	FillItems(*object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
 	size_t div_step = 64;
+	
+	ThreadPool::ThreadPoolPtr pool = std::make_shared<ThreadPool::ThreadPool>(8);
+	F3DCircleNodePtr obj_tree = F3DCircleNode::CreateTree(CircleItem(), 8);
+	IntPoint max_point(obj_tree->GetLength(), obj_tree->GetLength(), obj_tree->GetLength());
+	ThreadPool::AsyncOpVector fill_op;
+	
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.5, obj_tree->GetLength() * 0.45, CircleItem(CircleItem::tpSolid), div_step, pool));
 
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.25, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), div_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), div_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.10, CircleItem(CircleItem::tpWater), div_step, pool));
+	
+	ThreadPool::WaitHandlerPtr handler = std::make_shared<ThreadPool::WaitHandler>();
+	std::make_shared<ThreadPool::AsyncSequenceOperation>(fill_op)->Run(handler);
+	
+	handler->Wait();
+	
 	irr::core::vector3df center(0, 0, 10000);
 	ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));
 

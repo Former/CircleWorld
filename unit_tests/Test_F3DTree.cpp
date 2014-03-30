@@ -71,7 +71,7 @@ TEST(F3DTree, Init)
 		EXPECT_EQ(true, items[0] == items[0]);
 	}
 
-	EXPECT_EQ(2 * 2 * 2 * 2 * 2, tree->GetLeght());
+	EXPECT_EQ(2 * 2 * 2 * 2 * 2, tree->GetLength());
 }
 
 TEST(F3DTree, SetItem)

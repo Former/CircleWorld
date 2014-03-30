@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Workspace Name="CircleWorld" Database="./CircleWorld.tags">
-  <Project Name="CircleWorld" Path="CircleWorld.project" Active="No"/>
+  <Project Name="CircleWorld" Path="CircleWorld.project" Active="Yes"/>
   <Project Name="irrlicht" Path="irrlicht/irrlicht.project" Active="No"/>
-  <Project Name="unit_tests" Path="unit_tests/unit_tests.project" Active="Yes"/>
+  <Project Name="unit_tests" Path="unit_tests/unit_tests.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="CircleWorld" ConfigName="Debug"/>
