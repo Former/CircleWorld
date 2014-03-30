@@ -9,7 +9,7 @@ namespace
 	public:
 		TestItem();
 		TestItem(const int& a_Value);
-		TestItem(const std::vector<TestItem>& a_Items);
+		TestItem(const TestItem* a_Items, const size_t& a_Count);
 	
 		bool operator == (const TestItem& a_Value) const;
 	
@@ -29,10 +29,10 @@ namespace
 		m_Value = a_Value;
 	}
 	
-	TestItem::TestItem(const std::vector<TestItem>& a_Items)
+	TestItem::TestItem(const TestItem* a_Items, const size_t& a_Count)
 	{
 		size_t summ = 0;
-		for (size_t i = 0; i < a_Items.size(); ++i)
+		for (size_t i = 0; i < a_Count; ++i)
 			summ += a_Items[i].m_Value;
 
 		m_Value = summ;
@@ -49,7 +49,6 @@ namespace
 	}
 }
 
-typedef std::vector<TestItem> ItemsVector;
 typedef F3DTreeNode<TestItem> F3DTreeTest;
 
 TEST(F3DTree, Init)
@@ -64,10 +63,10 @@ TEST(F3DTree, Init)
 	EXPECT_EQ(true, tree->GetCurPosition() == IntPoint(0, 0, 0));
 	
 	
-	const ItemsVector& items = tree->GetItems();
+	const TestItem* items = tree->GetItems();
 	
-	EXPECT_EQ(8, items.size());
-	for (size_t i = 0; i < items.size(); ++i)
+	EXPECT_EQ(8, tree->GetItemsCount());
+	for (size_t i = 0; i < tree->GetItemsCount(); ++i)
 	{
 		EXPECT_EQ(true, items[0] == items[0]);
 	}

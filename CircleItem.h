@@ -23,9 +23,9 @@ struct CircleItem
 		m_Type = a_Type;
 	}
 
-	CircleItem(const std::vector<CircleItem>& a_Items)
+	CircleItem(const CircleItem* a_Items, const size_t& a_Count)
 	{
-		if (!a_Items.empty())
+		if (a_Count)
 			m_Type = a_Items[0].m_Type;
 	}
 	

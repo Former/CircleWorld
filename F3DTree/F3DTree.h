@@ -20,7 +20,6 @@ class F3DTreeNode : public std::enable_shared_from_this<F3DTreeNode<ItemType>>
 public:
 	typedef std::shared_ptr<F3DTreeNode<ItemType>> F3DTreeNodePtr;
 	typedef std::vector<F3DTreeNodePtr> NodeVector;
-	typedef std::vector<ItemType> ItemVector;
 	
 	struct ItemWithNode
 	{
@@ -43,8 +42,10 @@ public:
 	}
 
 	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
-	: m_Items(8, a_CurItem)
 	{
+		for (size_t i = 0; i < GetItemsCount(); ++i)
+			m_Items[i] = a_CurItem;
+			
 		m_Parent = a_Parent;
 		m_CurPosition = a_CurPosition;
 		m_ChildNodesCount = a_ChildNodesCount;
@@ -55,9 +56,14 @@ public:
 		return m_ChildNodes;
 	}
 
-	ItemVector& GetItems()
+	ItemType* GetItems()
 	{
 		return m_Items;
+	}
+
+	size_t GetItemsCount() const
+	{
+		return 8;
 	}
 	
 	const IntPoint& GetCurPosition() const
@@ -111,7 +117,7 @@ public:
 		return (0x2 << m_ChildNodesCount);
 	}
 	
-	F3DTreeNode& GetRoot()
+	F3DTreeNode<ItemType>& GetRoot()
 	{
 		if (!m_Parent)
 			return this;
@@ -140,7 +146,7 @@ public:
 	
 	bool CreateAllChild()
 	{
-		for (size_t i = 0; i < m_Items.size(); ++i)
+		for (size_t i = 0; i < GetItemsCount(); ++i)
 		{
 			if (!CreateChild(i))
 				return false;
@@ -152,7 +158,7 @@ public:
 private:
 	bool CheckForDelete() const
 	{
-		for (size_t i = 0 ; i < m_Items.size(); ++i)
+		for (size_t i = 0; i < GetItemsCount(); ++i)
 		{
 			const ItemType& zero_type = m_Items[0];
 			if (!(m_Items[i] == zero_type))
@@ -182,11 +188,11 @@ private:
 		return PoiterToIndex(child_node_point);
 	}
 	
-	void OnChangeChildNode(const ItemVector& a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount)
+	void OnChangeChildNode(const ItemType* a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount)
 	{
 		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
 		
-		m_Items[child_index] = ItemType(a_ChildNodeItems);
+		m_Items[child_index] = ItemType(a_ChildNodeItems, GetItemsCount());
 		
 		if (m_Parent)
 			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
@@ -194,7 +200,7 @@ private:
 	
 	bool CreateChild(const size_t& a_ChildIndex)
 	{
-		ASSERT(a_ChildIndex < 8);
+		ASSERT(a_ChildIndex < GetItemsCount());
 		
 		if (!m_ChildNodes.empty() && m_ChildNodes[a_ChildIndex])
 			return true;
@@ -205,7 +211,7 @@ private:
 		IntPoint child_pointer = IndexToPoiter(a_ChildIndex) + (m_CurPosition * 2);
 		
 		if (m_ChildNodes.empty())
-			m_ChildNodes.resize(8);
+			m_ChildNodes.resize(GetItemsCount());
 		
 		m_ChildNodes[a_ChildIndex] = CreateNode(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
 		
@@ -214,7 +220,7 @@ private:
 
 	F3DTreeNodePtr m_Parent;
 	NodeVector m_ChildNodes;
-	ItemVector m_Items;
+	ItemType m_Items[8];
 	IntPoint m_CurPosition;
 	size_t m_ChildNodesCount;
 };

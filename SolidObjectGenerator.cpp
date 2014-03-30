@@ -45,10 +45,10 @@ namespace
 		if (distance_to_center > (a_Radius + bb_size))
 			return;
 
-		F3DCircleNode::ItemVector& items = a_InOutObject->GetItems();
+		CircleItem* items = a_InOutObject->GetItems();
 		if ((distance_to_center + bb_size) < a_Radius)
 		{
-			for (size_t i = 0; i < items.size(); ++i)
+			for (size_t i = 0; i < a_InOutObject->GetItemsCount(); ++i)
 				items[i] = a_Item;			
 
 			return;
@@ -70,7 +70,7 @@ namespace
 		}
 		
 		IntPoint cur_node_point = a_InOutObject->GetCurPosition() * 2;
-		for (size_t i = 0; i < items.size(); ++i)
+		for (size_t i = 0; i < a_InOutObject->GetItemsCount(); ++i)
 		{
 			IntPoint cur_point = cur_node_point + IndexToPoiter(i);
 			
