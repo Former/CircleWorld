@@ -37,16 +37,16 @@ namespace
 		BBox bbox = a_InOutObject->GetBBox();
 		IntPoint vec_center = bbox.GetCenter() - a_Center;
 		
-		double bb_size2 = bbox.GetRadius2();
-		double radius2 = a_Radius * a_Radius;
+		double bb_size = bbox.GetRadius();
+		double radius = a_Radius;
 		
-		double distance_to_center2 = vec_center.GetLength2();
+		double distance_to_center = vec_center.GetLength();
 		
-		if (distance_to_center2 > (radius2 + bb_size2))
+		if (distance_to_center > (a_Radius + bb_size))
 			return;
 
 		F3DCircleNode::ItemVector& items = a_InOutObject->GetItems();
-		if ((distance_to_center2 + bb_size2) < radius2)
+		if ((distance_to_center + bb_size) < a_Radius)
 		{
 			for (size_t i = 0; i < items.size(); ++i)
 				items[i] = a_Item;			
@@ -78,7 +78,7 @@ namespace
 			irr::core::vector3df center(a_Center.x + 0.5, a_Center.y + 0.5, a_Center.z + 0.5);
 			irr::core::vector3df cur_vector(cur_point.x + 0.5, cur_point.y + 0.5, cur_point.z + 0.5);
 			irr::core::vector3df cvector = cur_vector - center;
-			if (cvector.getLengthSQ() < radius2)
+			if (cvector.getLengthSQ() < a_Radius * a_Radius)
 				item = a_Item;
 		}
 	}

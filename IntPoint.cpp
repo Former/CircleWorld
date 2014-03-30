@@ -1,4 +1,5 @@
 #include "IntPoint.h"
+#include <cmath>
 
 IntPoint::IntPoint()
 {
@@ -59,6 +60,10 @@ double IntPoint::GetLength2() const
 	return (double(x) * x) + (double(y) * y) + (double(z) * z);
 }
 
+double IntPoint::GetLength() const
+{
+	return sqrt(GetLength2());
+}
 //////////////////////////////////////////////////////////////
 
 BBox::BBox(const IntPoint& a_Start, const IntPoint& a_End)
@@ -76,4 +81,10 @@ double BBox::GetRadius2() const
 {
 	IntPoint radius = m_End - GetCenter();
 	return radius.GetLength2();
+}
+
+double BBox::GetRadius() const
+{
+	IntPoint radius = m_End - GetCenter();
+	return radius.GetLength();
 }

@@ -19,6 +19,7 @@ public:
 	bool operator <= (const IntPoint& a_Value) const;
 	
 	double GetLength2() const;
+	double GetLength() const;
 	
 	IntType x;
 	IntType y;
@@ -33,6 +34,7 @@ public:
 	IntPoint GetCenter() const;
 
 	double GetRadius2() const;
+	double GetRadius() const;
 	
 private:
 	IntPoint m_Start;
