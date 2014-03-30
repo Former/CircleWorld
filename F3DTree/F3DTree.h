@@ -125,6 +125,8 @@ public:
 
 		if (m_ChildNodes.empty())
 			return CheckForDelete();
+		
+		return false;
 	}
 	
 	bool CreateAllChild()

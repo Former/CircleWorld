@@ -20,7 +20,6 @@
 bool g_NeedExit = false;
 std::mutex g_GuiMutex;
 size_t s_PhysCount = 0;
-GetWorkTime	g_WorkTime;
 
 void PhysicsThread(CircleCoordinator& a_Coordinator)
 {
@@ -479,7 +478,6 @@ int main()
 	for (size_t i = 0; i < 100; ++i)
 		circle_coordinator.AddRule(strongBarRule);
 
-	g_WorkTime.Start();
 
 	std::thread phys_th(PhysicsThread, std::ref(circle_coordinator));
 
@@ -490,7 +488,10 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 256 + 2;
+	GetWorkTime sync_time(CLOCK_REALTIME);
+	sync_time.Start();
+
+	size_t size = 128 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
@@ -499,23 +500,32 @@ int main()
 	FillItems(*object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	FillItems(*object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
-	size_t div_step = 64;
+	sync_time.End();
+	std::cout << "Sync time" << sync_time.GetWorkingTime() << std::endl;
 	
+	size_t div_step = 64;
+
+	GetWorkTime async_time(CLOCK_REALTIME);
+	async_time.Start();
+
+	size_t asdiv_step = 1 << 15;
 	ThreadPool::ThreadPoolPtr pool = std::make_shared<ThreadPool::ThreadPool>(8);
-	F3DCircleNodePtr obj_tree = F3DCircleNode::CreateTree(CircleItem(), 8);
+	F3DCircleNodePtr obj_tree = F3DCircleNode::CreateTree(CircleItem(), 20);
 	IntPoint max_point(obj_tree->GetLength(), obj_tree->GetLength(), obj_tree->GetLength());
 	ThreadPool::AsyncOpVector fill_op;
 	
-	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.5, obj_tree->GetLength() * 0.45, CircleItem(CircleItem::tpSolid), div_step, pool));
-
-	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.25, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), div_step, pool));
-	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), div_step, pool));
-	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.10, CircleItem(CircleItem::tpWater), div_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.5, obj_tree->GetLength() * 0.45, CircleItem(CircleItem::tpSolid), asdiv_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.25, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), asdiv_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.15, CircleItem(CircleItem::tpNone), asdiv_step, pool));
+	fill_op.push_back(OpFillItems(obj_tree, max_point * 0.75, obj_tree->GetLength() * 0.10, CircleItem(CircleItem::tpWater), asdiv_step, pool));
 	
 	ThreadPool::WaitHandlerPtr handler = std::make_shared<ThreadPool::WaitHandler>();
 	std::make_shared<ThreadPool::AsyncSequenceOperation>(fill_op)->Run(handler);
 	
 	handler->Wait();
+
+	async_time.End();
+	std::cout << "ASync time" << async_time.GetWorkingTime() << std::endl;
 	
 	irr::core::vector3df center(0, 0, 10000);
 	ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));

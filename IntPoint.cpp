@@ -19,6 +19,11 @@ IntPoint IntPoint::operator * (const IntType& a_Value) const
 	return IntPoint(x * a_Value, y * a_Value, z * a_Value);
 }
 
+IntPoint IntPoint::operator * (const double& a_Value) const
+{
+	return IntPoint(x * a_Value, y * a_Value, z * a_Value);
+}
+
 IntPoint IntPoint::operator + (const IntPoint& a_Value) const
 {
 	return IntPoint(x + a_Value.x, y + a_Value.y, z + a_Value.z);

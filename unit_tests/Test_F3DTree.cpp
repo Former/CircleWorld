@@ -137,3 +137,22 @@ TEST(F3DTree, Pack)
 
 	EXPECT_EQ(0, tree->GetChildNodes().size());
 }
+/*
+TEST(F3DTree, PackOne)
+{
+	F3DTreeTest::F3DTreeNodePtr tree = F3DTreeTest::CreateTree(TestItem(0), 10);
+	
+	tree->SetItem(TestItem(0), IntPoint(0, 0, 0), 9);
+
+	ASSERT_EQ(8, tree->GetChildNodes().size());
+
+	for (size_t i = 0; i < tree->GetChildNodes().size(); ++i)
+	{
+		F3DTreeTest::F3DTreeNodePtr cur_node = tree->GetChildNodes()[i];
+		if (cur_node)
+			cur_node->PackOne();
+	}
+	tree->PackOne();
+
+	EXPECT_EQ(0, tree->GetChildNodes().size());
+}*/
