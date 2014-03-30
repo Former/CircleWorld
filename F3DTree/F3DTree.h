@@ -64,6 +64,15 @@ public:
 	{
 		return m_CurPosition;
 	} 
+	
+	BBox GetBBox() const
+	{
+		const size_t sdvig = GetChildNodesCount() + 1;
+		IntPoint start(m_CurPosition.x << sdvig, m_CurPosition.y << sdvig, m_CurPosition.z << sdvig);
+		IntPoint diff(GetLength(), GetLength(), GetLength());
+		
+		return BBox(start, start + diff);
+	}
 
 	const size_t& GetChildNodesCount() const
 	{
@@ -99,7 +108,7 @@ public:
 
 	size_t GetLength() const
 	{
-		return (0x1 << m_ChildNodesCount);
+		return (0x2 << m_ChildNodesCount);
 	}
 	
 	F3DTreeNode& GetRoot()

@@ -508,9 +508,9 @@ int main()
 	GetWorkTime async_time(CLOCK_REALTIME);
 	async_time.Start();
 
-	size_t asdiv_step = 1 << 15;
+	size_t asdiv_step = 1 << 7;
 	ThreadPool::ThreadPoolPtr pool = std::make_shared<ThreadPool::ThreadPool>(8);
-	F3DCircleNodePtr obj_tree = F3DCircleNode::CreateTree(CircleItem(), 20);
+	F3DCircleNodePtr obj_tree = F3DCircleNode::CreateTree(CircleItem(), 10);
 	IntPoint max_point(obj_tree->GetLength(), obj_tree->GetLength(), obj_tree->GetLength());
 	ThreadPool::AsyncOpVector fill_op;
 	

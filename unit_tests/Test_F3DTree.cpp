@@ -57,6 +57,7 @@ TEST(F3DTree, Init)
 	F3DTreeTest::F3DTreeNodePtr tree = F3DTreeTest::CreateTree(TestItem(1), 5);
 	
 	EXPECT_EQ(5, tree->GetChildNodesCount());
+	EXPECT_EQ(2 << 5, tree->GetLength());
 	EXPECT_EQ(true, !tree->GetParent());
 	EXPECT_EQ(0, tree->GetChildNodes().size());
 	
@@ -71,7 +72,7 @@ TEST(F3DTree, Init)
 		EXPECT_EQ(true, items[0] == items[0]);
 	}
 
-	EXPECT_EQ(2 * 2 * 2 * 2 * 2, tree->GetLength());
+	EXPECT_EQ(2 * 2 * 2 * 2 * 2 * 2, tree->GetLength());
 }
 
 TEST(F3DTree, SetItem)

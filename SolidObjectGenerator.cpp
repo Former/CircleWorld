@@ -32,32 +32,21 @@ namespace
 		CircleItem m_Item;
 	};	
 	
-	static IntPoint GetCenter(const F3DCircleNodePtr& a_InOutObject)
-	{
-		const IntPoint& cur_point = a_InOutObject->GetCurPosition();
-		const size_t sdvig = a_InOutObject->GetChildNodesCount() + 1;
-		IntPoint cur_abs_point(cur_point.x << sdvig, cur_point.y << sdvig, cur_point.z << sdvig);
-		
-		const int ml = (int)a_InOutObject->GetLength() / 2;
-		IntPoint midle_point(ml, ml, ml);
-		
-		return (cur_abs_point + midle_point);
-	}
-	
 	static void FillItems(const F3DCircleNodePtr& a_InOutObject, const IntPoint& a_Center, const double& a_Radius, const CircleItem& a_Item)
 	{
-		IntPoint vec_center = GetCenter(a_InOutObject) - a_Center;
+		BBox bbox = a_InOutObject->GetBBox();
+		IntPoint vec_center = bbox.GetCenter() - a_Center;
 		
-		double bb_size2 = 3.0 * a_InOutObject->GetLength() / 2.0 * a_InOutObject->GetLength() / 2.0;
+		double bb_size2 = bbox.GetRadius2();
 		double radius2 = a_Radius * a_Radius;
 		
-		double distance_to_center2 = vec_center.x * vec_center.x + vec_center.y * vec_center.y + vec_center.z * vec_center.z;
+		double distance_to_center2 = vec_center.GetLength2();
 		
 		if (distance_to_center2 > (radius2 + bb_size2))
 			return;
 
 		F3DCircleNode::ItemVector& items = a_InOutObject->GetItems();
-		if (distance_to_center2 + bb_size2 < radius2)
+		if ((distance_to_center2 + bb_size2) < radius2)
 		{
 			for (size_t i = 0; i < items.size(); ++i)
 				items[i] = a_Item;			

@@ -3,6 +3,9 @@
 #include "Common.h"
 #include "IntPoint.h"
 #include "CircleItem.h"
+#include "ThreadPool/AsyncOperation.h"
+#include "ThreadPool/ThreadPool.h"
+
 
 class ObjectDrawStrategy
 {
@@ -47,6 +50,9 @@ StartEndVector MakeStartEndItems(IN const IntPoint& a_StartPoint, IN const IntPo
 std::vector<StartEndVector> MakeStartEndVectorByGroup(IN const StartEndVector& a_StartEndVector, IN const size_t& a_GroupCount);
 
 SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep = 1, const size_t& a_DivStep = 1024);
+
+
+ThreadPool::IAsyncOperationPtr MakeDrawOp(const F3DCircleNodePtr& a_InOutObject, const ObjectDrawStrategyPtr& a_Strategy, const ThreadPool::ThreadPoolPtr& a_ThreadPool);
 
 
 

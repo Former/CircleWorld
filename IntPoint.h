@@ -18,7 +18,23 @@ public:
 	bool operator >= (const IntPoint& a_Value) const;
 	bool operator <= (const IntPoint& a_Value) const;
 	
+	double GetLength2() const;
+	
 	IntType x;
 	IntType y;
 	IntType z;
+};
+
+class BBox
+{
+public:
+	BBox(const IntPoint& a_Start, const IntPoint& a_End);
+	
+	IntPoint GetCenter() const;
+
+	double GetRadius2() const;
+	
+private:
+	IntPoint m_Start;
+	IntPoint m_End;
 };
