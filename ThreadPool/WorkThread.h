@@ -16,7 +16,7 @@ namespace ThreadPool
 	private:
 		void Work();
 		
-		std::thread m_Thread;
+		std::shared_ptr<std::thread> m_Thread;
 		AsyncOpForPoolVector m_OpQueue;
 		std::mutex m_QueueMutex;
 		std::condition_variable m_QueueEvent;

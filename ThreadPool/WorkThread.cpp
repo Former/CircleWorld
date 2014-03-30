@@ -1,16 +1,16 @@
 #include "WorkThread.h"
 
 ThreadPool::WorkThread::WorkThread() 
-: m_Thread(&WorkThread::Work, this)
 {
 	m_Exit = false;
+	m_Thread = std::make_shared<std::thread>(&WorkThread::Work, this);
 }
 
 ThreadPool::WorkThread::~WorkThread()
 {
 	m_Exit = true;
 	m_QueueEvent.notify_one();
-	m_Thread.join();
+	m_Thread->join();
 }
 
 void ThreadPool::WorkThread::AddOperation(const AsyncOpForPoolPtr& a_Operation)
