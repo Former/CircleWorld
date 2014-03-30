@@ -1,18 +1,18 @@
 #pragma once
 
 #include <vector>
-#include <memory>
-#include <IntPoint.h>
+#include <tr1/memory>
+#include "IntPoint.h"
 
 size_t PoiterToIndex(const IntPoint& a_CurPoint);
 const IntPoint& IndexToPoiter(const size_t& a_CurIndex);
-IntPoint ConvertPoiterToNewIndex(const IntPoint& a_CurPoint, const size& a_CurIndex, const size& a_NewIndex);
+IntPoint ConvertPoiterToNewIndex(const IntPoint& a_CurPoint, const size_t& a_CurIndex, const size_t& a_NewIndex);
 
 template <typename ItemType>
 class F3DTreeNode : public std::enable_shared_from_this<F3DTreeNode<ItemType>>
 {
 public:
-	typedef std::spared_ptr<F3DTreeNode<ItemType>> F3DTreeNodePtr;
+	typedef std::shared_ptr<F3DTreeNode<ItemType>> F3DTreeNodePtr;
 	typedef std::vector<F3DTreeNodePtr> NodeVector;
 	typedef std::vector<ItemType> ItemVector;
 	
@@ -27,7 +27,7 @@ public:
 	};
 	
 	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
-	: m_ChildNodes, m_Items(8, a_CurItem)
+	: m_Items(8, a_CurItem)
 	{
 		m_Parent = a_Parent;
 		m_CurPosition = a_CurPosition;
@@ -59,7 +59,7 @@ public:
 		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
 		
 		if (m_ChildNodes.empty() || !m_ChildNodes[child_index])
-			return ItemWithNode(m_Items[child_index], shared_from_this());
+			return ItemWithNode(m_Items[child_index], this->shared_from_this());
 
 		return m_ChildNodes[child_index]->GetItemWithNode(a_TargetNodePosition, a_TargetChildNodeCount);		
 	}
@@ -80,7 +80,7 @@ public:
 
 	size_t GetLeght() const
 	{
-		return (u0x1 << m_ChildNodesCount);
+		return (0x1 << m_ChildNodesCount);
 	}
 	
 	F3DTreeNode& GetRoot()
@@ -140,12 +140,12 @@ private:
 		if (m_ChildNodesCount == 0)
 			return false;
 		
-		IntPoint child_pointer = IndexToPoiter(a_ChildIndex) + 2 * m_CurPosition;
+		IntPoint child_pointer = IndexToPoiter(a_ChildIndex) + (m_CurPosition * 2);
 		
 		if (m_ChildNodes.empty())
 			m_ChildNodes.resize(8);
 		
-		m_ChildNodes[a_ChildIndex] = boost::make_shared<F3DTreeNode<ItemType>>(shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
+		m_ChildNodes[a_ChildIndex] = std::make_shared<F3DTreeNode<ItemType>>(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
 		
 		return true;
 	}

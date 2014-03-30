@@ -84,7 +84,6 @@
         <IncludePath Value="./Engine"/>
         <IncludePath Value="./irrlicht/include"/>
         <IncludePath Value="./ThreadPool"/>
-        <Preprocessor Value="_DEBUG"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
@@ -99,7 +98,9 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;" C_Options="-g;" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags=""/>
+      <Compiler Options="-g;" C_Options="-g;" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+        <Preprocessor Value="_DEBUG"/>
+      </Compiler>
       <Linker Options="" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="Bin/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>

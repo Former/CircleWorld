@@ -14,27 +14,27 @@ IntPoint::IntPoint(const IntType& a_X, const IntType& a_Y, const IntType& a_Z)
 	z = a_Z;
 }
 
-IntPoint IntPoint::operator *(const IntType& a_Value) const
+IntPoint IntPoint::operator * (const IntType& a_Value) const
 {
 	return IntPoint(x * a_Value, y * a_Value, z * a_Value);
 }
 
-IntPoint IntPoint::operator +(const IntPoint& a_Value) const
+IntPoint IntPoint::operator + (const IntPoint& a_Value) const
 {
-	return IntPoint(x + a_Value, y + a_Value, z + a_Value);
+	return IntPoint(x + a_Value.x, y + a_Value.y, z + a_Value.z);
 }
 
-IntPoint IntPoint::operator -(const IntPoint& a_Value) const
+IntPoint IntPoint::operator - (const IntPoint& a_Value) const
 {
-	return IntPoint(x - a_Value, y - a_Value, z - a_Value);
+	return IntPoint(x - a_Value.x, y - a_Value.y, z - a_Value.z);
 }
 
-IntPoint IntPoint::operator /(const IntType& a_Value) const
+IntPoint IntPoint::operator / (const IntType& a_Value) const
 {
 	return IntPoint(x / a_Value, y / a_Value, z / a_Value);
 }
 
-bool IntPoint::operator ==(const IntPoint& a_Value) const
+bool IntPoint::operator == (const IntPoint& a_Value) const
 {
 	return (x == a_Value.x) && (y == a_Value.y) && (z == a_Value.z);
 }
