@@ -485,7 +485,7 @@ int main()
 	SystemEventReceiver receiver(skydome, circle_coordinator);
 	device->setEventReceiver(&receiver);
 
-	size_t size = 256 + 2;
+	size_t size = 512 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
@@ -494,7 +494,7 @@ int main()
 	FillItems(*object, size, max_vector * 0.75, size * 0.15, CircleItem::tpNone);
 	FillItems(*object, size, max_vector * 0.75, size * 0.10, CircleItem::tpWater);
 
-	size_t div_step = 256;
+	size_t div_step = 64;
 
 	irr::core::vector3df center(0, 0, 10000);
 	ObjectDrawStrategyPtr strategy(new CObjectDrawStrategy(object, driver, size));

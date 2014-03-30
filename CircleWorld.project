@@ -73,6 +73,10 @@
     <File Name="ThreadPool/AsyncOpForThreadPool.h"/>
     <File Name="ThreadPool/AsyncOpForThreadPool.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="F3DTree">
+    <File Name="F3DTree/F3DTree.h"/>
+    <File Name="F3DTree/F3DTree.cpp"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-std=c++0x" C_Options="" Assembler="">
@@ -80,6 +84,7 @@
         <IncludePath Value="./Engine"/>
         <IncludePath Value="./irrlicht/include"/>
         <IncludePath Value="./ThreadPool"/>
+        <Preprocessor Value="_DEBUG"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>

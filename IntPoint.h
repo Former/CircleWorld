@@ -5,10 +5,22 @@
 
 struct IntPoint
 {
+public:
+	typedef int IntType;
+
 	IntPoint();
-	IntPoint(const int& a_X, const int& a_Y, const int& a_Z);
+	IntPoint(const IntType& a_X, const IntType& a_Y, const IntType& a_Z);
 	
-	int x;
-	int y;
-	int z;
+	IntPoint operator * (const IntType& a_Value) const;
+	IntPoint operator / (const IntType& a_Value) const;
+	IntPoint operator + (const IntPoint& a_Value) const;
+	IntPoint operator - (const IntPoint& a_Value) const;
+	bool operator == (const IntPoint& a_Value) const;
+
+	bool operator >= (const IntPoint& a_Value) const;
+	bool operator <= (const IntPoint& a_Value) const;
+	
+	IntType x;
+	IntType y;
+	IntType z;
 };
