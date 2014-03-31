@@ -51,10 +51,59 @@ std::vector<StartEndVector> MakeStartEndVectorByGroup(IN const StartEndVector& a
 
 SMeshVector CreateMeshFromObjectData(const CircleVectorZ& a_ObjectData, const ObjectDrawStrategyPtr& a_Strategy, const double& a_Step, const size_t& a_DrawStep = 1, const size_t& a_DivStep = 1024);
 
+///////////////////////////////////////////////////////
 
 
+class DrawObject
+{
+public:
+	DrawObject();
+	
+	irr::scene::SMesh* GetMesh() const;
+	void SetMesh(irr::scene::SMesh* a_Mesh);
+	
+private:	
+	irr::scene::SMesh* m_Mesh;
+	std::mutex m_Mutex;
+};
 
-ThreadPool::IAsyncOperationPtr MakeDrawOp(const F3DCircleNodePtr& a_InOutObject, const ObjectDrawStrategyPtr& a_Strategy, const ThreadPool::ThreadPoolPtr& a_ThreadPool);
+typedef std::shared_ptr<DrawObject> DrawObjectPtr;
+
+class IDrawStrategy
+{
+public:
+	virtual ~IDrawStrategy() {}
+	
+	virtual irr::video::SColor GetColor(const CircleItem& a_Item, const F3DCircleNodePtr& a_Node) = 0;
+	
+	virtual irr::video::SMaterial GetMaterial(const CircleItem& a_Item, const F3DCircleNodePtr& a_Node) = 0;
+
+	virtual bool AddFace(const CircleItem& a_Item, const F3DCircleNodePtr& a_Node, const CircleItem& a_NearItem, const F3DCircleNodePtr& a_NearNode) = 0;
+	
+	virtual bool IgnoreFace(const CircleItem& a_Item, const F3DCircleNodePtr& a_Node) = 0;
+	
+	virtual double GetStep() = 0;
+	
+	virtual IntPoint GetMeshNodePosition() = 0;
+
+	virtual size_t GetMeshNodeIndex() = 0;
+
+	virtual size_t GetDrawNodeIndex() = 0;
+};
+
+typedef std::shared_ptr<IDrawStrategy> IDrawStrategyPtr;
+
+class IPriorityCalculator
+{
+public:
+	virtual ~IPriorityCalculator();
+	
+	virtual double GetPriority() = 0;
+};
+
+typedef std::shared_ptr<IPriorityCalculator> IPriorityCalculatorPtr;
+
+ThreadPool::IAsyncOperationPtr MakeDrawOp(OUT const DrawObjectPtr& a_DrawObject, const F3DCircleNodePtr& a_Object, const IDrawStrategyPtr& a_Strategy, const IPriorityCalculatorPtr& a_PriorityCalculator, const ThreadPool::ThreadPoolPtr& a_ThreadPool);
 
 
 
