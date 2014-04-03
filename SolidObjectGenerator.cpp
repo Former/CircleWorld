@@ -54,11 +54,12 @@ namespace
 		
 		a_InOutObject->CreateAllChild();
 
-		const F3DCircleNode::NodeVector& nodes = a_InOutObject->GetChildNodes();
+		const F3DCircleNode::F3DTreeNodePtr* nodes = a_InOutObject->GetChildNodes();
+		const size_t nodes_count = a_InOutObject->GetChildNodesCount();
 		
-		if (!nodes.empty())
+		if (nodes_count)
 		{
-			for (size_t i = 0; i < nodes.size(); ++i)
+			for (size_t i = 0; i < nodes_count; ++i)
 			{
 				const F3DCircleNodePtr& cur_node = nodes[i];
 				
@@ -96,13 +97,14 @@ ThreadPool::IAsyncOperationPtr OpFillItems(const F3DCircleNodePtr& a_InOutObject
 
 	a_InOutObject->CreateAllChild();
 
-	const F3DCircleNode::NodeVector& nodes = a_InOutObject->GetChildNodes();
+	const F3DCircleNode::F3DTreeNodePtr* nodes = a_InOutObject->GetChildNodes();
+	const size_t nodes_count = a_InOutObject->GetChildNodesCount();
 	
-	if (nodes.empty())
+	if (!nodes_count)
 		return std::make_shared<FillItemsOp>(std::cref(a_InOutObject), std::cref(a_Center), std::cref(a_Radius), std::cref(a_Item), std::cref(a_ThreadPool));
 
 	ThreadPool::AsyncOpVector ops;
-	for (size_t i = 0; i < nodes.size(); ++i)
+	for (size_t i = 0; i < nodes_count; ++i)
 	{
 		const F3DCircleNodePtr& cur_node = nodes[i];
 		

@@ -14,12 +14,14 @@ size_t PoiterToIndex(const IntPoint& a_CurPoint);
 const IntPoint& IndexToPoiter(const size_t& a_CurIndex);
 IntPoint ConvertPoiterToNewIndex(const IntPoint& a_CurPoint, const size_t& a_CurIndex, const size_t& a_NewIndex);
 
+#pragma pack (push, 1)
+
 template <typename ItemType>
 class F3DTreeNode : public std::enable_shared_from_this<F3DTreeNode<ItemType>>
 {
 public:
 	typedef std::shared_ptr<F3DTreeNode<ItemType>> F3DTreeNodePtr;
-	typedef std::vector<F3DTreeNodePtr> NodeVector;
+	typedef unsigned char LayerIndex;
 	
 	struct ItemWithNode
 	{
@@ -31,29 +33,35 @@ public:
 		F3DTreeNodePtr m_Node;
 	};
 	
-	static F3DTreeNodePtr CreateNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
+	static F3DTreeNodePtr CreateNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const LayerIndex& a_CurrentLayerIndex)
 	{
-		return std::make_shared<F3DTreeNode<ItemType>>(a_Parent, a_CurItem, a_CurPosition, a_ChildNodesCount);
+		return std::make_shared<F3DTreeNode<ItemType>>(a_Parent, a_CurItem, a_CurPosition, a_CurrentLayerIndex);
 	}
 
-	static F3DTreeNodePtr CreateTree(const ItemType& a_CurItem, const size_t& a_ChildNodesCount)
+	static F3DTreeNodePtr CreateTree(const ItemType& a_CurItem, const LayerIndex& a_CurrentLayerIndex)
 	{
-		return CreateNode(F3DTreeNodePtr(), a_CurItem, IntPoint(0, 0, 0), a_ChildNodesCount);
+		return CreateNode(F3DTreeNodePtr(), a_CurItem, IntPoint(0, 0, 0), a_CurrentLayerIndex);
 	}
 
-	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const size_t& a_ChildNodesCount)
+	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const IntPoint& a_CurPosition, const LayerIndex& a_CurrentLayerIndex)
 	{
 		for (size_t i = 0; i < GetItemsCount(); ++i)
 			m_Items[i] = a_CurItem;
 			
 		m_Parent = a_Parent;
 		m_CurPosition = a_CurPosition;
-		m_ChildNodesCount = a_ChildNodesCount;
+		m_CurrentLayerIndex = a_CurrentLayerIndex;
+		m_ChildNodes = 0;
 	}
 
-	const NodeVector& GetChildNodes() const
+	const F3DTreeNodePtr* GetChildNodes() const
 	{
 		return m_ChildNodes;
+	}
+
+	size_t GetChildNodesCount() const
+	{
+		return (m_ChildNodes) ? 8 : 0;
 	}
 
 	ItemType* GetItems()
@@ -73,16 +81,16 @@ public:
 	
 	BBox GetBBox() const
 	{
-		const size_t sdvig = GetChildNodesCount() + 1;
+		const size_t sdvig = GetCurrentLayerIndex() + 1;
 		IntPoint start(m_CurPosition.x << sdvig, m_CurPosition.y << sdvig, m_CurPosition.z << sdvig);
 		IntPoint diff(GetLength(), GetLength(), GetLength());
 		
 		return BBox(start, start + diff);
 	}
 
-	const size_t& GetChildNodesCount() const
+	LayerIndex GetCurrentLayerIndex() const
 	{
-		return m_ChildNodesCount;
+		return m_CurrentLayerIndex;
 	}
 	
 	const F3DTreeNodePtr& GetParent() const
@@ -90,31 +98,31 @@ public:
 		return m_Parent;
 	}
 
-	ItemWithNode GetItemWithNode(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0)
+	ItemWithNode GetItemWithNode(const IntPoint& a_TargetNodePosition, const LayerIndex& a_TargetLayerIndex = 0)
 	{
-		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
+		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetLayerIndex);
 		
-		if ((m_ChildNodesCount == a_TargetChildNodeCount) || m_ChildNodes.empty() || !m_ChildNodes[child_index])
+		if ((m_CurrentLayerIndex == a_TargetLayerIndex) || !GetChildNodesCount() || !m_ChildNodes[child_index])
 			return ItemWithNode(m_Items[child_index], this->shared_from_this());
 
-		return m_ChildNodes[child_index]->GetItemWithNode(a_TargetNodePosition, a_TargetChildNodeCount);		
+		return m_ChildNodes[child_index]->GetItemWithNode(a_TargetNodePosition, a_TargetLayerIndex);		
 	}
 	
-	void SetItem(const ItemType& a_TargetItem, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0)
+	void SetItem(const ItemType& a_TargetItem, const IntPoint& a_TargetNodePosition, const LayerIndex& a_TargetLayerIndex = 0)
 	{
-		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
+		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetLayerIndex);
 		
-		if ((m_ChildNodesCount != a_TargetChildNodeCount) && CreateChild(child_index))
-			return m_ChildNodes[child_index]->SetItem(a_TargetItem, a_TargetNodePosition, a_TargetChildNodeCount);		
+		if ((m_CurrentLayerIndex != a_TargetLayerIndex) && CreateChild(child_index))
+			return m_ChildNodes[child_index]->SetItem(a_TargetItem, a_TargetNodePosition, a_TargetLayerIndex);		
 
 		m_Items[child_index] = a_TargetItem;
 		if (m_Parent)
-			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
+			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetLayerIndex);
 	}
 
 	size_t GetLength() const
 	{
-		return (0x2 << m_ChildNodesCount);
+		return (0x2 << static_cast<size_t>(m_CurrentLayerIndex));
 	}
 	
 	F3DTreeNode<ItemType>& GetRoot()
@@ -127,7 +135,7 @@ public:
 
 	bool Pack()
 	{
-		for (size_t i = 0 ; i < m_ChildNodes.size(); ++i)
+		for (size_t i = 0 ; i < GetChildNodesCount(); ++i)
 		{
 			F3DTreeNodePtr& cur_node = m_ChildNodes[i];
 			
@@ -136,9 +144,9 @@ public:
 		}
 		
 		if (NeedPackChildNodes())
-			m_ChildNodes.clear();
+			ClearChildNodes();
 
-		if (m_ChildNodes.empty())
+		if (!GetChildNodesCount())
 			return CheckForDelete();
 		
 		return false;
@@ -170,7 +178,7 @@ private:
 	
 	bool NeedPackChildNodes() const
 	{
-		for (size_t i = 0 ; i < m_ChildNodes.size(); ++i)
+		for (size_t i = 0 ; i < GetChildNodesCount(); ++i)
 		{
 			if (m_ChildNodes[i])
 				return false;		
@@ -179,48 +187,64 @@ private:
 		return true;
 	}
 	
-	size_t GetChildIndex(const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount = 0) const
+	size_t GetChildIndex(const IntPoint& a_TargetNodePosition, const LayerIndex& a_TargetLayerIndex = 0) const
 	{
-		IntPoint conv_child_node_position = ConvertPoiterToNewIndex(a_TargetNodePosition, a_TargetChildNodeCount, m_ChildNodesCount);
+		IntPoint conv_child_node_position = ConvertPoiterToNewIndex(a_TargetNodePosition, a_TargetLayerIndex, m_CurrentLayerIndex);
 		
 		IntPoint child_node_point = conv_child_node_position - (m_CurPosition * 2);
 
 		return PoiterToIndex(child_node_point);
 	}
 	
-	void OnChangeChildNode(const ItemType* a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const size_t& a_TargetChildNodeCount)
+	void OnChangeChildNode(const ItemType* a_ChildNodeItems, const IntPoint& a_TargetNodePosition, const LayerIndex& a_TargetLayerIndex)
 	{
-		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetChildNodeCount);
+		const size_t child_index = GetChildIndex(a_TargetNodePosition, a_TargetLayerIndex);
 		
 		m_Items[child_index] = ItemType(a_ChildNodeItems, GetItemsCount());
 		
 		if (m_Parent)
-			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetChildNodeCount);
+			m_Parent->OnChangeChildNode(m_Items, a_TargetNodePosition, a_TargetLayerIndex);
 	}
 	
 	bool CreateChild(const size_t& a_ChildIndex)
 	{
 		ASSERT(a_ChildIndex < GetItemsCount());
 		
-		if (!m_ChildNodes.empty() && m_ChildNodes[a_ChildIndex])
+		if (GetChildNodesCount() && m_ChildNodes[a_ChildIndex])
 			return true;
 			
-		if (m_ChildNodesCount == 0)
+		if (m_CurrentLayerIndex == 0)
 			return false;
 		
 		IntPoint child_pointer = IndexToPoiter(a_ChildIndex) + (m_CurPosition * 2);
 		
-		if (m_ChildNodes.empty())
-			m_ChildNodes.resize(GetItemsCount());
+		if (!GetChildNodesCount())
+			InitChildNodes();
 		
-		m_ChildNodes[a_ChildIndex] = CreateNode(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_ChildNodesCount - 1); 
+		m_ChildNodes[a_ChildIndex] = CreateNode(this->shared_from_this(), m_Items[a_ChildIndex], child_pointer, m_CurrentLayerIndex - 1); 
 		
 		return true;
 	}
+	
+	void InitChildNodes()
+	{
+		m_ChildNodes = new F3DTreeNodePtr[8];
+		
+		for (size_t i = 0; i < 8; ++i)
+			m_ChildNodes[i] = F3DTreeNodePtr();
+	}
+	
+	void ClearChildNodes()
+	{
+		delete [] m_ChildNodes;
+		m_ChildNodes = 0;
+	}
 
-	F3DTreeNodePtr m_Parent;
-	NodeVector m_ChildNodes;
-	ItemType m_Items[8];
 	IntPoint m_CurPosition;
-	size_t m_ChildNodesCount;
+	F3DTreeNodePtr m_Parent;
+	ItemType m_Items[8];
+	F3DTreeNodePtr* m_ChildNodes;
+	LayerIndex m_CurrentLayerIndex;
 };
+
+#pragma pack ( pop)

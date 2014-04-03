@@ -55,10 +55,10 @@ TEST(F3DTree, Init)
 {
 	F3DTreeTest::F3DTreeNodePtr tree = F3DTreeTest::CreateTree(TestItem(1), 5);
 	
-	EXPECT_EQ(5, tree->GetChildNodesCount());
+	EXPECT_EQ(5, tree->GetCurrentLayerIndex());
 	EXPECT_EQ(2 << 5, tree->GetLength());
 	EXPECT_EQ(true, !tree->GetParent());
-	EXPECT_EQ(0, tree->GetChildNodes().size());
+	EXPECT_EQ(0, tree->GetChildNodesCount());
 	
 	EXPECT_EQ(true, tree->GetCurPosition() == IntPoint(0, 0, 0));
 	
@@ -81,7 +81,7 @@ TEST(F3DTree, SetItem)
 	tree->SetItem(TestItem(1), IntPoint(2, 2, 2));
 	tree->SetItem(TestItem(1), IntPoint(1, 1, 1));
 	
-	EXPECT_EQ(8, tree->GetChildNodes().size());
+	EXPECT_EQ(8, tree->GetChildNodesCount());
 }
 
 TEST(F3DTree, GetItem)
@@ -98,18 +98,18 @@ TEST(F3DTree, GetItem)
 	
 	EXPECT_EQ(1, item1.m_Item.GetValue());
 	ASSERT_EQ(false, !item1.m_Node);
-	EXPECT_EQ(0, item1.m_Node->GetChildNodesCount());
+	EXPECT_EQ(0, item1.m_Node->GetCurrentLayerIndex());
 	EXPECT_EQ(true, item1.m_Node->GetCurPosition() == IntPoint(0, 0, 1));
 
 
 	EXPECT_EQ(2, item2.m_Item.GetValue());
 	ASSERT_EQ(false, !item2.m_Node);
-	EXPECT_EQ(0, item2.m_Node->GetChildNodesCount());
+	EXPECT_EQ(0, item2.m_Node->GetCurrentLayerIndex());
 	EXPECT_EQ(true, item2.m_Node->GetCurPosition() == IntPoint(1, 0, 0));
 
 	EXPECT_EQ(0, item0.m_Item.GetValue());
 	ASSERT_EQ(false, !item0.m_Node);
-	EXPECT_EQ(2, item0.m_Node->GetChildNodesCount());
+	EXPECT_EQ(2, item0.m_Node->GetCurrentLayerIndex());
 	EXPECT_EQ(true, item0.m_Node->GetCurPosition() == IntPoint(0, 0, 0));
 }
 
@@ -131,11 +131,11 @@ TEST(F3DTree, Pack)
 	
 	tree->SetItem(TestItem(0), IntPoint(0, 0, 0));
 
-	EXPECT_EQ(8, tree->GetChildNodes().size());
+	EXPECT_EQ(8, tree->GetChildNodesCount());
 
 	tree->Pack();
 
-	EXPECT_EQ(0, tree->GetChildNodes().size());
+	EXPECT_EQ(0, tree->GetChildNodesCount());
 }
 /*
 TEST(F3DTree, PackOne)
