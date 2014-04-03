@@ -8,7 +8,7 @@ namespace
 	class FillItemsOp : public ThreadPool::AsyncOpForPool
 	{
 	public:
-		FillItemsOp(const F3DCircleNodePtr& a_InOutObject, const IntPoint& a_Center, const double& a_Radius, const CircleItem& a_Item, const ThreadPool::ThreadPoolPtr& a_ThreadPool)
+		FillItemsOp(const F3DCircleNodePtr& a_InOutObject, const F3DCircleNode::Point& a_Center, const double& a_Radius, const CircleItem& a_Item, const ThreadPool::ThreadPoolPtr& a_ThreadPool)
 		: ThreadPool::AsyncOpForPool(a_ThreadPool)
 		{
 			m_InOutObject = a_InOutObject;
@@ -27,15 +27,15 @@ namespace
 		
 	private:
 		F3DCircleNodePtr m_InOutObject;
-		IntPoint m_Center;
+		F3DCircleNode::Point m_Center;
 		double m_Radius;
 		CircleItem m_Item;
 	};	
 	
-	static void FillItems(const F3DCircleNodePtr& a_InOutObject, const IntPoint& a_Center, const double& a_Radius, const CircleItem& a_Item)
+	static void FillItems(const F3DCircleNodePtr& a_InOutObject, const F3DCircleNode::Point& a_Center, const double& a_Radius, const CircleItem& a_Item)
 	{
-		BBox bbox = a_InOutObject->GetBBox();
-		IntPoint vec_center = bbox.GetCenter() - a_Center;
+		F3DCircleNode::TreeBBox bbox = a_InOutObject->GetBBox();
+		F3DCircleNode::Point vec_center = bbox.GetCenter() - a_Center;
 		
 		double bb_size = bbox.GetRadius();
 		double distance_to_center = vec_center.GetLength();
@@ -68,10 +68,10 @@ namespace
 			return;
 		}
 		
-		IntPoint cur_node_point = a_InOutObject->GetCurPosition() * 2;
+		F3DCircleNode::Point cur_node_point = a_InOutObject->GetCurPosition() * static_cast<F3DCircleNode::CoordTreeType>(2);
 		for (size_t i = 0; i < a_InOutObject->GetItemsCount(); ++i)
 		{
-			IntPoint cur_point = cur_node_point + IndexToPoiter(i);
+			F3DCircleNode::Point cur_point = cur_node_point + IndexToPoiter(i);
 			
 			CircleItem& item = items[i];
 			irr::core::vector3df center(a_Center.x + 0.5, a_Center.y + 0.5, a_Center.z + 0.5);
@@ -90,7 +90,7 @@ namespace
 
 }
 
-ThreadPool::IAsyncOperationPtr OpFillItems(const F3DCircleNodePtr& a_InOutObject, const IntPoint& a_Center, const double& a_Radius, const CircleItem& a_Item, const size_t& a_GroupLength, const ThreadPool::ThreadPoolPtr& a_ThreadPool)
+ThreadPool::IAsyncOperationPtr OpFillItems(const F3DCircleNodePtr& a_InOutObject, const F3DCircleNode::Point& a_Center, const double& a_Radius, const CircleItem& a_Item, const size_t& a_GroupLength, const ThreadPool::ThreadPoolPtr& a_ThreadPool)
 {
 	if (a_InOutObject->GetLength() <= a_GroupLength)
 		return std::make_shared<FillItemsOp>(std::cref(a_InOutObject), std::cref(a_Center), std::cref(a_Radius), std::cref(a_Item), std::cref(a_ThreadPool));

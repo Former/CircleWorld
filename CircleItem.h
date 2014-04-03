@@ -3,6 +3,8 @@
 #include <vector>
 #include "F3DTree/F3DTree.h"
 
+#pragma pack (push, 1)
+
 struct CircleItem
 {
 	enum Type : unsigned char
@@ -45,3 +47,5 @@ typedef std::vector<CircleVectorX> CircleVectorY;
 typedef std::vector<CircleVectorY> CircleVectorZ;
 
 typedef std::shared_ptr<CircleVectorZ> ObjectDataPtr;
+
+#pragma pack ( pop)
