@@ -292,16 +292,23 @@ namespace
 		IPriorityCalculatorPtr m_PriorityCalculator;
 	};	
 	
+	static void DrawObject(ObjectBufferVector& a_BufVector, const F3DCircleNodePtr& a_Object, const IDrawStrategyPtr& a_Strategy)
+	{
+		
+	}
+	
 	void DrawOp::__SyncRun()
 	{
-		DrawObject(m_DrawObject, m_Object, m_Strategy);
+		ObjectBufferVector buf_vector;
+		DrawObject(buf_vector, m_Object, m_Strategy);
+		//m_DrawObject;
 	}
 
 }
 
 ThreadPool::IAsyncOperationPtr MakeDrawOp(OUT const DrawObjectPtr& a_DrawObject, const F3DCircleNodePtr& a_Object, const IDrawStrategyPtr& a_Strategy, const IPriorityCalculatorPtr& a_PriorityCalculator, const ThreadPool::ThreadPoolPtr& a_ThreadPool)
 {
-	return std::make_shared<FillItemsOp>(std::cref(a_InOutObject), std::cref(a_Center), std::cref(a_Radius), std::cref(a_Item), std::cref(a_ThreadPool));
+	return std::make_shared<DrawOp>(std::cref(a_DrawObject), std::cref(a_Object), std::cref(a_Strategy), std::cref(a_PriorityCalculator), std::cref(a_ThreadPool));
 }
 
 
