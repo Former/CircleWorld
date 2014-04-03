@@ -5,6 +5,8 @@
 #include "IntPoint.h"
 #include <stdint.h>
 
+#include <iostream>
+
 #ifdef _DEBUG
 #define ASSERT(x) do{ if(!(x)) { asm volatile ("int3;"); } }while(0)
 #else
@@ -13,7 +15,7 @@
 
 #pragma pack (push, 1)
 
-typedef int16_t CoordType;
+typedef int32_t CoordType;
 typedef CPoint<CoordType> TreePoint;
 
 size_t PoiterToIndex(const TreePoint& a_CurPoint);
@@ -25,7 +27,7 @@ class F3DTreeNode : public std::enable_shared_from_this<F3DTreeNode<ItemType>>
 {
 public:
 	typedef std::shared_ptr<F3DTreeNode<ItemType>> F3DTreeNodePtr;
-	typedef unsigned char LayerIndex;
+	typedef uint16_t LayerIndex;
 	
 	typedef CoordType CoordTreeType;
 	typedef TreePoint Point;
@@ -48,7 +50,13 @@ public:
 
 	static F3DTreeNodePtr CreateTree(const ItemType& a_CurItem, const LayerIndex& a_CurrentLayerIndex)
 	{
-		return CreateNode(F3DTreeNodePtr(), a_CurItem, Point(0, 0, 0), a_CurrentLayerIndex);
+/*		std::cout << "m_Parent = " << sizeof(m_Parent) << std::endl;
+		std::cout << "m_ChildNodes = " << sizeof(m_ChildNodes) << std::endl;
+		std::cout << "m_Items = " << sizeof(m_Items) << std::endl;
+		std::cout << "m_CurPosition = " << sizeof(m_CurPosition) << std::endl;
+		std::cout << "m_CurrentLayerIndex = " << sizeof(m_CurrentLayerIndex) << std::endl;
+*/
+		return CreateNode(F3DTreeNodePtr(), a_CurItem, Point(0, 0, 0), a_CurrentLayerIndex);		
 	}
 
 	F3DTreeNode(const F3DTreeNodePtr& a_Parent, const ItemType& a_CurItem, const Point& a_CurPosition, const LayerIndex& a_CurrentLayerIndex)
@@ -237,9 +245,6 @@ private:
 	void InitChildNodes()
 	{
 		m_ChildNodes = new F3DTreeNodePtr[8];
-		
-		for (size_t i = 0; i < 8; ++i)
-			m_ChildNodes[i] = F3DTreeNodePtr();
 	}
 	
 	void ClearChildNodes()
@@ -248,8 +253,8 @@ private:
 		m_ChildNodes = 0;
 	}
 
-	F3DTreeNodePtr* m_ChildNodes;
 	F3DTreeNodePtr m_Parent;
+	F3DTreeNodePtr* m_ChildNodes;
 	ItemType m_Items[8];
 	Point m_CurPosition;
 	LayerIndex m_CurrentLayerIndex;

@@ -559,7 +559,7 @@ int main()
 			int fps = driver->getFPS();
 			if (lastFPS != fps)
 			{
-				irr::core::stringw str = L"Terrain Renderer - Irrlicht Engine [";
+				irr::core::stringw str = L"Circle World [";
 				str += driver->getName();
 				str += "] FPS:";
 				str += fps;
