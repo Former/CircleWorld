@@ -292,15 +292,31 @@ namespace
 		IPriorityCalculatorPtr m_PriorityCalculator;
 	};	
 	
-	static void DrawObject(ObjectBufferVector& a_BufVector, const F3DCircleNodePtr& a_Object, const IDrawStrategyPtr& a_Strategy)
+	static void DrawNode(ObjectBufferVector& a_BufVector, const F3DCircleNodePtr& a_Object, const size_t& a_ChildIndex, const IDrawStrategyPtr& a_Strategy)
 	{
+		if (a_ChildIndex < a_Object->GetChildNodesCount())
+		{
+			const F3DCircleNodePtr& child = a_Object->GetChildNodes()[a_ChildIndex];
+			
+			if (child)
+			{
+				//for (size_t i = 0; i < child->GetChildNodesCount(); ++i)
+				//	DrawNode(buf_vector, child, i, m_Strategy);	
+				
+				return;
+			}
+		}
 		
+				
 	}
 	
 	void DrawOp::__SyncRun()
 	{
 		ObjectBufferVector buf_vector;
-		DrawObject(buf_vector, m_Object, m_Strategy);
+
+		for (size_t i = 0; i < m_Object->GetChildNodesCount(); ++i)
+			DrawNode(buf_vector, m_Object, i, m_Strategy);
+
 		//m_DrawObject;
 	}
 

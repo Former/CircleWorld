@@ -491,7 +491,7 @@ int main()
 	GetWorkTime sync_time(CLOCK_REALTIME);
 	sync_time.Start();
 
-	size_t size = 256 + 2;
+	size_t size = 128 + 2;
 	ObjectDataPtr object(new CircleVectorZ);
 	irr::core::vector3df max_vector(size, size, size);
 	FillItems(*object, size, max_vector * 0.5, size * 0.45, CircleItem::tpSolid);
