@@ -83,9 +83,6 @@
             <pElem>./ThreadPool</pElem>
           </incDir>
           <commandLine>-std=c++0x</commandLine>
-          <preprocessorList>
-            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
-          </preprocessorList>
         </ccTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/circleworld</output>
@@ -247,9 +244,6 @@
             <pElem>./ThreadPool</pElem>
           </incDir>
           <commandLine>-std=c++0x</commandLine>
-          <preprocessorList>
-            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
-          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

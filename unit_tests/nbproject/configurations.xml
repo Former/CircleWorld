@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f2" displayName="Common" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f2" displayName="Common" projectFiles="true">
       <itemPath>../IntPoint.cpp</itemPath>
       <itemPath>../IntPoint.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f5" displayName="F3DTree" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f5" displayName="F3DTree" projectFiles="true">
       <itemPath>../F3DTree/F3DTree.cpp</itemPath>
       <itemPath>../F3DTree/F3DTree.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3" displayName="gtest" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f3" displayName="gtest" projectFiles="true">
       <itemPath>gtest/gtest-all.cc</itemPath>
       <itemPath>gtest/gtest.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f1" displayName="src" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="src" projectFiles="true">
       <itemPath>Test_F3DTree.cpp</itemPath>
       <itemPath>Test_ThreadPool.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4"
-                   displayName="ThreadPool"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f4" displayName="ThreadPool" projectFiles="true">
       <itemPath>../ThreadPool/AsyncOpForThreadPool.cpp</itemPath>
       <itemPath>../ThreadPool/AsyncOpForThreadPool.h</itemPath>
       <itemPath>../ThreadPool/AsyncOperation.cpp</itemPath>

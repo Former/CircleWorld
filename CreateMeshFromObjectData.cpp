@@ -300,10 +300,10 @@ namespace
 			
 			if (child)
 			{
-				//for (size_t i = 0; i < child->GetChildNodesCount(); ++i)
-				//	DrawNode(buf_vector, child, i, m_Strategy);	
+                            for (size_t i = 0; i < child->GetChildNodesCount(); ++i)
+				DrawNode(a_BufVector, child, i, a_Strategy);	
 				
-				return;
+                            return;
 			}
 		}
 		
