@@ -1,0 +1,3112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="94">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="src" projectFiles="true" kind="ROOT">
+      <logicalFolder name="f1"
+                     displayName="aesGladman"
+                     projectFiles="true"
+                     kind="ROOT">
+        <itemPath>source/aesGladman/aes.h</itemPath>
+        <itemPath>source/aesGladman/aescrypt.cpp</itemPath>
+        <itemPath>source/aesGladman/aeskey.cpp</itemPath>
+        <itemPath>source/aesGladman/aesopt.h</itemPath>
+        <itemPath>source/aesGladman/aestab.cpp</itemPath>
+        <itemPath>source/aesGladman/fileenc.cpp</itemPath>
+        <itemPath>source/aesGladman/fileenc.h</itemPath>
+        <itemPath>source/aesGladman/hmac.cpp</itemPath>
+        <itemPath>source/aesGladman/hmac.h</itemPath>
+        <itemPath>source/aesGladman/prng.cpp</itemPath>
+        <itemPath>source/aesGladman/prng.h</itemPath>
+        <itemPath>source/aesGladman/pwd2key.cpp</itemPath>
+        <itemPath>source/aesGladman/pwd2key.h</itemPath>
+        <itemPath>source/aesGladman/sha1.cpp</itemPath>
+        <itemPath>source/aesGladman/sha1.h</itemPath>
+        <itemPath>source/aesGladman/sha2.cpp</itemPath>
+        <itemPath>source/aesGladman/sha2.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="bzip2" projectFiles="true" kind="ROOT">
+        <itemPath>source/bzip2/blocksort.c</itemPath>
+        <itemPath>source/bzip2/bzcompress.c</itemPath>
+        <itemPath>source/bzip2/bzlib.c</itemPath>
+        <itemPath>source/bzip2/bzlib.h</itemPath>
+        <itemPath>source/bzip2/crctable.c</itemPath>
+        <itemPath>source/bzip2/decompress.c</itemPath>
+        <itemPath>source/bzip2/huffman.c</itemPath>
+        <itemPath>source/bzip2/randtable.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="jpeglib" projectFiles="true" kind="ROOT">
+        <itemPath>source/jpeglib/jaricom.c</itemPath>
+        <itemPath>source/jpeglib/jcapimin.c</itemPath>
+        <itemPath>source/jpeglib/jcapistd.c</itemPath>
+        <itemPath>source/jpeglib/jcarith.c</itemPath>
+        <itemPath>source/jpeglib/jccoefct.c</itemPath>
+        <itemPath>source/jpeglib/jccolor.c</itemPath>
+        <itemPath>source/jpeglib/jcdctmgr.c</itemPath>
+        <itemPath>source/jpeglib/jchuff.c</itemPath>
+        <itemPath>source/jpeglib/jcinit.c</itemPath>
+        <itemPath>source/jpeglib/jcmainct.c</itemPath>
+        <itemPath>source/jpeglib/jcmarker.c</itemPath>
+        <itemPath>source/jpeglib/jcmaster.c</itemPath>
+        <itemPath>source/jpeglib/jcomapi.c</itemPath>
+        <itemPath>source/jpeglib/jconfig.h</itemPath>
+        <itemPath>source/jpeglib/jcparam.c</itemPath>
+        <itemPath>source/jpeglib/jcprepct.c</itemPath>
+        <itemPath>source/jpeglib/jcsample.c</itemPath>
+        <itemPath>source/jpeglib/jctrans.c</itemPath>
+        <itemPath>source/jpeglib/jdapimin.c</itemPath>
+        <itemPath>source/jpeglib/jdapistd.c</itemPath>
+        <itemPath>source/jpeglib/jdarith.c</itemPath>
+        <itemPath>source/jpeglib/jdatadst.c</itemPath>
+        <itemPath>source/jpeglib/jdatasrc.c</itemPath>
+        <itemPath>source/jpeglib/jdcoefct.c</itemPath>
+        <itemPath>source/jpeglib/jdcolor.c</itemPath>
+        <itemPath>source/jpeglib/jdct.h</itemPath>
+        <itemPath>source/jpeglib/jddctmgr.c</itemPath>
+        <itemPath>source/jpeglib/jdhuff.c</itemPath>
+        <itemPath>source/jpeglib/jdinput.c</itemPath>
+        <itemPath>source/jpeglib/jdmainct.c</itemPath>
+        <itemPath>source/jpeglib/jdmarker.c</itemPath>
+        <itemPath>source/jpeglib/jdmaster.c</itemPath>
+        <itemPath>source/jpeglib/jdmerge.c</itemPath>
+        <itemPath>source/jpeglib/jdpostct.c</itemPath>
+        <itemPath>source/jpeglib/jdsample.c</itemPath>
+        <itemPath>source/jpeglib/jdtrans.c</itemPath>
+        <itemPath>source/jpeglib/jerror.c</itemPath>
+        <itemPath>source/jpeglib/jerror.h</itemPath>
+        <itemPath>source/jpeglib/jfdctflt.c</itemPath>
+        <itemPath>source/jpeglib/jfdctfst.c</itemPath>
+        <itemPath>source/jpeglib/jfdctint.c</itemPath>
+        <itemPath>source/jpeglib/jidctflt.c</itemPath>
+        <itemPath>source/jpeglib/jidctfst.c</itemPath>
+        <itemPath>source/jpeglib/jidctint.c</itemPath>
+        <itemPath>source/jpeglib/jinclude.h</itemPath>
+        <itemPath>source/jpeglib/jmemmgr.c</itemPath>
+        <itemPath>source/jpeglib/jmemnobs.c</itemPath>
+        <itemPath>source/jpeglib/jmemsys.h</itemPath>
+        <itemPath>source/jpeglib/jmorecfg.h</itemPath>
+        <itemPath>source/jpeglib/jpegint.h</itemPath>
+        <itemPath>source/jpeglib/jpeglib.h</itemPath>
+        <itemPath>source/jpeglib/jquant1.c</itemPath>
+        <itemPath>source/jpeglib/jquant2.c</itemPath>
+        <itemPath>source/jpeglib/jutils.c</itemPath>
+        <itemPath>source/jpeglib/jversion.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="libpng" projectFiles="true" kind="ROOT">
+        <itemPath>source/libpng/png.c</itemPath>
+        <itemPath>source/libpng/png.h</itemPath>
+        <itemPath>source/libpng/pngconf.h</itemPath>
+        <itemPath>source/libpng/pngdebug.h</itemPath>
+        <itemPath>source/libpng/pngerror.c</itemPath>
+        <itemPath>source/libpng/pngget.c</itemPath>
+        <itemPath>source/libpng/pnginfo.h</itemPath>
+        <itemPath>source/libpng/pnglibconf.h</itemPath>
+        <itemPath>source/libpng/pngmem.c</itemPath>
+        <itemPath>source/libpng/pngpread.c</itemPath>
+        <itemPath>source/libpng/pngpriv.h</itemPath>
+        <itemPath>source/libpng/pngread.c</itemPath>
+        <itemPath>source/libpng/pngrio.c</itemPath>
+        <itemPath>source/libpng/pngrtran.c</itemPath>
+        <itemPath>source/libpng/pngrutil.c</itemPath>
+        <itemPath>source/libpng/pngset.c</itemPath>
+        <itemPath>source/libpng/pngstruct.h</itemPath>
+        <itemPath>source/libpng/pngtest.c</itemPath>
+        <itemPath>source/libpng/pngtrans.c</itemPath>
+        <itemPath>source/libpng/pngwio.c</itemPath>
+        <itemPath>source/libpng/pngwrite.c</itemPath>
+        <itemPath>source/libpng/pngwtran.c</itemPath>
+        <itemPath>source/libpng/pngwutil.c</itemPath>
+      </logicalFolder>
+      <itemPath>source/BuiltInFont.h</itemPath>
+      <itemPath>source/C3DSMeshFileLoader.cpp</itemPath>
+      <itemPath>source/C3DSMeshFileLoader.h</itemPath>
+      <itemPath>source/CAnimatedMeshHalfLife.cpp</itemPath>
+      <itemPath>source/CAnimatedMeshHalfLife.h</itemPath>
+      <itemPath>source/CAnimatedMeshMD2.cpp</itemPath>
+      <itemPath>source/CAnimatedMeshMD2.h</itemPath>
+      <itemPath>source/CAnimatedMeshMD3.cpp</itemPath>
+      <itemPath>source/CAnimatedMeshMD3.h</itemPath>
+      <itemPath>source/CAnimatedMeshSceneNode.cpp</itemPath>
+      <itemPath>source/CAnimatedMeshSceneNode.h</itemPath>
+      <itemPath>source/CAttributeImpl.h</itemPath>
+      <itemPath>source/CAttributes.cpp</itemPath>
+      <itemPath>source/CAttributes.h</itemPath>
+      <itemPath>source/CB3DMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CB3DMeshFileLoader.h</itemPath>
+      <itemPath>source/CBSPMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CBSPMeshFileLoader.h</itemPath>
+      <itemPath>source/CBillboardSceneNode.cpp</itemPath>
+      <itemPath>source/CBillboardSceneNode.h</itemPath>
+      <itemPath>source/CBlit.h</itemPath>
+      <itemPath>source/CBoneSceneNode.cpp</itemPath>
+      <itemPath>source/CBoneSceneNode.h</itemPath>
+      <itemPath>source/CBurningShader_Raster_Reference.cpp</itemPath>
+      <itemPath>source/CCSMLoader.cpp</itemPath>
+      <itemPath>source/CCSMLoader.h</itemPath>
+      <itemPath>source/CCameraSceneNode.cpp</itemPath>
+      <itemPath>source/CCameraSceneNode.h</itemPath>
+      <itemPath>source/CCgMaterialRenderer.cpp</itemPath>
+      <itemPath>source/CCgMaterialRenderer.h</itemPath>
+      <itemPath>source/CColladaFileLoader.cpp</itemPath>
+      <itemPath>source/CColladaFileLoader.h</itemPath>
+      <itemPath>source/CColladaMeshWriter.cpp</itemPath>
+      <itemPath>source/CColladaMeshWriter.h</itemPath>
+      <itemPath>source/CColorConverter.cpp</itemPath>
+      <itemPath>source/CColorConverter.h</itemPath>
+      <itemPath>source/CCubeSceneNode.cpp</itemPath>
+      <itemPath>source/CCubeSceneNode.h</itemPath>
+      <itemPath>source/CD3D8Driver.cpp</itemPath>
+      <itemPath>source/CD3D8Driver.h</itemPath>
+      <itemPath>source/CD3D8MaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D8NormalMapRenderer.cpp</itemPath>
+      <itemPath>source/CD3D8NormalMapRenderer.h</itemPath>
+      <itemPath>source/CD3D8ParallaxMapRenderer.cpp</itemPath>
+      <itemPath>source/CD3D8ParallaxMapRenderer.h</itemPath>
+      <itemPath>source/CD3D8ShaderMaterialRenderer.cpp</itemPath>
+      <itemPath>source/CD3D8ShaderMaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D8Texture.cpp</itemPath>
+      <itemPath>source/CD3D8Texture.h</itemPath>
+      <itemPath>source/CD3D9CgMaterialRenderer.cpp</itemPath>
+      <itemPath>source/CD3D9CgMaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D9Driver.cpp</itemPath>
+      <itemPath>source/CD3D9Driver.h</itemPath>
+      <itemPath>source/CD3D9HLSLMaterialRenderer.cpp</itemPath>
+      <itemPath>source/CD3D9HLSLMaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D9MaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D9NormalMapRenderer.cpp</itemPath>
+      <itemPath>source/CD3D9NormalMapRenderer.h</itemPath>
+      <itemPath>source/CD3D9ParallaxMapRenderer.cpp</itemPath>
+      <itemPath>source/CD3D9ParallaxMapRenderer.h</itemPath>
+      <itemPath>source/CD3D9ShaderMaterialRenderer.cpp</itemPath>
+      <itemPath>source/CD3D9ShaderMaterialRenderer.h</itemPath>
+      <itemPath>source/CD3D9Texture.cpp</itemPath>
+      <itemPath>source/CD3D9Texture.h</itemPath>
+      <itemPath>source/CDMFLoader.cpp</itemPath>
+      <itemPath>source/CDMFLoader.h</itemPath>
+      <itemPath>source/CDefaultGUIElementFactory.cpp</itemPath>
+      <itemPath>source/CDefaultGUIElementFactory.h</itemPath>
+      <itemPath>source/CDefaultSceneNodeAnimatorFactory.cpp</itemPath>
+      <itemPath>source/CDefaultSceneNodeAnimatorFactory.h</itemPath>
+      <itemPath>source/CDefaultSceneNodeFactory.cpp</itemPath>
+      <itemPath>source/CDefaultSceneNodeFactory.h</itemPath>
+      <itemPath>source/CDepthBuffer.cpp</itemPath>
+      <itemPath>source/CDepthBuffer.h</itemPath>
+      <itemPath>source/CDummyTransformationSceneNode.cpp</itemPath>
+      <itemPath>source/CDummyTransformationSceneNode.h</itemPath>
+      <itemPath>source/CEmptySceneNode.cpp</itemPath>
+      <itemPath>source/CEmptySceneNode.h</itemPath>
+      <itemPath>source/CFPSCounter.cpp</itemPath>
+      <itemPath>source/CFPSCounter.h</itemPath>
+      <itemPath>source/CFileList.cpp</itemPath>
+      <itemPath>source/CFileList.h</itemPath>
+      <itemPath>source/CFileSystem.cpp</itemPath>
+      <itemPath>source/CFileSystem.h</itemPath>
+      <itemPath>source/CGUIButton.cpp</itemPath>
+      <itemPath>source/CGUIButton.h</itemPath>
+      <itemPath>source/CGUICheckBox.cpp</itemPath>
+      <itemPath>source/CGUICheckBox.h</itemPath>
+      <itemPath>source/CGUIColorSelectDialog.cpp</itemPath>
+      <itemPath>source/CGUIColorSelectDialog.h</itemPath>
+      <itemPath>source/CGUIComboBox.cpp</itemPath>
+      <itemPath>source/CGUIComboBox.h</itemPath>
+      <itemPath>source/CGUIContextMenu.cpp</itemPath>
+      <itemPath>source/CGUIContextMenu.h</itemPath>
+      <itemPath>source/CGUIEditBox.cpp</itemPath>
+      <itemPath>source/CGUIEditBox.h</itemPath>
+      <itemPath>source/CGUIEnvironment.cpp</itemPath>
+      <itemPath>source/CGUIEnvironment.h</itemPath>
+      <itemPath>source/CGUIFileOpenDialog.cpp</itemPath>
+      <itemPath>source/CGUIFileOpenDialog.h</itemPath>
+      <itemPath>source/CGUIFont.cpp</itemPath>
+      <itemPath>source/CGUIFont.h</itemPath>
+      <itemPath>source/CGUIImage.cpp</itemPath>
+      <itemPath>source/CGUIImage.h</itemPath>
+      <itemPath>source/CGUIImageList.cpp</itemPath>
+      <itemPath>source/CGUIImageList.h</itemPath>
+      <itemPath>source/CGUIInOutFader.cpp</itemPath>
+      <itemPath>source/CGUIInOutFader.h</itemPath>
+      <itemPath>source/CGUIListBox.cpp</itemPath>
+      <itemPath>source/CGUIListBox.h</itemPath>
+      <itemPath>source/CGUIMenu.cpp</itemPath>
+      <itemPath>source/CGUIMenu.h</itemPath>
+      <itemPath>source/CGUIMeshViewer.cpp</itemPath>
+      <itemPath>source/CGUIMeshViewer.h</itemPath>
+      <itemPath>source/CGUIMessageBox.cpp</itemPath>
+      <itemPath>source/CGUIMessageBox.h</itemPath>
+      <itemPath>source/CGUIModalScreen.cpp</itemPath>
+      <itemPath>source/CGUIModalScreen.h</itemPath>
+      <itemPath>source/CGUIScrollBar.cpp</itemPath>
+      <itemPath>source/CGUIScrollBar.h</itemPath>
+      <itemPath>source/CGUISkin.cpp</itemPath>
+      <itemPath>source/CGUISkin.h</itemPath>
+      <itemPath>source/CGUISpinBox.cpp</itemPath>
+      <itemPath>source/CGUISpinBox.h</itemPath>
+      <itemPath>source/CGUISpriteBank.cpp</itemPath>
+      <itemPath>source/CGUISpriteBank.h</itemPath>
+      <itemPath>source/CGUIStaticText.cpp</itemPath>
+      <itemPath>source/CGUIStaticText.h</itemPath>
+      <itemPath>source/CGUITabControl.cpp</itemPath>
+      <itemPath>source/CGUITabControl.h</itemPath>
+      <itemPath>source/CGUITable.cpp</itemPath>
+      <itemPath>source/CGUITable.h</itemPath>
+      <itemPath>source/CGUIToolBar.cpp</itemPath>
+      <itemPath>source/CGUIToolBar.h</itemPath>
+      <itemPath>source/CGUITreeView.cpp</itemPath>
+      <itemPath>source/CGUITreeView.h</itemPath>
+      <itemPath>source/CGUIWindow.cpp</itemPath>
+      <itemPath>source/CGUIWindow.h</itemPath>
+      <itemPath>source/CGeometryCreator.cpp</itemPath>
+      <itemPath>source/CGeometryCreator.h</itemPath>
+      <itemPath>source/CImage.cpp</itemPath>
+      <itemPath>source/CImage.h</itemPath>
+      <itemPath>source/CImageLoaderBMP.cpp</itemPath>
+      <itemPath>source/CImageLoaderBMP.h</itemPath>
+      <itemPath>source/CImageLoaderDDS.cpp</itemPath>
+      <itemPath>source/CImageLoaderDDS.h</itemPath>
+      <itemPath>source/CImageLoaderJPG.cpp</itemPath>
+      <itemPath>source/CImageLoaderJPG.h</itemPath>
+      <itemPath>source/CImageLoaderPCX.cpp</itemPath>
+      <itemPath>source/CImageLoaderPCX.h</itemPath>
+      <itemPath>source/CImageLoaderPNG.cpp</itemPath>
+      <itemPath>source/CImageLoaderPNG.h</itemPath>
+      <itemPath>source/CImageLoaderPPM.cpp</itemPath>
+      <itemPath>source/CImageLoaderPPM.h</itemPath>
+      <itemPath>source/CImageLoaderPSD.cpp</itemPath>
+      <itemPath>source/CImageLoaderPSD.h</itemPath>
+      <itemPath>source/CImageLoaderRGB.cpp</itemPath>
+      <itemPath>source/CImageLoaderRGB.h</itemPath>
+      <itemPath>source/CImageLoaderTGA.cpp</itemPath>
+      <itemPath>source/CImageLoaderTGA.h</itemPath>
+      <itemPath>source/CImageLoaderWAL.cpp</itemPath>
+      <itemPath>source/CImageLoaderWAL.h</itemPath>
+      <itemPath>source/CImageWriterBMP.cpp</itemPath>
+      <itemPath>source/CImageWriterBMP.h</itemPath>
+      <itemPath>source/CImageWriterJPG.cpp</itemPath>
+      <itemPath>source/CImageWriterJPG.h</itemPath>
+      <itemPath>source/CImageWriterPCX.cpp</itemPath>
+      <itemPath>source/CImageWriterPCX.h</itemPath>
+      <itemPath>source/CImageWriterPNG.cpp</itemPath>
+      <itemPath>source/CImageWriterPNG.h</itemPath>
+      <itemPath>source/CImageWriterPPM.cpp</itemPath>
+      <itemPath>source/CImageWriterPPM.h</itemPath>
+      <itemPath>source/CImageWriterPSD.cpp</itemPath>
+      <itemPath>source/CImageWriterPSD.h</itemPath>
+      <itemPath>source/CImageWriterTGA.cpp</itemPath>
+      <itemPath>source/CImageWriterTGA.h</itemPath>
+      <itemPath>source/CIrrDeviceConsole.cpp</itemPath>
+      <itemPath>source/CIrrDeviceConsole.h</itemPath>
+      <itemPath>source/CIrrDeviceFB.cpp</itemPath>
+      <itemPath>source/CIrrDeviceFB.h</itemPath>
+      <itemPath>source/CIrrDeviceLinux.cpp</itemPath>
+      <itemPath>source/CIrrDeviceLinux.h</itemPath>
+      <itemPath>source/CIrrDeviceSDL.cpp</itemPath>
+      <itemPath>source/CIrrDeviceSDL.h</itemPath>
+      <itemPath>source/CIrrDeviceStub.cpp</itemPath>
+      <itemPath>source/CIrrDeviceStub.h</itemPath>
+      <itemPath>source/CIrrDeviceWin32.cpp</itemPath>
+      <itemPath>source/CIrrDeviceWin32.h</itemPath>
+      <itemPath>source/CIrrDeviceWinCE.cpp</itemPath>
+      <itemPath>source/CIrrDeviceWinCE.h</itemPath>
+      <itemPath>source/CIrrMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CIrrMeshFileLoader.h</itemPath>
+      <itemPath>source/CIrrMeshWriter.cpp</itemPath>
+      <itemPath>source/CIrrMeshWriter.h</itemPath>
+      <itemPath>source/CLMTSMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CLMTSMeshFileLoader.h</itemPath>
+      <itemPath>source/CLWOMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CLWOMeshFileLoader.h</itemPath>
+      <itemPath>source/CLightSceneNode.cpp</itemPath>
+      <itemPath>source/CLightSceneNode.h</itemPath>
+      <itemPath>source/CLimitReadFile.cpp</itemPath>
+      <itemPath>source/CLimitReadFile.h</itemPath>
+      <itemPath>source/CLogger.cpp</itemPath>
+      <itemPath>source/CLogger.h</itemPath>
+      <itemPath>source/CMD2MeshFileLoader.cpp</itemPath>
+      <itemPath>source/CMD2MeshFileLoader.h</itemPath>
+      <itemPath>source/CMD3MeshFileLoader.cpp</itemPath>
+      <itemPath>source/CMD3MeshFileLoader.h</itemPath>
+      <itemPath>source/CMS3DMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CMS3DMeshFileLoader.h</itemPath>
+      <itemPath>source/CMY3DHelper.h</itemPath>
+      <itemPath>source/CMY3DMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CMY3DMeshFileLoader.h</itemPath>
+      <itemPath>source/CMemoryFile.cpp</itemPath>
+      <itemPath>source/CMemoryFile.h</itemPath>
+      <itemPath>source/CMeshCache.cpp</itemPath>
+      <itemPath>source/CMeshCache.h</itemPath>
+      <itemPath>source/CMeshManipulator.cpp</itemPath>
+      <itemPath>source/CMeshManipulator.h</itemPath>
+      <itemPath>source/CMeshSceneNode.cpp</itemPath>
+      <itemPath>source/CMeshSceneNode.h</itemPath>
+      <itemPath>source/CMetaTriangleSelector.cpp</itemPath>
+      <itemPath>source/CMetaTriangleSelector.h</itemPath>
+      <itemPath>source/CMountPointReader.cpp</itemPath>
+      <itemPath>source/CMountPointReader.h</itemPath>
+      <itemPath>source/CNPKReader.cpp</itemPath>
+      <itemPath>source/CNPKReader.h</itemPath>
+      <itemPath>source/CNullDriver.cpp</itemPath>
+      <itemPath>source/CNullDriver.h</itemPath>
+      <itemPath>source/COBJMeshFileLoader.cpp</itemPath>
+      <itemPath>source/COBJMeshFileLoader.h</itemPath>
+      <itemPath>source/COBJMeshWriter.cpp</itemPath>
+      <itemPath>source/COBJMeshWriter.h</itemPath>
+      <itemPath>source/COCTLoader.cpp</itemPath>
+      <itemPath>source/COCTLoader.h</itemPath>
+      <itemPath>source/COSOperator.cpp</itemPath>
+      <itemPath>source/COSOperator.h</itemPath>
+      <itemPath>source/COctreeSceneNode.cpp</itemPath>
+      <itemPath>source/COctreeSceneNode.h</itemPath>
+      <itemPath>source/COctreeTriangleSelector.cpp</itemPath>
+      <itemPath>source/COctreeTriangleSelector.h</itemPath>
+      <itemPath>source/COgreMeshFileLoader.cpp</itemPath>
+      <itemPath>source/COgreMeshFileLoader.h</itemPath>
+      <itemPath>source/COpenGLCgMaterialRenderer.cpp</itemPath>
+      <itemPath>source/COpenGLCgMaterialRenderer.h</itemPath>
+      <itemPath>source/COpenGLDriver.cpp</itemPath>
+      <itemPath>source/COpenGLDriver.h</itemPath>
+      <itemPath>source/COpenGLExtensionHandler.cpp</itemPath>
+      <itemPath>source/COpenGLExtensionHandler.h</itemPath>
+      <itemPath>source/COpenGLMaterialRenderer.h</itemPath>
+      <itemPath>source/COpenGLNormalMapRenderer.cpp</itemPath>
+      <itemPath>source/COpenGLNormalMapRenderer.h</itemPath>
+      <itemPath>source/COpenGLParallaxMapRenderer.cpp</itemPath>
+      <itemPath>source/COpenGLParallaxMapRenderer.h</itemPath>
+      <itemPath>source/COpenGLSLMaterialRenderer.cpp</itemPath>
+      <itemPath>source/COpenGLSLMaterialRenderer.h</itemPath>
+      <itemPath>source/COpenGLShaderMaterialRenderer.cpp</itemPath>
+      <itemPath>source/COpenGLShaderMaterialRenderer.h</itemPath>
+      <itemPath>source/COpenGLTexture.cpp</itemPath>
+      <itemPath>source/COpenGLTexture.h</itemPath>
+      <itemPath>source/CPLYMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CPLYMeshFileLoader.h</itemPath>
+      <itemPath>source/CPLYMeshWriter.cpp</itemPath>
+      <itemPath>source/CPLYMeshWriter.h</itemPath>
+      <itemPath>source/CPakReader.cpp</itemPath>
+      <itemPath>source/CPakReader.h</itemPath>
+      <itemPath>source/CParticleAnimatedMeshSceneNodeEmitter.cpp</itemPath>
+      <itemPath>source/CParticleAnimatedMeshSceneNodeEmitter.h</itemPath>
+      <itemPath>source/CParticleAttractionAffector.cpp</itemPath>
+      <itemPath>source/CParticleAttractionAffector.h</itemPath>
+      <itemPath>source/CParticleBoxEmitter.cpp</itemPath>
+      <itemPath>source/CParticleBoxEmitter.h</itemPath>
+      <itemPath>source/CParticleCylinderEmitter.cpp</itemPath>
+      <itemPath>source/CParticleCylinderEmitter.h</itemPath>
+      <itemPath>source/CParticleFadeOutAffector.cpp</itemPath>
+      <itemPath>source/CParticleFadeOutAffector.h</itemPath>
+      <itemPath>source/CParticleGravityAffector.cpp</itemPath>
+      <itemPath>source/CParticleGravityAffector.h</itemPath>
+      <itemPath>source/CParticleMeshEmitter.cpp</itemPath>
+      <itemPath>source/CParticleMeshEmitter.h</itemPath>
+      <itemPath>source/CParticlePointEmitter.cpp</itemPath>
+      <itemPath>source/CParticlePointEmitter.h</itemPath>
+      <itemPath>source/CParticleRingEmitter.cpp</itemPath>
+      <itemPath>source/CParticleRingEmitter.h</itemPath>
+      <itemPath>source/CParticleRotationAffector.cpp</itemPath>
+      <itemPath>source/CParticleRotationAffector.h</itemPath>
+      <itemPath>source/CParticleScaleAffector.cpp</itemPath>
+      <itemPath>source/CParticleScaleAffector.h</itemPath>
+      <itemPath>source/CParticleSphereEmitter.cpp</itemPath>
+      <itemPath>source/CParticleSphereEmitter.h</itemPath>
+      <itemPath>source/CParticleSystemSceneNode.cpp</itemPath>
+      <itemPath>source/CParticleSystemSceneNode.h</itemPath>
+      <itemPath>source/CQ3LevelMesh.cpp</itemPath>
+      <itemPath>source/CQ3LevelMesh.h</itemPath>
+      <itemPath>source/CQuake3ShaderSceneNode.cpp</itemPath>
+      <itemPath>source/CQuake3ShaderSceneNode.h</itemPath>
+      <itemPath>source/CReadFile.cpp</itemPath>
+      <itemPath>source/CReadFile.h</itemPath>
+      <itemPath>source/CSMFMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CSMFMeshFileLoader.h</itemPath>
+      <itemPath>source/CSTLMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CSTLMeshFileLoader.h</itemPath>
+      <itemPath>source/CSTLMeshWriter.cpp</itemPath>
+      <itemPath>source/CSTLMeshWriter.h</itemPath>
+      <itemPath>source/CSceneCollisionManager.cpp</itemPath>
+      <itemPath>source/CSceneCollisionManager.h</itemPath>
+      <itemPath>source/CSceneLoaderIrr.cpp</itemPath>
+      <itemPath>source/CSceneLoaderIrr.h</itemPath>
+      <itemPath>source/CSceneManager.cpp</itemPath>
+      <itemPath>source/CSceneManager.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCameraFPS.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCameraFPS.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCameraMaya.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCameraMaya.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCollisionResponse.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorCollisionResponse.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorDelete.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorDelete.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFlyCircle.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFlyCircle.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFlyStraight.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFlyStraight.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFollowSpline.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorFollowSpline.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorRotation.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorRotation.h</itemPath>
+      <itemPath>source/CSceneNodeAnimatorTexture.cpp</itemPath>
+      <itemPath>source/CSceneNodeAnimatorTexture.h</itemPath>
+      <itemPath>source/CShadowVolumeSceneNode.cpp</itemPath>
+      <itemPath>source/CShadowVolumeSceneNode.h</itemPath>
+      <itemPath>source/CSkinnedMesh.cpp</itemPath>
+      <itemPath>source/CSkinnedMesh.h</itemPath>
+      <itemPath>source/CSkyBoxSceneNode.cpp</itemPath>
+      <itemPath>source/CSkyBoxSceneNode.h</itemPath>
+      <itemPath>source/CSkyDomeSceneNode.cpp</itemPath>
+      <itemPath>source/CSkyDomeSceneNode.h</itemPath>
+      <itemPath>source/CSoftware2MaterialRenderer.h</itemPath>
+      <itemPath>source/CSoftwareDriver.cpp</itemPath>
+      <itemPath>source/CSoftwareDriver.h</itemPath>
+      <itemPath>source/CSoftwareDriver2.cpp</itemPath>
+      <itemPath>source/CSoftwareDriver2.h</itemPath>
+      <itemPath>source/CSoftwareTexture.cpp</itemPath>
+      <itemPath>source/CSoftwareTexture.h</itemPath>
+      <itemPath>source/CSoftwareTexture2.cpp</itemPath>
+      <itemPath>source/CSoftwareTexture2.h</itemPath>
+      <itemPath>source/CSphereSceneNode.cpp</itemPath>
+      <itemPath>source/CSphereSceneNode.h</itemPath>
+      <itemPath>source/CTRFlat.cpp</itemPath>
+      <itemPath>source/CTRFlatWire.cpp</itemPath>
+      <itemPath>source/CTRGouraud.cpp</itemPath>
+      <itemPath>source/CTRGouraud2.cpp</itemPath>
+      <itemPath>source/CTRGouraudAlpha2.cpp</itemPath>
+      <itemPath>source/CTRGouraudAlphaNoZ2.cpp</itemPath>
+      <itemPath>source/CTRGouraudWire.cpp</itemPath>
+      <itemPath>source/CTRNormalMap.cpp</itemPath>
+      <itemPath>source/CTRStencilShadow.cpp</itemPath>
+      <itemPath>source/CTRTextureBlend.cpp</itemPath>
+      <itemPath>source/CTRTextureDetailMap2.cpp</itemPath>
+      <itemPath>source/CTRTextureFlat.cpp</itemPath>
+      <itemPath>source/CTRTextureFlatWire.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraud.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraud.h</itemPath>
+      <itemPath>source/CTRTextureGouraud2.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudAdd.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudAdd2.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudAddNoZ2.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudAlpha.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudAlphaNoZ.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudNoZ.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudNoZ2.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudVertexAlpha2.cpp</itemPath>
+      <itemPath>source/CTRTextureGouraudWire.cpp</itemPath>
+      <itemPath>source/CTRTextureLightMap2_Add.cpp</itemPath>
+      <itemPath>source/CTRTextureLightMap2_M1.cpp</itemPath>
+      <itemPath>source/CTRTextureLightMap2_M2.cpp</itemPath>
+      <itemPath>source/CTRTextureLightMap2_M4.cpp</itemPath>
+      <itemPath>source/CTRTextureLightMapGouraud2_M4.cpp</itemPath>
+      <itemPath>source/CTRTextureWire2.cpp</itemPath>
+      <itemPath>source/CTarReader.cpp</itemPath>
+      <itemPath>source/CTarReader.h</itemPath>
+      <itemPath>source/CTerrainSceneNode.cpp</itemPath>
+      <itemPath>source/CTerrainSceneNode.h</itemPath>
+      <itemPath>source/CTerrainTriangleSelector.cpp</itemPath>
+      <itemPath>source/CTerrainTriangleSelector.h</itemPath>
+      <itemPath>source/CTextSceneNode.cpp</itemPath>
+      <itemPath>source/CTextSceneNode.h</itemPath>
+      <itemPath>source/CTimer.h</itemPath>
+      <itemPath>source/CTriangleBBSelector.cpp</itemPath>
+      <itemPath>source/CTriangleBBSelector.h</itemPath>
+      <itemPath>source/CTriangleSelector.cpp</itemPath>
+      <itemPath>source/CTriangleSelector.h</itemPath>
+      <itemPath>source/CVideoModeList.cpp</itemPath>
+      <itemPath>source/CVideoModeList.h</itemPath>
+      <itemPath>source/CVolumeLightSceneNode.cpp</itemPath>
+      <itemPath>source/CVolumeLightSceneNode.h</itemPath>
+      <itemPath>source/CWADReader.cpp</itemPath>
+      <itemPath>source/CWADReader.h</itemPath>
+      <itemPath>source/CWaterSurfaceSceneNode.cpp</itemPath>
+      <itemPath>source/CWaterSurfaceSceneNode.h</itemPath>
+      <itemPath>source/CWriteFile.cpp</itemPath>
+      <itemPath>source/CWriteFile.h</itemPath>
+      <itemPath>source/CXMLReader.cpp</itemPath>
+      <itemPath>source/CXMLReader.h</itemPath>
+      <itemPath>source/CXMLReaderImpl.h</itemPath>
+      <itemPath>source/CXMLWriter.cpp</itemPath>
+      <itemPath>source/CXMLWriter.h</itemPath>
+      <itemPath>source/CXMeshFileLoader.cpp</itemPath>
+      <itemPath>source/CXMeshFileLoader.h</itemPath>
+      <itemPath>source/CZBuffer.cpp</itemPath>
+      <itemPath>source/CZBuffer.h</itemPath>
+      <itemPath>source/CZipReader.cpp</itemPath>
+      <itemPath>source/CZipReader.h</itemPath>
+      <itemPath>source/IAttribute.h</itemPath>
+      <itemPath>source/IBurningShader.cpp</itemPath>
+      <itemPath>source/IBurningShader.h</itemPath>
+      <itemPath>source/IDepthBuffer.h</itemPath>
+      <itemPath>source/IImagePresenter.h</itemPath>
+      <itemPath>source/ISceneNodeAnimatorFinishing.h</itemPath>
+      <itemPath>source/ITriangleRenderer.h</itemPath>
+      <itemPath>source/IZBuffer.h</itemPath>
+      <itemPath>source/Irrlicht.aps</itemPath>
+      <itemPath>source/Irrlicht.cpp</itemPath>
+      <itemPath>source/Irrlicht.dev</itemPath>
+      <itemPath>source/Octree.h</itemPath>
+      <itemPath>source/S2DVertex.h</itemPath>
+      <itemPath>source/S4DVertex.h</itemPath>
+      <itemPath>source/SoftwareDriver2_compile_config.h</itemPath>
+      <itemPath>source/SoftwareDriver2_helper.h</itemPath>
+      <itemPath>source/dmfsupport.h</itemPath>
+      <itemPath>source/glext.h</itemPath>
+      <itemPath>source/glxext.h</itemPath>
+      <itemPath>source/irrXML.cpp</itemPath>
+      <itemPath>source/os.cpp</itemPath>
+      <itemPath>source/os.h</itemPath>
+      <itemPath>source/resource.h</itemPath>
+      <itemPath>source/source.txt</itemPath>
+      <itemPath>source/wglext.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>MakefileNb</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>MakefileNb</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>include</pElem>
+            <pElem>source</pElem>
+            <pElem>source/jpeglib</pElem>
+            <pElem>source/libpng</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>_IRR_STATIC_LIB_</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="source/BuiltInFont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/C3DSMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/C3DSMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshHalfLife.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshHalfLife.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAttributeImpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAttributes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAttributes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CB3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CB3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBSPMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBSPMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBillboardSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBillboardSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBlit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBoneSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBoneSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBurningShader_Raster_Reference.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CCSMLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCSMLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCameraSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCameraSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCgMaterialRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColladaFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColladaFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColladaMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColladaMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColorConverter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColorConverter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCubeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCubeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8Driver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8Driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8MaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8NormalMapRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8NormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8ParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8ParallaxMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8ShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8ShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9CgMaterialRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9CgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9Driver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9Driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9HLSLMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9HLSLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9MaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9NormalMapRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9NormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9ParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9ParallaxMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9ShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9ShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDMFLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CDMFLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDefaultGUIElementFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultGUIElementFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeAnimatorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeAnimatorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDepthBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CDepthBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDummyTransformationSceneNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDummyTransformationSceneNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CEmptySceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CEmptySceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFPSCounter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFPSCounter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFileList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFileList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFileSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFileSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUICheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUICheckBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIColorSelectDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIColorSelectDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIComboBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIComboBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIContextMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIContextMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIEditBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIEditBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIEnvironment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIEnvironment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIFileOpenDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIFileOpenDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIFont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIImage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIImageList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIImageList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIInOutFader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIInOutFader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIListBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIListBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMeshViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMeshViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMessageBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMessageBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIModalScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIModalScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIScrollBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIScrollBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISkin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISkin.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISpinBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISpinBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISpriteBank.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISpriteBank.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIStaticText.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIStaticText.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITabControl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITabControl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIToolBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIToolBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITreeView.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITreeView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGeometryCreator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGeometryCreator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderBMP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderBMP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderDDS.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderDDS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderJPG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderJPG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPCX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPCX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPNG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPNG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPPM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPPM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPSD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPSD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderRGB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderRGB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderTGA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderTGA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderWAL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderWAL.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterBMP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterBMP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterJPG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterJPG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPCX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPCX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPNG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPNG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPPM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPPM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPSD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPSD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterTGA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterTGA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceConsole.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceConsole.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceFB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceFB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceLinux.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceLinux.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceSDL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceSDL.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceStub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceStub.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWin32.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWin32.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWinCE.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWinCE.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLMTSMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLMTSMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLWOMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLWOMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLightSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLightSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLimitReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLimitReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLogger.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLogger.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMD2MeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMD2MeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMD3MeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMD3MeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMS3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMS3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMY3DHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMY3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMY3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMemoryFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMemoryFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshCache.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshCache.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshManipulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshManipulator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMetaTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMetaTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMountPointReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMountPointReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CNPKReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CNPKReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CNullDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CNullDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COBJMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COBJMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COBJMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COBJMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COCTLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COCTLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COSOperator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COSOperator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COctreeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COctreeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COctreeTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COctreeTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COgreMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COgreMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLCgMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLCgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLExtensionHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLExtensionHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLNormalMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLNormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLParallaxMapRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLSLMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLSLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPakReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPakReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleAnimatedMeshSceneNodeEmitter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAnimatedMeshSceneNodeEmitter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAttractionAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAttractionAffector.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleBoxEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleBoxEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleCylinderEmitter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleCylinderEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleFadeOutAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleFadeOutAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleGravityAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleGravityAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleMeshEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleMeshEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticlePointEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticlePointEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleRingEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleRingEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleRotationAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleRotationAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleScaleAffector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleScaleAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleSphereEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleSphereEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleSystemSceneNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleSystemSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CQ3LevelMesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CQ3LevelMesh.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CQuake3ShaderSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CQuake3ShaderSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSMFMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSMFMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneCollisionManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneCollisionManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneLoaderIrr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneLoaderIrr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraFPS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraFPS.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraMaya.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraMaya.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCollisionResponse.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCollisionResponse.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorDelete.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorDelete.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyCircle.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyCircle.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyStraight.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyStraight.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFollowSpline.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFollowSpline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorRotation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorRotation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CShadowVolumeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CShadowVolumeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkinnedMesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkinnedMesh.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkyBoxSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkyBoxSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkyDomeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkyDomeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftware2MaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSphereSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSphereSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTRFlat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRFlatWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraud2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudAlpha2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudAlphaNoZ2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRNormalMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRStencilShadow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureBlend.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureDetailMap2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureFlat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureFlatWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAdd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAdd2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAddNoZ2.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAlpha.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAlphaNoZ.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudNoZ.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudNoZ2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudVertexAlpha2.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_Add.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMapGouraud2_M4.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureWire2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTarReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTarReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTerrainSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTerrainSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTerrainTriangleSelector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTerrainTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTextSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTextSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTimer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTriangleBBSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTriangleBBSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CVideoModeList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CVideoModeList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CVolumeLightSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CVolumeLightSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWADReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWADReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWaterSurfaceSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWaterSurfaceSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWriteFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWriteFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMLReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLReaderImpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMLWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CZBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CZBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CZipReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CZipReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IAttribute.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IBurningShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/IBurningShader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IDepthBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IImagePresenter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/ISceneNodeAnimatorFinishing.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/ITriangleRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IZBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.aps" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.dev" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Octree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/S2DVertex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/S4DVertex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/SoftwareDriver2_compile_config.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/SoftwareDriver2_helper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aescrypt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aeskey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aesopt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aestab.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/fileenc.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/fileenc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/hmac.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/hmac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/prng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/prng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/pwd2key.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/pwd2key.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/bzip2/blocksort.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzcompress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/bzip2/crctable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/decompress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/huffman.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/randtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/dmfsupport.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/glext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/glxext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/irrXML.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jaricom.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcapimin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcapistd.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcarith.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jccoefct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jccolor.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcdctmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jchuff.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcinit.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmainct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmarker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmaster.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcomapi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jconfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcparam.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcprepct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcsample.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jctrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdapimin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdapistd.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdarith.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdatadst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdatasrc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdcoefct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdcolor.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jddctmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdhuff.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdinput.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmainct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmarker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmaster.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmerge.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdpostct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdsample.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdtrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jerror.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jerror.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctflt.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctfst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctflt.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctfst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jinclude.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemnobs.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemsys.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmorecfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jpegint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jpeglib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jquant1.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jquant2.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jutils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jversion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/png.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/png.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngdebug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngerror.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngget.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pnginfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pnglibconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngmem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngpread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngpriv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrtran.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngstruct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngtrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwrite.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwtran.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/os.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/os.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/resource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/source.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/wglext.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>include</pElem>
+            <pElem>source</pElem>
+            <pElem>source/jpeglib</pElem>
+            <pElem>source/libpng</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>_IRR_STATIC_LIB_</Elem>
+          </preprocessorList>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="source/BuiltInFont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/C3DSMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/C3DSMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshHalfLife.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshHalfLife.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD3.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshMD3.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAnimatedMeshSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAttributeImpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CAttributes.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CAttributes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CB3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CB3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBSPMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBSPMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBillboardSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBillboardSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBlit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBoneSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CBoneSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CBurningShader_Raster_Reference.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CCSMLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCSMLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCameraSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCameraSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCgMaterialRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColladaFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColladaFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColladaMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColladaMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CColorConverter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CColorConverter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CCubeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CCubeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8Driver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8Driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8MaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8NormalMapRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8NormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8ParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8ParallaxMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D8ShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8ShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D8Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D8Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9CgMaterialRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9CgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9Driver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9Driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9HLSLMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9HLSLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9MaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9NormalMapRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9NormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9ParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9ParallaxMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CD3D9ShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9ShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CD3D9Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CD3D9Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDMFLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CDMFLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDefaultGUIElementFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultGUIElementFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeAnimatorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeAnimatorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDefaultSceneNodeFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDepthBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CDepthBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CDummyTransformationSceneNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CDummyTransformationSceneNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CEmptySceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CEmptySceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFPSCounter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFPSCounter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFileList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFileList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CFileSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CFileSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUICheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUICheckBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIColorSelectDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIColorSelectDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIComboBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIComboBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIContextMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIContextMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIEditBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIEditBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIEnvironment.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIEnvironment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIFileOpenDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIFileOpenDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIFont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIImage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIImageList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIImageList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIInOutFader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIInOutFader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIListBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIListBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMeshViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMeshViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIMessageBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIMessageBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIModalScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIModalScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIScrollBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIScrollBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISkin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISkin.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISpinBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISpinBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUISpriteBank.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUISpriteBank.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIStaticText.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIStaticText.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITabControl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITabControl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIToolBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIToolBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUITreeView.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUITreeView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGUIWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGUIWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CGeometryCreator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CGeometryCreator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderBMP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderBMP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderDDS.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderDDS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderJPG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderJPG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPCX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPCX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPNG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPNG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPPM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPPM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPSD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderPSD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderRGB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderRGB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderTGA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderTGA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderWAL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageLoaderWAL.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterBMP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterBMP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterJPG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterJPG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPCX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPCX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPNG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPNG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPPM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPPM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPSD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterPSD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CImageWriterTGA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CImageWriterTGA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceConsole.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceConsole.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceFB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceFB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceLinux.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceLinux.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceSDL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceSDL.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceStub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceStub.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWin32.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWin32.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWinCE.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrDeviceWinCE.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CIrrMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLMTSMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLMTSMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLWOMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLWOMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLightSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLightSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLimitReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLimitReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CLogger.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CLogger.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMD2MeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMD2MeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMD3MeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMD3MeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMS3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMS3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMY3DHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMY3DMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMY3DMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMemoryFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMemoryFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshCache.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshCache.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshManipulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshManipulator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMeshSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMeshSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMetaTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMetaTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CMountPointReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CMountPointReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CNPKReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CNPKReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CNullDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CNullDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COBJMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COBJMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COBJMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COBJMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COCTLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COCTLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COSOperator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COSOperator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COctreeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COctreeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COctreeTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COctreeTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COgreMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COgreMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLCgMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLCgMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLExtensionHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLExtensionHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLNormalMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLNormalMapRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLParallaxMapRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLParallaxMapRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLSLMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLSLMaterialRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/COpenGLShaderMaterialRenderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLShaderMaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/COpenGLTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/COpenGLTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPLYMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CPakReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CPakReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleAnimatedMeshSceneNodeEmitter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAnimatedMeshSceneNodeEmitter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAttractionAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleAttractionAffector.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleBoxEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleBoxEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleCylinderEmitter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleCylinderEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleFadeOutAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleFadeOutAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleGravityAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleGravityAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleMeshEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleMeshEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticlePointEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticlePointEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleRingEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleRingEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleRotationAffector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleRotationAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleScaleAffector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleScaleAffector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleSphereEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CParticleSphereEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CParticleSystemSceneNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CParticleSystemSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CQ3LevelMesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CQ3LevelMesh.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CQuake3ShaderSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CQuake3ShaderSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSMFMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSMFMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSTLMeshWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneCollisionManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneCollisionManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneLoaderIrr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneLoaderIrr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSceneManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraFPS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraFPS.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraMaya.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCameraMaya.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCollisionResponse.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorCollisionResponse.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorDelete.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorDelete.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyCircle.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyCircle.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyStraight.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFlyStraight.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFollowSpline.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorFollowSpline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorRotation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorRotation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CSceneNodeAnimatorTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CShadowVolumeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CShadowVolumeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkinnedMesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkinnedMesh.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkyBoxSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkyBoxSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSkyDomeSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSkyDomeSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftware2MaterialRenderer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareDriver2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSoftwareTexture2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CSphereSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CSphereSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTRFlat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRFlatWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraud2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudAlpha2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudAlphaNoZ2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRGouraudWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRNormalMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRStencilShadow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureBlend.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureDetailMap2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureFlat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureFlatWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraud2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAdd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAdd2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAddNoZ2.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAlpha.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudAlphaNoZ.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudNoZ.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudNoZ2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudVertexAlpha2.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureGouraudWire.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_Add.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMap2_M4.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTRTextureLightMapGouraud2_M4.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTRTextureWire2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTarReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTarReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTerrainSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTerrainSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTerrainTriangleSelector.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="source/CTerrainTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTextSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTextSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTimer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTriangleBBSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTriangleBBSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CTriangleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CTriangleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CVideoModeList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CVideoModeList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CVolumeLightSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CVolumeLightSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWADReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWADReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWaterSurfaceSceneNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWaterSurfaceSceneNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CWriteFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CWriteFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMLReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLReaderImpl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMLWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMLWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CXMeshFileLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CXMeshFileLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CZBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CZBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/CZipReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/CZipReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IAttribute.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IBurningShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/IBurningShader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IDepthBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IImagePresenter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/ISceneNodeAnimatorFinishing.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/ITriangleRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/IZBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.aps" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Irrlicht.dev" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Octree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/S2DVertex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/S4DVertex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/SoftwareDriver2_compile_config.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="source/SoftwareDriver2_helper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aescrypt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aeskey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aesopt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/aestab.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/fileenc.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/fileenc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/hmac.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/hmac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/prng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/prng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/pwd2key.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/pwd2key.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/aesGladman/sha2.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/bzip2/blocksort.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzcompress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/bzlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/bzip2/crctable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/decompress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/huffman.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/bzip2/randtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/dmfsupport.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/glext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/glxext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/irrXML.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jaricom.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcapimin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcapistd.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcarith.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jccoefct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jccolor.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcdctmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jchuff.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcinit.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmainct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmarker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcmaster.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcomapi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jconfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcparam.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcprepct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jcsample.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jctrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdapimin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdapistd.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdarith.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdatadst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdatasrc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdcoefct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdcolor.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jddctmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdhuff.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdinput.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmainct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmarker.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmaster.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdmerge.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdpostct.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdsample.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jdtrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jerror.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jerror.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctflt.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctfst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jfdctint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctflt.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctfst.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jidctint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jinclude.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemmgr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemnobs.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmemsys.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jmorecfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jpegint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jpeglib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jquant1.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jquant2.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jutils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/jpeglib/jversion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/png.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/png.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngdebug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngerror.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngget.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pnginfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pnglibconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngmem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngpread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngpriv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrtran.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngrutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngstruct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/libpng/pngtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngtrans.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwrite.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwtran.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/libpng/pngwutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/os.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/os.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/resource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/source.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/wglext.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

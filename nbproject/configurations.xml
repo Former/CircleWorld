@@ -69,9 +69,6 @@
       <itemPath>MakefileNb</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <sourceRootList>
-    <Elem>.;./Engine;./irrlicht/include;./ThreadPool</Elem>
-  </sourceRootList>
   <projectmakefile>MakefileNb</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -82,11 +79,50 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
-          <incFile>
-            <pElem>.;./Engine;./irrlicht/include;./ThreadPool</pElem>
-          </incFile>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>./Engine</pElem>
+            <pElem>./irrlicht/include</pElem>
+            <pElem>./ThreadPool</pElem>
+          </incDir>
+          <commandLine>-std=c++0x</commandLine>
+          <preprocessorList>
+            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
+          </preprocessorList>
         </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/X11R6/lib</pElem>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerOptionItem>-lrt -lGLU -lGL</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="irrlicht"
+                            CT="3"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="irrlicht"
+                            BC="${MAKE}  -f MakefileNb CONF=Debug"
+                            CC="${MAKE}  -f MakefileNb CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libirrlicht.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+        </linkerTool>
+        <requiredProjects>
+          <makeArtifact PL="irrlicht"
+                        CT="3"
+                        CN="Debug"
+                        AC="true"
+                        BL="false"
+                        WD="irrlicht"
+                        BC="${MAKE}  -f MakefileNb CONF=Debug"
+                        CC="${MAKE}  -f MakefileNb CONF=Debug clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libirrlicht.a">
+          </makeArtifact>
+        </requiredProjects>
       </compileType>
       <item path="CircleCoordinator.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -207,11 +243,15 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>Engine/.</pElem>
+            <pElem>.</pElem>
             <pElem>./Engine</pElem>
             <pElem>./irrlicht/include</pElem>
             <pElem>./ThreadPool</pElem>
           </incDir>
+          <commandLine>-std=c++0x</commandLine>
+          <preprocessorList>
+            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -219,6 +259,25 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/X11R6/lib</pElem>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <additionalDep>irrlicht;rt;GLU;GL</additionalDep>
+        </linkerTool>
+        <requiredProjects>
+          <makeArtifact PL="irrlicht"
+                        CT="3"
+                        CN="Release"
+                        AC="false"
+                        BL="false"
+                        WD="irrlicht"
+                        BC="${MAKE}  -f MakefileNb CONF=Release"
+                        CC="${MAKE}  -f MakefileNb CONF=Release clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libirrlicht.a">
+          </makeArtifact>
+        </requiredProjects>
       </compileType>
       <item path="CircleCoordinator.cpp" ex="false" tool="1" flavor2="0">
       </item>

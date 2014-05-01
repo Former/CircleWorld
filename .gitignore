@@ -13,3 +13,7 @@ core
 *.clang
 *.codelite
 *.build*
+/irrlicht/build/
+/irrlicht/dist/
+/build/
+/dist/
