@@ -116,6 +116,39 @@
         <itemPath>source/libpng/pngwtran.c</itemPath>
         <itemPath>source/libpng/pngwutil.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f5" displayName="lzma" projectFiles="true" kind="ROOT">
+        <itemPath>source/lzma/LzmaDec.c</itemPath>
+        <itemPath>source/lzma/LzmaDec.h</itemPath>
+        <itemPath>source/lzma/Types.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="zlib" projectFiles="true" kind="ROOT">
+        <itemPath>source/zlib/adler32.c</itemPath>
+        <itemPath>source/zlib/compress.c</itemPath>
+        <itemPath>source/zlib/crc32.c</itemPath>
+        <itemPath>source/zlib/crc32.h</itemPath>
+        <itemPath>source/zlib/deflate.c</itemPath>
+        <itemPath>source/zlib/deflate.h</itemPath>
+        <itemPath>source/zlib/gzclose.c</itemPath>
+        <itemPath>source/zlib/gzguts.h</itemPath>
+        <itemPath>source/zlib/gzlib.c</itemPath>
+        <itemPath>source/zlib/gzread.c</itemPath>
+        <itemPath>source/zlib/gzwrite.c</itemPath>
+        <itemPath>source/zlib/infback.c</itemPath>
+        <itemPath>source/zlib/inffast.c</itemPath>
+        <itemPath>source/zlib/inffast.h</itemPath>
+        <itemPath>source/zlib/inffixed.h</itemPath>
+        <itemPath>source/zlib/inflate.c</itemPath>
+        <itemPath>source/zlib/inflate.h</itemPath>
+        <itemPath>source/zlib/inftrees.c</itemPath>
+        <itemPath>source/zlib/inftrees.h</itemPath>
+        <itemPath>source/zlib/trees.c</itemPath>
+        <itemPath>source/zlib/trees.h</itemPath>
+        <itemPath>source/zlib/uncompr.c</itemPath>
+        <itemPath>source/zlib/zconf.h</itemPath>
+        <itemPath>source/zlib/zlib.h</itemPath>
+        <itemPath>source/zlib/zutil.c</itemPath>
+        <itemPath>source/zlib/zutil.h</itemPath>
+      </logicalFolder>
       <itemPath>source/BuiltInFont.h</itemPath>
       <itemPath>source/C3DSMeshFileLoader.cpp</itemPath>
       <itemPath>source/C3DSMeshFileLoader.h</itemPath>
@@ -1822,6 +1855,12 @@
       </item>
       <item path="source/libpng/pngwutil.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="source/lzma/LzmaDec.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/lzma/LzmaDec.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/lzma/Types.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="source/os.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/os.h" ex="false" tool="3" flavor2="0">
@@ -1831,6 +1870,58 @@
       <item path="source/source.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/wglext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/adler32.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/compress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/crc32.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/crc32.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/deflate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/deflate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/gzclose.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzguts.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/gzlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzwrite.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/infback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inffast.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inffast.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inffixed.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inflate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inflate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inftrees.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inftrees.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/trees.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/trees.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/uncompr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/zconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/zlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/zutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/zutil.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="3">
@@ -3097,6 +3188,12 @@
       </item>
       <item path="source/libpng/pngwutil.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="source/lzma/LzmaDec.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/lzma/LzmaDec.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/lzma/Types.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="source/os.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/os.h" ex="false" tool="3" flavor2="0">
@@ -3106,6 +3203,58 @@
       <item path="source/source.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/wglext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/adler32.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/compress.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/crc32.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/crc32.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/deflate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/deflate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/gzclose.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzguts.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/gzlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzread.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/gzwrite.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/infback.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inffast.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inffast.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inffixed.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inflate.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inflate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/inftrees.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/inftrees.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/trees.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/trees.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/uncompr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/zconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/zlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/zlib/zutil.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/zlib/zutil.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

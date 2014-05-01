@@ -46,6 +46,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -57,6 +59,12 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
+          <runcommandpicklistitem>${CND_DISTDIR}/${CND_CONF}/circleworld</runcommandpicklistitem>
+          <runcommandpicklistitem></runcommandpicklistitem>
+          <runcommandpicklistitem>circleworld</runcommandpicklistitem>
+          <runcommandpicklistitem>"${CND_DISTDIR}"/"${CND_CONF}"/circleworld</runcommandpicklistitem>
+          <runcommandpicklistitem> cd "${CND_DISTDIR}"/"${CND_CONF}"; ./circleworld</runcommandpicklistitem>
+          <runcommandpicklistitem>"${CND_DISTDIR}/${CND_CONF}/circleworld"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f4" displayName="Engine" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f4" displayName="Engine" projectFiles="true">
       <itemPath>Engine/CircleObject.cpp</itemPath>
       <itemPath>Engine/CircleObject.h</itemPath>
       <itemPath>Engine/CircleSelector.cpp</itemPath>
@@ -12,11 +12,11 @@
       <itemPath>Engine/Point.cpp</itemPath>
       <itemPath>Engine/Point.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="F3DTree" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f2" displayName="F3DTree" projectFiles="true">
       <itemPath>F3DTree/F3DTree.cpp</itemPath>
       <itemPath>F3DTree/F3DTree.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f1" displayName="src" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="src" projectFiles="true">
       <itemPath>CircleCoordinator.cpp</itemPath>
       <itemPath>CircleCoordinator.h</itemPath>
       <itemPath>CircleItem.h</itemPath>
@@ -37,10 +37,7 @@
       <itemPath>SolidObjectGenerator.h</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3"
-                   displayName="ThreadPool"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f3" displayName="ThreadPool" projectFiles="true">
       <itemPath>ThreadPool/AsyncOpForThreadPool.cpp</itemPath>
       <itemPath>ThreadPool/AsyncOpForThreadPool.h</itemPath>
       <itemPath>ThreadPool/AsyncOperation.cpp</itemPath>
@@ -91,12 +88,12 @@
           </preprocessorList>
         </ccTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/circleworld</output>
           <linkerAddLib>
             <pElem>/usr/X11R6/lib</pElem>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerOptionItem>-lrt -lGLU -lGL</linkerOptionItem>
             <linkerLibProjectItem>
               <makeArtifact PL="irrlicht"
                             CT="3"
@@ -110,6 +107,7 @@
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
+          <commandLine>-lrt -lGLU -lGL</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="irrlicht"
@@ -260,11 +258,26 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/circleworld</output>
           <linkerAddLib>
             <pElem>/usr/X11R6/lib</pElem>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <additionalDep>irrlicht;rt;GLU;GL</additionalDep>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="irrlicht"
+                            CT="3"
+                            CN="Release"
+                            AC="false"
+                            BL="true"
+                            WD="irrlicht"
+                            BC="${MAKE}  -f MakefileNb CONF=Release"
+                            CC="${MAKE}  -f MakefileNb CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libirrlicht.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lrt -lGLU -lGL</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="irrlicht"
