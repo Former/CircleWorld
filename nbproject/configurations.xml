@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="SourceFiles"
-                   displayName="Исходные файлы"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Engine" projectFiles="true" kind="ROOT">
+      <itemPath>Engine/CircleObject.cpp</itemPath>
+      <itemPath>Engine/CircleObject.h</itemPath>
+      <itemPath>Engine/CircleSelector.cpp</itemPath>
+      <itemPath>Engine/CircleSelector.h</itemPath>
+      <itemPath>Engine/CommonTypes.h</itemPath>
+      <itemPath>Engine/EngineRules.cpp</itemPath>
+      <itemPath>Engine/EngineRules.h</itemPath>
+      <itemPath>Engine/Point.cpp</itemPath>
+      <itemPath>Engine/Point.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="HeaderFiles"
-                   displayName="Файлы заголовков"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="F3DTree" projectFiles="true" kind="ROOT">
+      <itemPath>F3DTree/F3DTree.cpp</itemPath>
+      <itemPath>F3DTree/F3DTree.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="ResourceFiles"
-                   displayName="Файлы ресурсов"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="src" projectFiles="true" kind="ROOT">
+      <itemPath>CircleCoordinator.cpp</itemPath>
+      <itemPath>CircleCoordinator.h</itemPath>
+      <itemPath>CircleItem.h</itemPath>
+      <itemPath>Common.h</itemPath>
+      <itemPath>CreateMeshFromObjectData.cpp</itemPath>
+      <itemPath>CreateMeshFromObjectData.h</itemPath>
+      <itemPath>GetWorkTime.cpp</itemPath>
+      <itemPath>GetWorkTime.h</itemPath>
+      <itemPath>Import_Obj.cpp</itemPath>
+      <itemPath>Import_Obj.h</itemPath>
+      <itemPath>IntPoint.cpp</itemPath>
+      <itemPath>IntPoint.h</itemPath>
+      <itemPath>LOD_Object.cpp</itemPath>
+      <itemPath>LOD_Object.h</itemPath>
+      <itemPath>SolidObject.cpp</itemPath>
+      <itemPath>SolidObject.h</itemPath>
+      <itemPath>SolidObjectGenerator.cpp</itemPath>
+      <itemPath>SolidObjectGenerator.h</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f3"
+                   displayName="ThreadPool"
+                   projectFiles="true"
+                   kind="ROOT">
+      <itemPath>ThreadPool/AsyncOpForThreadPool.cpp</itemPath>
+      <itemPath>ThreadPool/AsyncOpForThreadPool.h</itemPath>
+      <itemPath>ThreadPool/AsyncOperation.cpp</itemPath>
+      <itemPath>ThreadPool/AsyncOperation.h</itemPath>
+      <itemPath>ThreadPool/AsyncParallelOperation.cpp</itemPath>
+      <itemPath>ThreadPool/AsyncParallelOperation.h</itemPath>
+      <itemPath>ThreadPool/AsyncSequenceOperation.cpp</itemPath>
+      <itemPath>ThreadPool/AsyncSequenceOperation.h</itemPath>
+      <itemPath>ThreadPool/Common.h</itemPath>
+      <itemPath>ThreadPool/ThreadPool.cpp</itemPath>
+      <itemPath>ThreadPool/ThreadPool.h</itemPath>
+      <itemPath>ThreadPool/WaitHandler.cpp</itemPath>
+      <itemPath>ThreadPool/WaitHandler.h</itemPath>
+      <itemPath>ThreadPool/WorkThread.cpp</itemPath>
+      <itemPath>ThreadPool/WorkThread.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Файлы тестов"
@@ -25,6 +69,9 @@
       <itemPath>MakefileNb</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.;./Engine;./irrlicht/include;./ThreadPool</Elem>
+  </sourceRootList>
   <projectmakefile>MakefileNb</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -34,7 +81,118 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incFile>
+            <pElem>.;./Engine;./irrlicht/include;./ThreadPool</pElem>
+          </incFile>
+        </ccTool>
       </compileType>
+      <item path="CircleCoordinator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircleCoordinator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CircleItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CreateMeshFromObjectData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CreateMeshFromObjectData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CircleObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/CircleObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CircleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/CircleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CommonTypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/EngineRules.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/EngineRules.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/Point.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/Point.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="F3DTree/F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="F3DTree/F3DTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GetWorkTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GetWorkTime.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Import_Obj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Import_Obj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntPoint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntPoint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LOD_Object.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LOD_Object.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SolidObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SolidObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SolidObjectGenerator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SolidObjectGenerator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOpForThreadPool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOpForThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOperation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOperation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncParallelOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncParallelOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncSequenceOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncSequenceOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/ThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/WaitHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/WaitHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/WorkThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/WorkThread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -48,6 +206,12 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>Engine/.</pElem>
+            <pElem>./Engine</pElem>
+            <pElem>./irrlicht/include</pElem>
+            <pElem>./ThreadPool</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -56,6 +220,111 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CircleCoordinator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CircleCoordinator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CircleItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CreateMeshFromObjectData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CreateMeshFromObjectData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CircleObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/CircleObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CircleSelector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/CircleSelector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/CommonTypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/EngineRules.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/EngineRules.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine/Point.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine/Point.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="F3DTree/F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="F3DTree/F3DTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GetWorkTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GetWorkTime.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Import_Obj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Import_Obj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IntPoint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IntPoint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LOD_Object.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LOD_Object.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SolidObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SolidObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SolidObjectGenerator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SolidObjectGenerator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOpForThreadPool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOpForThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOperation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncOperation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncParallelOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncParallelOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncSequenceOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/AsyncSequenceOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="ThreadPool/Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/ThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/WaitHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/WaitHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ThreadPool/WorkThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ThreadPool/WorkThread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>
