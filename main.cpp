@@ -1,5 +1,6 @@
 #include "Common.h"
 
+#include <fstream>
 #include "CircleCoordinator.h"
 #include "CreateMeshFromObjectData.h"
 #include "GetWorkTime.h"
@@ -176,13 +177,38 @@ private:
 	ObjectDataPtr m_ObjectData;
 };
 
+static bool IsFileExist(const std::string& a_FileName)
+{
+    std::ifstream infile(a_FileName);
+    return infile.good();    
+}
+
+static std::string GetFileNameWithPath(const std::string& a_FileName)
+{
+    std::vector<std::string> paths = 
+    {
+        "media/",
+        "../../media/",
+    };
+    
+    for (size_t i = 0; i < paths.size(); ++i)
+    {
+        std::string cur_path = paths[i];
+        std::string new_filename = cur_path + a_FileName;
+        if (IsFileExist(new_filename))
+            return new_filename;
+    }
+    
+    return a_FileName;
+}
+
 CObjectDrawStrategy::CObjectDrawStrategy(const ObjectDataPtr& a_ObjectData, irr::video::IVideoDriver* a_Driver, const size_t& a_Size)
 	: m_ObjectData(a_ObjectData)
 {
 	m_Driver = a_Driver;
 	m_Size = a_Size;
-	m_SolidMaterial.setTexture(0, m_Driver->getTexture("../../media/wall.jpg"));
-	m_WaterMaterial.setTexture(0, m_Driver->getTexture("../../media/water.jpg"));
+	m_SolidMaterial.setTexture(0, m_Driver->getTexture(GetFileNameWithPath("wall.jpg").c_str()));
+	m_WaterMaterial.setTexture(0, m_Driver->getTexture(GetFileNameWithPath("water.jpg").c_str()));
 }
 
 const CircleItem& CObjectDrawStrategy::GetItem(const IntPoint& a_CurPoint, const size_t& a_DrawStep)
@@ -321,7 +347,7 @@ int main()
 	driver->setTextureCreationFlag(irr::video::ETCF_ALWAYS_32_BIT, true);
 
 	//set other font
-	env->getSkin()->setFont(env->getFont("../../media/fontlucida.png"));
+	env->getSkin()->setFont(env->getFont(GetFileNameWithPath("fontlucida.png").c_str()));
 
 	// add some help text
 	env->addStaticText(
@@ -347,7 +373,7 @@ int main()
 	CircleEngine::PairBarSelectorPtr pairBarSelector(new CircleEngine::PairBarSelector);
 
 	OBJ_Data obj_data;
-	if (LoadObjFile(&obj_data, "../../FullCar.obj"))
+	if (LoadObjFile(&obj_data, GetFileNameWithPath("FullCar.obj").c_str()))
 	{
 		CircleEngine::Point center = CircleEngine::Point(0,-175,0);
 		CircleEngine::Point scale = CircleEngine::Point(30,30,30);
@@ -482,7 +508,7 @@ int main()
 	std::thread phys_th(PhysicsThread, std::ref(circle_coordinator));
 
 	driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
-	irr::scene::ISceneNode* skydome = smgr->addSkyDomeSceneNode(driver->getTexture("../../media/Tycho_catalog_skymap_v2.0_(threshold_magnitude_3.0,_low-res).png"),16,8,0.95f,2.0f);
+	irr::scene::ISceneNode* skydome = smgr->addSkyDomeSceneNode(driver->getTexture(GetFileNameWithPath("/Tycho_catalog_skymap_v2.0_(threshold_magnitude_3.0,_low-res).png").c_str()),16,8,0.95f,2.0f);
 	driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, true);
 
 	SystemEventReceiver receiver(skydome, circle_coordinator);
@@ -537,7 +563,7 @@ int main()
 	if (sphere_node)
 	{
 		sphere_node->setPosition(irr::core::vector3df(10000,0,0));
-		sphere_node->setMaterialTexture(0, driver->getTexture("../../media/wall.jpg"));
+		sphere_node->setMaterialTexture(0, driver->getTexture(GetFileNameWithPath("wall.jpg").c_str()));
 		sphere_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
 
