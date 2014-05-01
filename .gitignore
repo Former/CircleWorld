@@ -17,3 +17,5 @@ core
 /irrlicht/dist/
 /build/
 /dist/
+/unit_tests/build/
+/unit_tests/dist/

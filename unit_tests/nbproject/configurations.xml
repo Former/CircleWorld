@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="94">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f2" displayName="Common" projectFiles="true" kind="ROOT">
+      <itemPath>../IntPoint.cpp</itemPath>
+      <itemPath>../IntPoint.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f5" displayName="F3DTree" projectFiles="true" kind="ROOT">
+      <itemPath>../F3DTree/F3DTree.cpp</itemPath>
+      <itemPath>../F3DTree/F3DTree.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="gtest" projectFiles="true" kind="ROOT">
+      <itemPath>gtest/gtest-all.cc</itemPath>
+      <itemPath>gtest/gtest.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f1" displayName="src" projectFiles="true" kind="ROOT">
+      <itemPath>Test_F3DTree.cpp</itemPath>
+      <itemPath>Test_ThreadPool.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f4"
+                   displayName="ThreadPool"
+                   projectFiles="true"
+                   kind="ROOT">
+      <itemPath>../ThreadPool/AsyncOpForThreadPool.cpp</itemPath>
+      <itemPath>../ThreadPool/AsyncOpForThreadPool.h</itemPath>
+      <itemPath>../ThreadPool/AsyncOperation.cpp</itemPath>
+      <itemPath>../ThreadPool/AsyncOperation.h</itemPath>
+      <itemPath>../ThreadPool/AsyncParallelOperation.cpp</itemPath>
+      <itemPath>../ThreadPool/AsyncParallelOperation.h</itemPath>
+      <itemPath>../ThreadPool/AsyncSequenceOperation.cpp</itemPath>
+      <itemPath>../ThreadPool/AsyncSequenceOperation.h</itemPath>
+      <itemPath>../ThreadPool/Common.h</itemPath>
+      <itemPath>../ThreadPool/ThreadPool.cpp</itemPath>
+      <itemPath>../ThreadPool/ThreadPool.h</itemPath>
+      <itemPath>../ThreadPool/WaitHandler.cpp</itemPath>
+      <itemPath>../ThreadPool/WaitHandler.h</itemPath>
+      <itemPath>../ThreadPool/WorkThread.cpp</itemPath>
+      <itemPath>../ThreadPool/WorkThread.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>MakefileNB</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>MakefileNB</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>..</pElem>
+            <pElem>../F3DTree</pElem>
+            <pElem>../ThreadPool</pElem>
+          </incDir>
+          <commandLine>-std=c++0x</commandLine>
+        </ccTool>
+        <linkerTool>
+          <commandLine>-lpthread</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../F3DTree/F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../F3DTree/F3DTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../IntPoint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../IntPoint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOpForThreadPool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOpForThreadPool.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOperation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOperation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncParallelOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncParallelOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncSequenceOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncSequenceOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/ThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WaitHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WaitHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WorkThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WorkThread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Test_F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Test_ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gtest/gtest-all.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gtest/gtest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>..</pElem>
+            <pElem>../F3DTree</pElem>
+            <pElem>../ThreadPool</pElem>
+          </incDir>
+          <commandLine>-std=c++0x</commandLine>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <commandLine>-lpthread</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../F3DTree/F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../F3DTree/F3DTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../IntPoint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../IntPoint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOpForThreadPool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOpForThreadPool.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOperation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncOperation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncParallelOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncParallelOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncSequenceOperation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/AsyncSequenceOperation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../ThreadPool/Common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/ThreadPool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WaitHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WaitHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WorkThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../ThreadPool/WorkThread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Test_F3DTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Test_ThreadPool.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gtest/gtest-all.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="gtest/gtest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
